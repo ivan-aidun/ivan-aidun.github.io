@@ -27,10 +27,10 @@ baseurl: ""
 url: https://ivan-aidun.github.io
 
 # Build settings
-# theme: minima
-remote-theme: jekyll/minima
+theme: minima
+# remote-theme: jekyll/minima
 plugins:
-    - jekyll-remote-theme
+  # - jekyll-remote-theme
   # - jekyll-feed
 
 minima:
