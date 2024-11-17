@@ -5,9 +5,11 @@
 layout: home
 ---
 
-I am a Ph.D. student in math at the [University of Wisconsin—Madison][uw-link]. I am interested in number theory and algebraic geometry. My advisor is [Jordan Ellenberg][ellenberg].
+<div>
+<img src="IMG_2876.JPG" alt="Ivan Aidun" style="height:200px; width:auto; object-fit:contain">
+</div>
 
-<img src="IMG_2876.JPG" alt="Ivan Aidun" style="scale:.5">
+I am a Ph.D. student in math at the [University of Wisconsin—Madison][uw-link]. I am interested in number theory and algebraic geometry. My advisor is [Jordan Ellenberg][ellenberg].
 
 [uw-link]:https://math.wisc.edu/
 [ellenberg]:https://www.jordanellenberg.com/
