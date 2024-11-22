@@ -52,6 +52,13 @@ My undergraduate honors thesis, advised by [Lola Thompson][lola]:
 <a class="page-link" href="/files/other-writing/honors-thesis/A_statistical_investigation_of_a_divisor_sum_function.pdf" download>Honor's Thesis</a>
 </details>
 
+<details>
+<summary title="Click to expand">
+<h4><u>Article in <i>The Synapse</i></u></h4>
+</summary>
+I wrote an article about information theory and Reddit for [Issue 13 of <i>The Synapse</i>](https://synapsemagazine.org/s/Issue_13.pdf), an intercollegiate science magazine primarily organized by students at Oberlin College.
+</details>
+
 # Non-math writing
 <details>
 <summary title="Click to expand">
