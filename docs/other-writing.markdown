@@ -8,7 +8,7 @@ title: Other Writing
 <summary title="Click to expand">
 <h4><u>Notes on Algebra</u></h4>
 </summary>
-From 2022-2024 I have been the instructor of the Algebra SEP (Summer Enhancement Program) at UW—Madison. You can read more about the SEP <a href="https://wiki.math.wisc.edu/index.php/Summer_Enhancement_Program">here</a>. In Summer 2024, as part of my SEP materials, I wrote a series of expository notes on various topics in graduate-level algebra. The notes are not intended to be read front-to-back, but rather with the intention that if the reader is facing an unfamiliar topic for the first time (say, tensor products), they can navigate to that section and find a short, conversational introduction, along with example problems, many of which are drawn from or oriented towards problems that have appeared on past Algebra Qualifying Exams at UW.
+From 2022-2024 I have been the instructor of the Algebra SEP (Summer Enhancement Program) at UW—Madison. You can read more about the SEP <a class="page-link" href="https://wiki.math.wisc.edu/index.php/Summer_Enhancement_Program">here</a>. In Summer 2024, as part of my SEP materials, I wrote a series of expository notes on various topics in graduate-level algebra. The notes are not intended to be read front-to-back, but rather with the intention that if the reader is facing an unfamiliar topic for the first time (say, tensor products), they can navigate to that section and find a short, conversational introduction, along with example problems, many of which are drawn from or oriented towards problems that have appeared on past Algebra Qualifying Exams at UW.
 <ul>
 <li><a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_LA_basics.pdf" download>Basic Linear Algebra</a></li>
 <li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_LA_adv.pdf" download>Advanced Linear Algebra</a></li>
@@ -41,14 +41,14 @@ I have written several short expositions of a more recreational nature:
 <summary title="Click to expand">
 <h4><u>Blog</u></h4>
 </summary>
-I have a math blog for more casual math writing. You can find it [here][blog].
+I have a math blog for more casual math writing. You can find it <a class="page-link" href="https://mathblognplusone.wordpress.com/">here</a>.
 </details>
 
 <details>
 <summary title="Click to expand">
 <h4><u>Oberlin Honors Thesis</u></h4>
 </summary>
-My undergraduate honors thesis, advised by [Lola Thompson][lola]: 
+My undergraduate honors thesis, advised by <a class="page-link" href="http://www.lolathompson.com/">Lola Thompson</a>: 
 <a class="page-link" href="/files/other-writing/honors-thesis/A_statistical_investigation_of_a_divisor_sum_function.pdf" download>Honor's Thesis</a>
 </details>
 
@@ -56,7 +56,7 @@ My undergraduate honors thesis, advised by [Lola Thompson][lola]:
 <summary title="Click to expand">
 <h4><u>Article in <i>The Synapse</i></u></h4>
 </summary>
-I wrote an article about information theory and Reddit for [Issue 13 of <i>The Synapse</i>](https://synapsemagazine.org/s/Issue_13.pdf), an intercollegiate science magazine primarily organized by students at Oberlin College.
+I wrote an article about information theory and Reddit for <a class="page-link" href="https://synapsemagezine.org/s/Issue_13.pdf">The Synapse</a>, an intercollegiate science magazine primarily organized by students at Oberlin College.
 </details>
 
 # Non-math writing
@@ -64,11 +64,5 @@ I wrote an article about information theory and Reddit for [Issue 13 of <i>The S
 <summary title="Click to expand">
 <h4><u>Oberlin Review</u></h4>
 </summary>
-In undergrad, I was a staff writer for my college newspaper, The Oberlin Review, covering arts events on campus, especially things related to classical music. You can read my old articles [here][review-1] and [here][review-2].
+In undergrad, I was a staff writer for my college newspaper, The Oberlin Review, covering arts events on campus, especially things related to classical music. You can read my old articles <a class="page-link" href="https://oberlinreview.org/staff_name/ivan-aidun/">here</a> and <a class="page-link" href="https://oberlinreview.org/staff_name/interview-by-ivan-aidun/">here</a>.
 </details>
-
-[sep]:https://wiki.math.wisc.edu/index.php/Summer_Enhancement_Program
-[blog]:https://mathblognplusone.wordpress.com/
-[lola]:http://www.lolathompson.com/
-[review-1]:https://oberlinreview.org/staff_name/ivan-aidun/
-[review-2]:https://oberlinreview.org/staff_name/interview-by-ivan-aidun/
