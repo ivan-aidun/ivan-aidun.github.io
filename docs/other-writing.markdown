@@ -56,7 +56,7 @@ My undergraduate honors thesis, advised by <a class="page-link" href="http://www
 <summary title="Click to expand">
 <h4><u>Article in <i>The Synapse</i></u></h4>
 </summary>
-I wrote an article about information theory and Reddit for <a class="page-link" href="https://synapsemagezine.org/s/Issue_13.pdf">The Synapse</a>, an intercollegiate science magazine primarily organized by students at Oberlin College.
+In 2017, I wrote an article about information theory and Reddit for <a class="page-link" href="https://synapsemagezine.org/">The Synapse</a>, an intercollegiate science magazine primarily organized by students at Oberlin College. You can read my article <a href="https://synapsemagezine.org/s/Issue_13.pdf">here</a>.
 </details>
 
 # Non-math writing
