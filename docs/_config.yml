@@ -37,7 +37,7 @@ minima:
   skin: auto
 
 header_pages:
-  - publications.markdown
+  - research.markdown
   - other-writing.markdown
 
 # Exclude from processing.
