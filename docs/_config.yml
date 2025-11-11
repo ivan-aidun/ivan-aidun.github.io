@@ -30,6 +30,7 @@ url: https://ivan-aidun.github.io
 theme: minima
 # remote-theme: jekyll/minima
 plugins:
+  - jekyll-spaceship
   # - jekyll-remote-theme
   # - jekyll-feed
 
