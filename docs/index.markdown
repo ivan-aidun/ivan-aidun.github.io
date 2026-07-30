@@ -6,7 +6,7 @@ layout: home
 ---
 
 <div>
-<img src="Ivan Aidun[2].jpg" alt="picture of Ivan Aidun" style="float:left; margin-right: 1.5em; height:550px; width:auto; object-fit:contain">
+<img src="/files/pics/Ivan Aidun[2].jpg" alt="picture of Ivan Aidun" style="float:left; margin-right: 1.5em; height:550px; width:auto; object-fit:contain">
 </div>
 
 My name is Ivan Aidun (last name pronunciation: ay-DUNE, IPA: /ɛjˈdun/).  
