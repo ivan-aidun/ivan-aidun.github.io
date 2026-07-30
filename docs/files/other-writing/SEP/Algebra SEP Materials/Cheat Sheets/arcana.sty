@@ -1,0 +1,267 @@
+\ProvidesPackage{arcana}
+
+\usepackage{setspace}
+\SetSinglespace{1.1}\singlespacing
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools,mathdots,nicefrac}
+\usepackage[normalem]{ulem}
+\usepackage[mathscr]{euscript}
+\usepackage{tikz-cd}
+\usetikzlibrary{fit,shapes.geometric,calc,arrows.meta,bending,positioning}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage[auto-label,counter-within=chapter]{exsheets}
+%\usepackage{paralist} %conflicts with enumitem
+\usepackage{fancyhdr}
+\usepackage[shortlabels]{enumitem}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+%\usepackage{tocloft}
+\usepackage{thmtools}
+
+
+%% Arcana %%
+
+%This assigns an otherwise unused amsmath symbol for a short minus sign, useful in exponents where the normal minus sign often looks a bit too big
+\DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39}
+
+%Defining a symbol for group actions that I like.
+\newcommand{\laction}[2]{\prescript{{#1}\mspace{1mu} \text{\rotatebox[origin=c]{270}{$\circlearrowright$}}}{}{{#2}}}
+\newcommand{\raction}[2]{{#1}^{\mspace{1mu} \text{\rotatebox[origin=c]{90}{$\circlearrowleft$}} \mspace{1mu} {#2}}}
+
+\newcommand{\factpow}[2]{{#1}^{\underline{{#2}}}}
+\newcommand{\conj}[1]{\overline{{#1}}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\mf}{\mathfrak}
+\newcommand{\mc}{\mathcal}
+\newcommand{\inv}{^{\shortminus 1}}
+\newcommand{\linv}{\inv\!} %inverse for before capitals
+\newcommand{\badep}{\epsilon}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\fracpar}[2]{\paren{\frac{#1}{#2}}}
+\newcommand{\nicefracpar}[2]{\paren{\nicefrac{#1}{#2}}}
+\newcommand{\mult}{^{\times}}
+\newcommand{\degree}{^{\circ}}
+\newcommand{\del}{\nabla}
+\newcommand{\tensor}{\otimes}
+\newcommand{\twoarrayinput}[4]{{#1} & {#2}\\{#3} & {#4}}
+\newcommand{\twomatrix}[4]{\begin{pmatrix*}[r]\twoarrayinput{#1}{#2}{#3}{#4}\end{pmatrix*}}
+\newcommand{\piecewisedef}[4]{\left\{\begin{array}{ll}\twoarrayinput{#1}{#2}{#3}{#4}\end{array}\right.}
+\newcommand{\lnormal}{\triangleleft}
+\newcommand{\rnormal}{\triangleright}
+\newcommand{\ab}{^{\mathrm{ab}}}
+\newcommand{\starprob}{\llap{$\ast$\,}}
+\newcommand{\vb}{\mathbf}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\tonamed}{\xrightarrow}
+\newcommand{\twiddle}{\widetilde}
+
+%fiddling with arrows, reference the following posts
+%https://tex.stackexchange.com/questions/356884/scale-maths-character-horizontally
+%https://tex.stackexchange.com/questions/34393/the-mysteries-of-mathpalette
+%https://tex.stackexchange.com/questions/96501/what-does-relax-do
+\makeatletter
+\newcommand{\midrightarrow}{\mathrel{\mathpalette{\midright@rrow}{\relax}}}
+\newcommand{\midright@rrow}[2]{\scalebox{1.1}[1]{$#1\to$}}
+\makeatother
+
+%arrow with twiddle for bijection/isomorphism
+%modified from https://tex.stackexchange.com/questions/480739/placing-sim-above-to-with-correct-spacing
+\newcommand{\simto}{\stackrel{\mspace{-7mu}\sim}{\smash{\midrightarrow}\rule{0pt}{0.5ex}}}
+
+%broken arrow for rational maps
+%https://tex.stackexchange.com/a/257516
+\newcommand{\dashto}{\mathrel{\ThisStyle{\ooalign{$\SavedStyle\midrightarrow$\cr%
+\hfil\textcolor{white}{\rule{2\LMpt}{1\LMex}}\kern2\LMpt\hfil}}}}
+%and the birational symbol, combining the two above
+\newcommand{\simdashto}{\stackrel{\mspace{-7mu}\sim}{\smash{\dashto}\rule{0pt}{0.5ex}}}
+
+%a birational \simeq for Bella
+\newcommand{\birateq}{\mathrel{\ThisStyle{\ooalign{$\SavedStyle\simeq$\cr%
+\hfil\textcolor{white}{\rule{2\LMpt}{1\LMpt}}\hfil}}}}
+
+
+%This command lets you show cancellation in a calculation
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\Orth}{O}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Func}{Func}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Orb}{Orb}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Frac}{Frac}
+\DeclareMathOperator{\Tor}{Tor}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Char}{char}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\genset{\langle}{\rangle}
+\DeclarePairedDelimiter\pair{\langle}{\rangle}
+\DeclarePairedDelimiter\paren{(}{)}
+\DeclarePairedDelimiter\set{\{}{\}}
+
+\definecolor{WarningRed}{RGB}{221,13,2}
+\declaretheoremstyle[
+headfont=\bfseries\color{WarningRed},
+headformat=\NAME
+]{warning}
+\declaretheorem[style=warning]{Warning}
+
+\theoremstyle{definition}
+\newtheorem*{thm}{Theorem}
+\newtheorem{ex}{Example}[chapter]
+\renewcommand{\theex}{\arabic{ex}}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{pf}{Proof}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem*{fact}{Fact}
+\newtheorem*{facts}{Facts}
+\newtheorem*{sol}{Solution}
+\newtheorem*{com}{Comment}
+\newtheorem*{claim}{Claim}
+
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\let\oldparen\paren
+\def\paren{\@ifstar{\oldparen}{\oldparen*}}
+\let\oldset\set
+\def\set{\@ifstar{\oldset}{\oldset*}}
+\makeatother
+
+%%Defining a better \widebar%%
+%found at: https://tex.stackexchange.com/questions/16337/can-i-get-a-widebar-without-using-the-mathabx-package/60253#60253
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+  \setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+  \setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+  \ifdim\ht0=\ht2 #3\else #2\fi
+  }
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+%Enable nesting of accents:
+    \let\mathaccent\save@mathaccent
+%If there's more than a single symbol, use the first character instead (see below):
+    \if#32 \let\macc@nucleus\first@char \fi
+%Determine the italic correction:
+    \setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+    \setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+    \dimen@\wd\tw@
+    \advance\dimen@-\wd\z@
+%Now \dimen@ is the italic correction of the symbol.
+    \divide\dimen@ 3
+    \@tempdima\wd\tw@
+    \advance\@tempdima-\scriptspace
+%Now \@tempdima is the width of the symbol.
+    \divide\@tempdima 10
+    \advance\dimen@-\@tempdima
+%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+    \ifdim\dimen@>\z@ \dimen@0pt\fi
+%The bar will be shortened in the case \dimen@<0 !
+    \rel@kern{0.6}\kern-\dimen@
+    \if#31
+      \overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+      \advance\dimen@0.4\dimexpr\macc@kerna
+%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+      \let\final@kern#2%
+      \ifdim\dimen@<\z@ \let\final@kern1\fi
+      \if\final@kern1 \kern-\dimen@\fi
+    \else
+      \overline{\rel@kern{-0.6}\kern\dimen@#1}%
+    \fi
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+%The following initialises \macc@kerna and calls \mathaccent:
+  \if#31
+    \macc@nested@a\relax111{#1}%
+  \else
+%If the argument consists of more than one symbol, and if the first token is
+%a letter, use that letter for the computations:
+    \def\gobble@till@marker##1\endmarker{}%
+    \futurelet\first@char\gobble@till@marker#1\endmarker
+    \ifcat\noexpand\first@char A\else
+      \def\first@char{}%
+    \fi
+    \macc@nested@a\relax111{\first@char}%
+  \fi
+  \endgroup
+}
+\makeatother
+
+%% Formatting %%
+
+\DeclareInstance{exsheets-heading}{runin-subtitle}{default}{
+runin = true ,
+subtitle-pre-code = \textbf{(} ,
+subtitle-post-code = \textbf{)}\space ,
+attach =
+{ main[l,vc]points[l,vc](\linewidth+\marginparsep,0pt) } ,
+join =
+{
+main[r,vc]title[r,vc](0pt,0pt) ;
+main[r,vc]number[l,vc](.333em,0pt) ;
+main[r,vc]subtitle[l,vc](.333em,0pt)
+}
+}
+
+\DeclareInstance{exsheets-heading}{subtitle-only-runin}{default}{
+runin = true ,
+subtitle-post-code = \space ,
+join = {main[r,vc]subtitle[l,vc](0pt,0pt)}
+}
+
+%Make it so \autoref can handle `question'
+\newcommand{\questionautorefname}{Exercise}
+
+% \setlength{\parindent}{0.0in}
+% \setlength{\parskip}{0.05in}

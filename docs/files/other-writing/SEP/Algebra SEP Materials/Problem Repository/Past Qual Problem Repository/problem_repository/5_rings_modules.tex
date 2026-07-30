@@ -1,0 +1,798 @@
+\section{Rings and Modules}
+
+\subsection*{Commutative rings}
+
+\begin{question}[subtitle = January 2026 Problem 2,ID=Jan26_2]
+Let $M$ be a free $R$-module of rank $n$, where $n > 0$ is an integer and $R$ an integral domain.
+\begin{enumerate}
+    \item Given an example of $n$ elements of $M$ which are linearly independent but do not form a basis (for some $M$, $R$, and $n$). No justification is required.
+    \item Show that any $n+1$ elements of $M$ are linearly dependent over $R$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $R = M = \Z$ ($n = 1$), then the set $\set{2}$ is linearly independent but does not form a basis for $M$.
+    \item Let $K = \Frac(R)$, and let $V = M \otimes_R K$. Then $V$ is a vector space over $K$ of dimension $n$, and we have an injective map of $R$-modules $M \to V$. Given $n+1$ elements of $M$, they are certainly linearly dependent in $V$. By clearing denominators, we obtain a linear dependence over $R$ as well. 
+\end{enumerate}
+\end{solution}
+
+% LOC
+\newcommand{\len}{\operatorname{len}}
+\begin{question}[subtitle = January 2025 Problem 5,ID=Jan25_5]
+Let $A$ be a commutative Noetherian ring, and $M$ an $A$-module. We say that $M$ has finite length if there exists a positive integer $n$ such that every chain
+\[M_0 \subsetneq M_1 \subsetneq \dots \subsetneq M_k\]
+satisfies $k \leq n$. The smallest such $n$ is then called the length of $M$.
+\begin{enumerate}
+    \item Prove that if $M$ has finite length, then so does every localization $M_{\mf{p}}$ at a prime ideal $\mf{p}$ of $A$.
+    \item Now assume that $A$ is local with maximal ideal $\mf{m}$. Assume furthermore that the field $\kappa = A/\mf{m}$ embeds into $A$ as a subring. Prove that the length of $M$ equals the dimension of $M$ over $\kappa$ via restriction of scalars. (\textbf{NB} if the length and the dimension are both infinite, we consider them to be equal, we're not going to be particular about different ordinals/cardinals.)
+    \item Prove that the following converse of (a) holds if $A$ has finitely many maximal ideals: under this assumption, $M$ has finite length if $M_{\mf{m}}$ has finite length for every maximal ideal $\mf{m}$ of $A$. (You can use without proof the fact that an $A$-module $M$ is zero if and only if $M_{\mf{m}}$ is zero for every maximal ideal $\mf{m}$ of $A$.)
+    \item Prove that the assumption in part (c) on the finiteness of the number of maximal ideals is necessary by providing an example of a ring $A$ and an $A$-module $M$ which is not of finite length, even though $M_\mf{m}$ is of finite length for every maximal ideal $\mf{m}$ of $A$. (Hint: you can find such an example where $A$ is the ring of integers.)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Given a prime $\mf{p} \subset A$, we will show that $\len(M_{\mf{p}}) \leq \len(M)$. Let $\ell\colon M \to M_{\mf{p}}$ be the localization map. Given any chain contained in $M_{\mf{p}}$, $\twiddle{M}_0 \subsetneq \dots \subsetneq \twiddle{M}_k$, we want to show that $M$ contains a chain at least as long. Define $M_i = \ell\inv(\twiddle{M}_i) \subset M$. Clearly $M_i \subseteq M_{i+1}$ for all $i$, so if we show that the inclusions are strict we will be done. 
+    
+    Since $\twiddle{M}_i \subsetneq \twiddle{M}_{i+1}$, we can find some $m/s \in \twiddle{M}_{i+1} \setminus \twiddle{M}_i$ where $s \notin \mf{p}$.  If we look in the quotient $\twiddle{M}_{i+1}/\twiddle{M}_i$, the annihilator of the class $[m/s]$ is an ideal of $A_{\mf{p}}$. Since $A_{\mf{p}}$ is a local ring, and since the class $[m/s]$ was chosen not to be the zero class, the annihilator must be contained in the maximal ideal $\mf{p}$. Since $s \notin \mf{p}$, $s$ does not annihilate $[m/s]$, so $s[m/s] \neq [0]$ in the quotient, i.e.\ $s(m/s) = m/1 \notin \twiddle{M}_i$. Hence, $m/1 \in \twiddle{M}_{i+1} \setminus \twiddle{M}_i$, and so $m \in M_{i+1} \setminus M_i$.
+
+    \item First, we will show that $\len(M) \leq \dim_{\kappa}(M)$. Suppose $M_0 \subsetneq \dots \subsetneq M_k$ is any chain in $M$. We can find elements $m_i \in M_i \setminus M_{i-1}$ for $i = 1, \dots, k$. We will be done if we can show that the $m_i$ are $\kappa$-linearly independent. Suppose $c_1 m_1 + \dots + c_k m_k = 0$ for some $c_i \in \kappa$, if we look at this identity in the quotient $M_k/M_{k-1}$, it becomes $c_k [m_k] = 0$. If $c_k$ were not 0, it would be invertible, and we would have $[m_k] = 0$, i.e.\ $m_k \in M_{k-1}$, which contradicts the way we chose it. Hence, $c_k = 0$. Continuing in like fashion, we conclude that all of the $c_i = 0$, and so the $m_i$ are linearly independent.
+
+    I spent a long time trying to figure out how to finish the proof in an airtight manner. The normal way you would finish a proof like this is to establish the reverse inequality, $\dim_{\kappa}(M) \leq \len(M)$. However, I could see no clear way to go from an arbitrary basis $\set{e_1,\dots}$ to a chain of submodules. E.g.\ for $A = M = \C[x]/(x^2)$, if you choose the $\kappa = \C$-basis $\set{1,1+x}$, then the $A$-span of both basis vectors is all of $M$: $A \cdot 1 = A \cdot (1+x) = M$. The issue in that example is that we chose a bad basis, and we should have chosen the basis $\set{1,x}$, because this basis also generates submodules of $M$. The distinguishing thing about the second basis is that it comes from taking a generator for $M$ and a generator for $\mf{m}M$. So, our strategy is going to be to take generators for the submodules $\mf{m}^i M$ and show that they give a chain of submodules as well as a $\kappa$-basis, and hence that $\len(M) = \dim_{\kappa}(M)$.
+
+    One more subtle thing to note: we're going to want to use Nakayama's lemma to obtain our generators, but Nakayama's lemma requires that $M$ be finitely generated. Indeed, we must do this for the above strategy to work, as we can see from the example of $A = \C[x]_{(x)}$ and $M = \C(x)$. In this case, $M$ is indeed both an infinite length module over $A$, as well as an infinite-dimensional vector space over $\kappa = \C$, but each submodule $(x^i) M = M$, so our strategy definitely fails in this case. However, we have already shown that $\len(M) \leq \dim_{\kappa}(M)$, so if the length is infinite then we already know that the dimension is as well, so we are done. So, we can freely assume that $M$ has finite length, and so in particular is finitely generated.
+
+    So, suppose $M$ has finite length. Consider the chain $M \supset \mf{m} M \supset \mf{m}^2 M \supset \dots$. Since $M$ has finite length, at some point this chain terminates $\mf{m}^e M = 0$. Since $M$ is finitely generated, by Nakayama's lemma we can find a minimal set of generators $\set{x_{i,j}}$ for $\mf{m}^i M$ which descend to a basis for the $\kappa$-vector space $\mf{m}^i M/ \mf{m}^{i+1} M$. For each $\mf{m}^i M$, we have a chain $\mf{m}^{i+1} M \subsetneq \mf{m}^{i+1} M + Ax_{i,1} \subsetneq \mf{m}^{i+1} M + Ax_{i,1} + Ax_{i,2} \subsetneq \dots \subsetneq \mf{m}^i M$. Thus, we get a chain of length equal to the total number of generators $x_{i,j}$.
+
+    For a fixed $i$, since the $x_{i,j}$ are $\kappa$-linearly independent in the quotient $\mf{m}^i M/\mf{m}^{i+1} M$, they are also $\kappa$-linearly independent in $M$. Furthermore, for any $y \in M$, we can write
+    \[y = \kappa\text{-linear combo of } x_{1,j} + y_1,\]
+    with $y_1 \in \mf{m}M$. Continuing like this, we get that $y$ is a $\kappa$-linear combination of the $x_{i,j}$, so the $x_{i,j}$ span $M$. Thus, we have found a $\kappa$-basis, and a chain of length equal to that basis. Since we already know $\len(M) \leq \dim_{\kappa}(M)$, this shows that $\len(M) = \dim_{\kappa}(M)$.
+    
+    \item For each maximal ideal $\mf{m} \subset A$, let $\len(M_{\mf{m}}) = n_{\mf{m}}$. We claim $\len(M) \leq \sum_{\mf{m}} n_{\mf{m}}$. Let $M_0 \subsetneq \dots \subsetneq M_k$ be a chain. Localizing at a maximal ideal $\mf{m}$, we find there are at most $n_{\mf{m}}$ locations where $(M_i)_{\mf{m}} \subsetneq (M_{i+1})_{n_{\mf{m}}}$, and the other inclusions must be equality. If $k$ were greater than $\sum_{\mf{m}} n_{\mf{m}}$, then there would be some $M_i$ so that $(M_i)_{\mf{m}} = (M_{i+1})_{\mf{m}}$ for all $\mf{m}$. That is, $(M_{i+1}/M_i)_{\mf{m}} = 0$ for all $\mf{m}$, hence $M_{i+1}/M_i = 0$, hence $M_{i+1} = M_i$, a contradiction.
+
+    \item An example is the $\Z$-module $\displaystyle \bigoplus_{p \text{ prime}} \Z/p\Z$. Let $S$ be the set of integers not divisible by $p$, then localizing at $S$ will kill every factor except $\Z/p\Z$, which is finite length as a $\Z[1/S]$-module. However, the whole module is clearly not finite length.
+\end{enumerate}
+\end{solution}
+
+% This one is rather subtle. There was a fiasco in the exam where someone asked if the hint in part (a) was correct as-written, and got told the wrong thing.
+% PROJ, LOC
+\begin{question}[subtitle = August 2024 Problem 2,ID=Aug24_2]
+Let $k$ be a field, and let $A$ denote the ring $k[x,y]/(xy)$. Consider the $A$-module $M$ which is the quotient of the free rank 2 $A$-module with basis $e_1$ and $e_2$ by the submodule generated by the element $ye_1+xe_2$.
+\begin{enumerate}
+    \item Prove that $M$ is not a projective $A$-module. (Hint from the original test: find a submodule of $M$ isomorphic to $k[x,y]/(x,y)$.) (\textbf{NB} There are other, more systematic, ways of doing this if you are comfortable with Tor.)
+    \item Let $f \in A$ denote the polynomial $x+y$, and let $A_f$ denote the localization of $A$ at the multiplicative subset $\set{1,f,f^2,\dots}$. Prove that $M \tensor_A A_f$ is free as an $A_f$-module.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Consider the submodule of $M$ generated by $ye_1 = -xe_2$. This is a cyclic submodule that is annihilated by $x$ since $xye_1 = 0$, and is annihilated by $y$ since $y(-xe_2) = 0$. Thus, this submodule must be isomorphic to $A/(x,y) = k[x,y]/(x,y)$. Now, in order to show that $M$ is not projective, it suffices to show that no projective $A$-module can have $k[x,y]/(x,y)$ as a submodule. If $P$ is a projective $A$-module, then $P$ must be a direct summand of a free $A$-module, so it is enough to show that no free $A$-module can contain $k[x,y]/(x,y)$. If $F$ is a free $A$-module, then by choosing a basis we can see that an element is annihilated by $x$ only if it lies in $yF$, and is annihilated by $y$ only if it lies in $xF$, and $xF \cap yF = \set{0}$, so there are no nonzero elements of $F$ that are annihilated by both $x$ and $y$. (A faster but trickier proof would be to consider the quotient $P/yP$ over $A/(y) \cong k[x]$, which must still be a projective module. Since $k[x,y]/(x,y)$ is annihilated by $y$, it passes to the quotient unharmed, but then $P/yP$ is a projective module over a domain, hence is torsion-free, while $k[x,y]/(x,y)$ is torsion as a $k[x]$-module.)
+    \item We know that $M \tensor_A A_f = M_f$. Since localization is exact, we have that $M_f = ((A \oplus A)/(ye_1+xe_2))_f = (A_f \oplus A_f)/(ye_1+xe_2)$. We want to show this a free $A_f$-module, but the only way for the quotient to be free is if we quotiented out by a direct summand, so we need to show that the submodule generated by $ye_1+xe_2$ is a direct summand of $A_f \oplus A_f$. This is very similar to row reducing a matrix, except our matrix is the column vector $(y,x)^T$ and our allowable operations are multiplying by invertible $2 \times 2$ matrices with coefficients in $A_f$. For instance:
+    \[\twomatrix{1}{0}{\shortminus x}{1} \! \twomatrix{(x+y)\inv}{0}{0}{1} \! \twomatrix{1}{1}{0}{1} \! \begin{pmatrix} y \\ x \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}\]
+    The existence of this row reduction implies that $ye_1 + xe_2$ generates a direct summand of $A_f \oplus A_f$, since after a change of basis it is the direct summand generated by $(1,0)^T$.
+    % (If we want, we can find a complement to this submodule by taking
+    % \[\twomatrix{1}{1}{0}{1}\linv \twomatrix{(x+y)\inv}{0}{0}{1}\linv \twomatrix{1}{0}{\shortminus x}{1}\linv \begin{pmatrix} 0 \\ 1 \end{pmatrix} = \twomatrix{1}{\shortminus 1}{0}{1} \! \twomatrix{(x+y)}{0}{0}{1} \! \twomatrix{1}{0}{x}{1} \!\begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} \shortminus 1 \\ 1 \end{pmatrix}.\]
+    % Thus, $-e_1+e_2$ generates a complementary submodule.)
+\end{enumerate}
+\end{solution}
+
+% TENS, FLAT
+\begin{question}[subtitle = {January 2024 Problem 4, notation altered},ID=Jan24_4]
+Let $R$ be a commutative ring, and let $A$ and $B$ be commutative $R$-algebras.
+\begin{enumerate}
+    \item Prove that if $B$ is flat over $R$, and $f$ is a non zero divisor in $A$, then $f \tensor 1$ is a non zero divisor in $A \tensor_R B$.
+    \item Prove that the flatness condition above is necessary by giving an example where part (a) fails if $B$ is not flat over $R$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item We need to figure out a way to use the flatness of $B$. Flatness wins us only one thing: it tells us that if $M \hookrightarrow N$ is an injection of $R$-modules, then $M \tensor_R B \to N \tensor_R B$ is still an injection. This suggests we should try to phrase the condition ``$f$ is a non zero divisor'' in terms of some map being injective. This we can do: $f$ being a non zero divisor is equivalent to saying that the ``multiplication by $f$'' map $A \tonamed{\cdot f} A$ is injective. (Check for yourself that this is in fact a homomorphism of $R$-modules.) Having noticed this rephrasing we are now done: since $B$ is flat, the map $A \tensor_R B \tonamed{\cdot f \tensor 1} A \tensor_R B$ is injective, which is the same as saying $f \tensor 1$ is a non zero divisor.
+    \item A good example of a non-flat module is a module that has torsion. So, for example, we could take $R = A = \Z$, and say $B = \Z/2\Z$, and the question becomes ``is there a non zero divisor in $\Z$ that becomes a zero divisor in $\Z \tensor_\Z \Z/2\Z \cong \Z/2\Z$''. And of course there is. For example, 2 is a non zero divisor in $\Z$ which becomes 0 in $\Z/2\Z$. (If you use the definition by which a zero divisor must be different from 0: first of all, cut it out, but also you could instead take say $B = \Z/4\Z$.)
+\end{enumerate}
+\end{solution}
+
+% Not my favorite, gotta say. See also January 2022 Problem 4, altho I think this is a somewhat better version of the problem.
+\begin{question}[subtitle = {August 2023 Problem 4},ID=Aug23_4]
+Two questions about homomorphisms of modules.
+\begin{enumerate}
+    \item Let $R$ be an integral domain and $M$ an $R$-module. Suppose $M$ is free of finite rank $r$. Exhibit an isomorphism of $R$-modules $\phi$ from $M$ to $\Hom_R(\Hom_R(M,R),R)$ (and prove that $\phi$ is an isomorphism).
+    \item Give an example of an integral domain $R$ and an $R$-module $M$ such that $M$ is not isomorphic as an $R$-module to $\Hom_R(\Hom_R(M,R),R)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The difficulty of this problem is unpacking what it is asking for. We want to define a function $\phi\colon M \to \Hom_R(\Hom_R(M,R),R)$. For each $m \in M$, the image $\phi(m)$ will itself be a function, $\phi(m) \colon \Hom_R(M,R) \to R$. The inputs to the function $\phi(m)$ \emph{will themselves be functions}, $f\colon M \to R$. So, the question becomes: how can I take an element $m \in M$ and a function $f \colon M \to R$ and produce an element $\phi(m)(f) \in R$? A hopefully reasonable thing to do would be to define $\phi(m)(f) \coloneqq f(m)$ to be the evaluation function.
+    % Maybe if you think about it long enough you will agree that there is a reasonable guess: we can define $\phi(m)(f) \coloneqq f(m)$ to be the evaluation function. (I think practically, the right way to approach this is if you are trying to study a module that consists of functions, and you try to articulate what it means to say that evaluation is a homomorphism, you end up reconstructing this function.)
+
+    With certain facts in place, you can prove this is an isomorphism in one line. Here, I'll just directly check that it is injective and surjective. To check injectivity, we want to check that if $\phi(m)(f) = 0$ for all $f\colon M \to R$, then $m = 0$. Since $M$ is free of finite rank, we have a finite basis $m_1,\dots,m_r$ for $M$, and we can construct functions $\delta_i \colon M \to R$ so that $\delta_i(m_j) = 1$ if $i = j$ and 0 otherwise. Thus, $\delta_i(m)$ is the coefficient of $m_i$ appearing in the expansion of $m$ in terms of the basis $\set{m_i}$. So, if we have an $m$ such that $\phi(m)(f) = 0$ for all $f$, in particular $\phi(m)(\delta_i) = 0$ for all $i$, but then this implies $m = 0$ by the preceding observation.
+
+    To check surjectivity, notice that the functions $\delta_i$ generate $\Hom_R(M,R)$, because any function $M \to R$ can be specified by defining its action on a basis. In fact, the $\delta_i$ form a basis, so $\Hom_R(M,R)$ is also free of the same rank as $M$. But then given an arbitrary map $\psi\colon \Hom_R(M,R) \to R$, we can define $r_i = \psi(\delta_i)$. But then, $\psi = \phi\paren{\sum r_i m_i}$, so in fact $\phi$ is surjective.
+    \item We can take $R = \Z$, $M = \Z/2\Z$. Then there are no homomorphisms $M \to R$, so
+    \[\Hom_\Z (\Hom_\Z(\Z/2\Z,\Z),\Z) = \Hom_\Z(0,\Z) = 0,\] and $0 \neq \Z/2\Z$.
+\end{enumerate}
+\end{solution}
+
+% TENS
+\begin{question}[subtitle = {January 2023 Problem 3, notation altered},ID=Jan23_3]
+Let $S = \C[x,y,z]$. In this problem, you may use the fact that the maximal ideals $\mf{m} \subset S$ are of the form $\mf{m} = (x-a,y-b,z-c)$ for $(a,b,c) \in \C^3$.
+
+Consider the sequence
+\[S \xleftarrow{g} S^3 \xleftarrow{f} S^2,\]
+where the maps $f$ and $g$ are given by the matrices
+\[g = \begin{pmatrix} x & y & z \end{pmatrix}, \qquad f = \begin{pmatrix} y & z\\ \shortminus x & 0\\ 0 & \shortminus x \end{pmatrix}.\]
+For a maximal ideal $\mf{m}$, we tensor the sequence by $S/\mf{m}$ and denote by $f_{\mf{m}}$ and $g_{\mf{m}}$ the induced maps
+\[S \tensor_S (S/\mf{m}) \xleftarrow{g_{\mf{m}}} (S^3) \tensor_S (S/\mf{m}) \xleftarrow{f_{\mf{m}}} (S^2) \tensor_S (S/\mf{m}).\]
+\begin{enumerate}
+    \item For which maximal ideals $\mf{m}$ is $f_{\mf{m}}$ injective?
+    \item For which maximal ideals $\mf{m}$ is $g_{\mf{m}}$ surjective?
+    \item For which maximal ideals $\mf{m}$ is $\ker g_{\mf{m}} = \im f_{\mf{m}}$?
+\end{enumerate}
+\end{question}
+\begin{solution}
+%tensor product replaces x by a, y by b, z by c
+%tensor distributes over direct sum
+The important things to know/realize for all of the parts of this problem are:
+\begin{itemize}
+    \item $S/\mf{m} \cong \C$ via the isomorphism that sends $x \mapsto a$, $y \mapsto b$, and $z \mapsto c$.
+    \item Tensor products distribute over direct sums, so $S^n \tensor_S (S/\mf{m}) \cong (S/\mf{m})^n \cong \C^n$. Under this identification, $f_{\mf{m}}$ and $g_{\mf{m}}$ become the maps obtained by replacing the $x,y,z$ in the matrices above with $a,b,c$.
+\end{itemize}
+\begin{enumerate}
+    \item The map $f_{\mf{m}}$ is injective if and only if the columns of the matrix we obtain by replacing $x,y,z$ with $a,b,c$ are linearly independent, which happens if and only if $a \neq 0$.
+    \item The map $g_{\mf{m}}$ is surjective for every maximal ideal $\mf{m}$ \emph{except} $\mf{m} = (x,y,z)$. In that case, $g$ becomes the zero map, which is not surjective.
+    \item Notice that for the original sequence, before we tensor, we have that $g \circ f = 0$, so $\ker g \supset \im f$, and this remains true after tensoring. Now, after tensoring, to check that $\ker g_{\mf{m}} = \im f_{\mf{m}}$, it is enough to check that they have the same dimension, since we already know that $\ker g_{\mf{m}} \supset \im f_{\mf{m}}$. The previous parts have shown that $\dim \ker g_{\mf{m}} = 2$ if $\mf{m} \neq (x,y,z)$, and $\dim \ker g_{\mf{m}} = 3$ if $\mf{m} = (x,y,z)$. On the other hand, we saw that $\dim \im f_{\mf{m}} = 2$ if $a \neq 0$, and $\dim \im f_{\mf{m}} \leq 1$ if $a = 0$. The only time the two are equal is when $a \neq 0$.
+\end{enumerate}
+\end{solution}
+
+% This problem is both quite easy as well as quite clumsy. I don't think it has any merits for instructional purposes.
+% PROJ
+\begin{question}[subtitle = August 2022 Problem 3,ID=Aug22_3]
+Let $R$ be a commutative ring. Suppose $M$ and $N$ are $R$-modules whose direct sum is a free module of finite rank, that is,
+\[M \oplus N \simeq R^n\]
+for some $n \geq 0$.
+\begin{enumerate}
+    \item Show that $M$ is finitely generated.
+    \item Show that $M$ is finitely presented. (Recall that a module is \emph{finitely presented} if it is isomorphic to the quotient of a finitely generated free module by a finitely generated submodule.)
+    \item Besides the two properties listed above, $M$ also has another well-known property. What is it? %this is the worst way to phrase this lmao
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Write a basis $v_1,\dots,v_n$ for $R^n$. Since $M \oplus N = R^n$, for each $v_i$ we can find unique $m_i \in M,n_i \in N$ so that $(m_i,n_i) = v_i$. On the other hand, since the $v_i$ are a basis, for each $m \in M$, we can write $(m,0)$ as an $R$-linear combination of the $v_i$, which in particular means that $m$ can be written as an $R$-linear combination of the $m_i$, so the $m_i$ generate $M$.
+    \item By symmetry, we have that $N$ is finitely generated, and also we have that $M = R^n/N$, so $M$ is finitely generated.
+    \item I guess this is very explicitly just a vocabulary question, not a math question. The correct answer is ``$M$ is a projective module''.
+\end{enumerate}
+\end{solution}
+
+% PROJ, LOC
+\begin{question}[subtitle = January 2022 Problem 3,ID=Jan22_3]
+Let $R$ be a commutative ring.
+\begin{enumerate}
+    \item Prove that a module $M$ over $R$ is projective if and only if it is a direct summand of a free module.
+    \item Let $M$ be a projective module over $R$ and $S \subset R$ a multiplicative set. Prove that $S\linv M$ is a projective $R[S\inv]$-module.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item For the forward direction, assume $M$ is projective, and let $\pi\colon F \to M$ be a surjective map where $F$ is a free module. Such a map exists since every module is a homomorphic image of a free module. Then by definition of $M$ being projective, there exists a map $\varphi\colon M \to F$ such that $\pi \circ \varphi = id_M$. Therefore, the short exact sequence $0 \to \ker \pi \to F \tonamed{\pi} M \to 0$ splits, and thus $F \cong M \oplus \ker \pi$.
+    
+    For the reverse direction, assume $F \cong M \oplus N$ for some free module $F$. Then there exist natural maps $\alpha\colon M \to F$ and $\beta\colon F \to M$ given by inclusion and projection such that $\beta \circ \alpha = id_M$. Suppose we have a surjective map $\pi\colon L \to K$ and a map $\psi\colon M \to K$. We need to show that there exists a map $\varphi\colon M \to L$ such that the following commutes:
+    \begin{tikzcd}[ampersand replacement=\&]
+    \& M \arrow[d,"\psi"] \arrow[ld, dashed, "\varphi"]\\
+L \arrow[r, two heads, "\pi"] \& K  
+    \end{tikzcd}
+    Since $F$ is free, it is projective (this is not hard to prove using that $F$ has a basis and so any map out of $F$ is defined by what it does to the basis elements). Therefore, considering the map $\psi \circ \beta\colon F \to M$, we know that there exists a map $\gamma\colon F \to L$ such that $\pi \circ \gamma = \psi \circ \beta$. Then defining $\varphi = \gamma\circ\alpha\colon M \to L$, we see that $\pi \circ \varphi = \pi \circ \gamma \circ \alpha = \psi \circ \beta \circ \alpha = \psi$. Thus, $M$ is projective.
+    \item Since $M$ is projective, by part (a), we have that $M \oplus N \cong R^d$ for some $R$-module $N$ and some $d \geq 1$. Therefore, we have a split SES $0 \to N \to R^d \to M \to 0$. Since localization is exact, we get that $0 \to S\linv N \to S\inv(R^d) \to S\linv M \to 0$ is also a split SES. Thus, $S\linv M \oplus S\linv N \cong S\inv(R^d) \cong R[S\inv]^d$, so $S\linv M$ is a projective $R[S\inv]$-module by part (a).
+\end{enumerate}
+\end{solution}
+
+% TENS
+\begin{question}[subtitle = August 2021 Problem 4,ID=Aug21_4]
+Decide if the following statements are true. If so, provide a proof, if not, provide a counterexample. Let $M,N$ be finitely generated modules over a commutative ring $A$. Let $f \colon M \to N$ be a homomorphism of $A$-modules, and let $g \colon B \to A$ be a homomorphism of commutative rings.
+\begin{enumerate}
+    \item ``If $f$ is injective, so is the induced morphism $M \tensor_A M \to N \tensor_A N$.''
+    \item ``If $f$ is surjective, so is the induced morphism $M \tensor_A M \to N \tensor_A N$.''
+    \item ``If $g$ is injective, so is the induced morphism $M \tensor_B M \to M \tensor_A M$.''
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item We should suspect this is false because tensor products usually don't play well with injections. So we're going to need either $M$ or $N$ to be non-flat, but how do we figure out which one we need?
+    
+    The morphism $M \tensor_A M \to N \tensor_A N$ factors as $M\tensor_A M \to M\tensor_A N \to N \tensor_A N$. If the composition were injective, then in particular the first map $\id\tensor f$ would also be injective. However, we know $\id\tensor f$ need not be injective if $M$ is not flat, so that gives us an avenue to look for a counterexample.
+    
+    Here's one possible counterexample: let $A = \Z$, $M = \Z/2\Z$, $N = \Z/4\Z$, and $f\colon M \to N$ given by $f(1) = 2$, which is injective. Then we have that $M \tensor_A M \cong \Z/2\Z$ where the nonzero element is $1 \tensor 1$, $N \tensor_A N \cong \Z/4\Z$, but the induced map sends $1 \tensor 1$ to $2 \tensor 2 = 4 \tensor 1 = 0 \times 1$, so the induced map is the zero map.
+    \item This one is true. Looking at the factorization from part (a), both $\id \tensor f$ and $f \tensor \id$ are surjective, since tensor products preserve surjections. But then the composition of two surjections is a surjection.
+    \item This one is mega false. For example, let $A = \C$, $B = \R$, and $M = \C$. Then $\C \tensor_{\R} \C \to \C \tensor_{\C} \C$ is not injective, because the one on the left has real dimension 4 and the one on the right has real dimension 2. In fact, I think quite to the contrary that $M \tensor_B M \to M \tensor_A M$ is surjective when $B \to A$ is injective, and visa versa.
+\end{enumerate}
+\end{solution}
+
+% PROJ
+\begin{question}[subtitle = January 2021 Problem 3,ID=Jan21_3]
+Two questions about projective modules.
+\begin{enumerate}
+    \item Show that a projective module over an integral domain is torsion free.
+    \item Let $0 \to M_1 \to M_2 \to M_3 \to 0$ be a short exact sequence of finitely generated modules over a commutative, Noetherian ring. Prove the following OR give a counterexample:
+    \begin{enumerate}[(i)]
+        \item If $M_1$ and $M_2$ are projective, then so is $M_3$.
+        \item If $M_2$ and $M_3$ are projective, then so is $M_1$.
+    \end{enumerate}
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $M$ be a projective $R$-module, where $R$ is an integral domain. Then $M$ is a direct summand of a free $R$-module, i.e.\ $M \oplus N = R^d$ for some $R$-module $N$ and $d \in \N$. Let $m \in M$ be a nonzero element, and suppose that $am=0$ for some $a \in R$. We will show that $a=0$. We can write $m=(r_1,\dots,r_d)$ with $r_i \in R$. Then $am=(ar_1,\dots,ar_d)=0$ implies that $ar_i=0$ in $R$ for all $i$. Since $R$ is a domain, this means that either $a=0$ or $r_i=0$ for all $i$. Since $m\neq 0$, we must have that $a=0$. Thus, $M$ is torsion free.
+    \item 
+    \begin{enumerate}
+        \item[(i)] This is not true. For example, consider the SES of $\Z$-modules $0 \to \Z \tonamed{\cdot 2} \Z \to \Z/2\Z \to 0$, where the left map is multiplication by $2$ and the right map is the natural quotient map. (Or similarly, $0 \to k[x] \tonamed{\cdot x} k[x] \to k \to 0$.) Then $\Z$ is projective, but $\Z/2\Z$ is not a projective $\Z$-module. One way to see this directly is that if $\pi: \Z/4\Z \to \Z/2\Z$ is the map given by modding out by 2 and $\Z/2\Z \to \Z/2\Z$ is the identity map, then there is no map that makes the following diagram commute:
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+            \& \mathbb{Z}/2\mathbb{Z} \arrow[d] \arrow[ld, dashed]\\
+            \mathbb{Z}/4\mathbb{Z} \arrow[r, two heads] \& \mathbb{Z}/2\mathbb{Z}  
+        \end{tikzcd}
+        \end{center}
+        This because the only possible maps are the zero map and multiplication by $2$, and neither of these gives the identity map when composed with $\pi$. Another way to see that $\Z/2\Z$ is not a projective $\Z$-module is to use that every projective module is flat and show that it is not flat.
+    
+        \item[(ii)] This is true. If $M_3$ is projective, then the SES is split exact, so $M_2 \cong M_1 \oplus M_3$. Recall that being projective is equivalent to being a direct summand of a free module. If $M_2$ is projective, then $M_1$ is as well since it is a direct summand of $M_2$ which is a direct summand of a free module.
+    \end{enumerate}
+\end{enumerate}
+\end{solution}
+
+% This one seems kinda tough, but the methods are extremely standard. Caitlyn's solution to (b) is not the only one, you can simply tensor by R/m, and tensor products preserve cokernels.
+% LOC, TENS
+\begin{question}[subtitle = August 2020 Problem 4,ID=Aug20_4]
+Let $R$ be a commutative ring.
+\begin{enumerate}
+    \item Give an example of a free $R$-module $M$ and an injective homomorphism $M\to M$ which is not an isomorphism. (For this part, $R$ can be whatever commutative ring you like.)
+    \item If $M_1$ and $M_2$ are free of finite ranks $r_1$ and $r_2$, show that a surjective map $M_1\to M_2$ exists if and only if $r_1\geq r_2$.
+    \item Assume furthermore that $R$ is an integral domain. Show that an injective map $M_1\to M_2$ exists if and only if $r_1\leq r_2$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Recall that if $M$ is finitely generated as an $R$-module, then any surjective endomorphism is injective. This problem shows that the converse is not true. For example, consider $\Z$ as a module over itself. Then the map $\Z \to \Z$ given by multiplication by 2 is injective but not surjective.
+    \item We have $M_1 \cong R^{r_1}$ and $M_2 \cong R^{r_2}$. Consider a map $\varphi: R^{r_1} \to R^{r_2}$, and let $\mathfrak{m}$ be a maximal ideal in $R$ so that $R/\mathfrak{m} \cong k$ where $k$ is a field. It is a fact that $\varphi$ is surjective iff $\varphi_{\mathfrak{m}}$ is surjective for every maximal ideal $\mathfrak{m}$, so we may assume that $R$ is a local ring with unique maximal ideal $\mathfrak{m}$. Then consider the commutative diagram
+    \begin{center}
+    \begin{tikzcd}[ampersand replacement=\&]
+    R^{r_1} \arrow[r,"\varphi"] \arrow[d, two heads] \& R^{r_2} \arrow[d, two heads]\\
+    k^{r_1} \arrow[r,"\overline{\varphi}"] \& k^{r_2}
+    \end{tikzcd}
+    \end{center}
+    where the vertical maps are the natural quotient maps and $\overline{\varphi}$ is induced by $\varphi$. By Nakayama's Lemma, we know that $g_1,\dots,g_{r_2}$ are generators for $M_2$ iff $\overline{g_1},\dots,\overline{g_{r_2}}$ are generators for $k^{r_2}$. Then $\varphi$ is surjective iff there exists $f_i \in R^{r_1}$ such that $\varphi(f_i) = g_i$ for each $i=1,\dots,r_2$. And this occurs iff there exists $\overline{f_i} \in k^{r_1}$ such that $\overline{\varphi}(\overline{f_i}) = \overline{g_i}$ for each $i=1,\dots,r_2$. Since $\overline{\varphi}$ is a map of vector spaces, this happens iff $r_1 \geq r_2$.
+    \item Since $R$ is a domain, $(0)$ is a prime ideal, so let $K = \Frac(R) = R_{(0)}$. Any map $\varphi: R^{r_1} \to R^{r_2}$ induces a map $\varphi_{(0)}: K^{r_1} \to K^{r_2}$, which is a map of vector spaces. Since localization is exact, $\varphi$ is injective iff $\varphi_{(0)}$ is injective, which happens iff $r_1 \leq r_2$.
+\end{enumerate}
+\end{solution}
+
+% I had separated out part (a) from parts (b) and (c), and made it non-optional to prove both parts. I think knowing part (a) is a basic necessity for someone who passes the algebra qual. Looking at it now, I do admire the elegance of putting (b) and (c) right after (a).
+% LOC
+\begin{question}[subtitle = January 2020 Problem 3,ID=Jan20_3]
+Let $R$ be a commutative ring, $I$ an ideal in $R$, and $S$ a multiplicative subset of $R$. There are two standard correspondences involving prime ideals:
+\begin{enumerate}
+\item[]
+\begin{enumerate}[(i)]
+    \item Prime ideals in $R/I$ are in bijection with prime ideals in $R$ which contain $I$.
+    \item Prime ideals in $S\linv R$ are in bijection with prime ideals in $R$ which do not meet $S$.
+\end{enumerate}
+\end{enumerate}
+
+\begin{enumerate}
+    \item Prove (i) or (ii).
+    \item Give an example of a ring with finitely many elements that has exactly three prime ideals.
+    \item Give an example of a subring of $\Q$ that has exactly three prime ideals.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item
+    \begin{enumerate}[(i)]
+        \item Let $P$ be a prime ideal which contains $I$. Then $P/I$ is a proper ideal of $R/I$. Let $x,y \in R$ such that $[x][y] \in P/I$, where $[x]$ denotes the class of $x$ in $R/I$. Then $xy = p + i$ for some $p \in P$ and $i \in I$. Since $P \supset I$, we in fact have $xy \in P$, which means $x \in P$ or $y \in P$. Thus, $[x] \in P/I$ or $[y] \in P/I$.
+        
+        On the other hand, let $Q \subset R/I$ be a prime ideal, and consider $P = \pi\inv(Q)$, where $\pi\colon R \to R/I$ is the quotient map. Then $P$ is an ideal of $R$. Let $xy \in P$, then $[x][y] \in Q$, and so either $[x] \in Q$ or $[y] \in Q$. Thus, either $x \in P$ or $y \in P$.
+        
+        \item Let $P$ be a prime ideal which does not meet $S$: $P \cap S = \emptyset$. Then $S\linv P$ is a proper ideal of $S\linv R$. Suppose $\frac{x}{s_1} \cdot \frac{y}{s_2} \in S\linv P$, then there exist $p \in P$ and $s_3 \in S$ such that $xys_3 = ps_1s_2$. Notice here that the RHS is in $P$, so $xys_3 \in P$. But $s_3 \notin P$, so $xy \in P$, and thus either $x \in P$ or $y \in P$. Therefore, either $\frac{x}{s_1} \in S\linv P$ or $\frac{y}{s_2} \in S\linv P$.
+        
+        On the other hand, let $Q \subset S\linv R$ be a prime ideal, and let $P = \ell\inv(Q)$, where $\ell\colon R \to S\linv R$ is the localization map. From here, the argument is identical to the above. 
+    \end{enumerate}
+    \item $\Z/30\Z$
+    \item Let $S = \set{n \in \Z: 2 \nmid n,\ 3 \nmid n}$. Then $S\inv\Z \subset \Q$ has only the prime ideals $(0)$, $(2)$, and $(3)$.
+    %(Note on notation: usually in this context people would actually write $\Z[\frac{1}{S}]$. This is to avoid the issues from the notational note on the original worksheet.)
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2019 Problem 2,ID=Aug19_2]
+This problem involves ideals in a commutative ring (with unit). A proper ideal $I$ is \emph{primary} if whenever $ab \in I$ and $a \notin I$, then $b^n \in I$ for some $n > 0$. The radical of an ideal $I$, denoted $\sqrt{I}$, is the set $\sqrt{I} = \set{f: f^n \in I \text{ for some } n>0}$.
+\begin{enumerate}
+    \item Prove that if $I$ is primary, then $\sqrt{I}$ is prime.
+    \item Is the ideal $J = (x^2,xy) \subset \Q[x,y]$ primary?  Be sure to carefully justify your answer.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Suppose $fg \in \sqrt{I}$, then by definition there exists some $n_1 > 0$ such that $(fg)^{n_1} = f^{n_1} g^{n_1}\in I$. Since $I$ is primary, either $f^{n_1} \in I$ --- in which case $f \in \sqrt{I}$ --- or else there exists some $n_2$ such that $(g^{n_1})^{n_2} = g^{n_1 n_2} \in I$. In the latter case, $g \in \sqrt{I}$. Thus, $\sqrt{I}$ is prime.
+    \item The ideal $J$ is not primary. To see this, note that $xy \in J$, but neither $x \in J$ nor $y^n \in J$ for any $n > 0$.
+\end{enumerate}
+\end{solution}
+
+%A weird one. I feel it has the unappealing property of being very easy when you know the trick, but being very obtuse otherwise. Otoh, it is a "standard trick".
+% LOC, TENS, FLAT
+\begin{question}[subtitle = {January 2019 Problem 3, edited},ID=Jan19_3]
+Let $R$ be a commutative ring and $S \subseteq R$ a multiplicatively closed set.
+\begin{enumerate}
+    \item Let $M$ be an $R$-module. Prove that $S\linv M \cong S\linv R \tensor_R M$.
+    \item Give an example of a ring $R$, a multiplicatively closed subset $S \subseteq R$, and an $R$-module $M$ where $S\linv M$ is flat (as an $S\linv R$-module) and nonzero, but where $M$ is not flat. (And prove that your example has those properties!)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let's start by defining an $R$-module homomorphism $S\linv R \tensor_R M \to S\linv M$. We have a bilinear map $S\linv R \times M \to S\linv M$ given by $(\tfrac{r}{s},m) \mapsto \tfrac{rm}{s}$, so the universal property of the tensor product gives us a homomorphism $\phi\colon S\linv R \tensor_R M \to S\linv M$ which satisfies $\phi(\tfrac{r}{s} \tensor m) = \tfrac{r}{s} \cdot \tfrac{m}{1} = \tfrac{rm}{s}$.
+
+    Now, showing that this $\phi$ is an isomorphism would be a little hard on its own, in particular checking that it is injective requires us to decide whether some arbitrary tensor in the kernel is 0 or not, which is pretty tough. Instead, let's show it's an isomorphism by constructing an inverse map. Note that $S\linv R \tensor_R M$ is an $S\linv R$-module in addition to being an $R$-module, since we can define $\tfrac{r_1}{s_1} \cdot (\tfrac{r_2}{s_2} \tensor m) = \tfrac{r_1 r_2}{s_1 s_2}$. Also, note that we have an $R$-module homomorphism $M \to S\linv R \tensor_R M$ given by $m \mapsto (\tfrac{1}{1} \tensor m)$. Thus, the universal property of localization gives us a map $\psi\colon S\linv M \to S\linv R \tensor_R M$ which satisfies $\psi(\tfrac{m}{s}) = \tfrac{1}{s}(\tfrac{1}{1} \tensor m) = (\tfrac{1}{s} \tensor m)$.
+
+    Now, we can check that $\phi$ and $\psi$ are inverses to one another, for we have
+    \begin{align*}
+        \phi \circ \psi(\tfrac{m}{s}) &= \phi(\tfrac{1}{s} \tensor m) & \psi \circ \phi(\tfrac{r}{s} \tensor m) &= \psi(\tfrac{rm}{s})\\
+        &= \tfrac{m}{s} & &= \tfrac{1}{s} \tensor rm = \tfrac{r}{s} \tensor m.
+    \end{align*}
+    Therefore, $\phi$ and $\psi$ are both isomorphisms, as desired.
+    \item $R = \Z$, $M = \Z \oplus \Z/2\Z$, $S = \{2^n\}$. Then $M$ is not a flat $R$ module, because $M$ is not torsion-free. However, $M \tensor_\Z \Z[\frac{1}{2}] \cong \Z[\tfrac{1}{2}]$ is a free $\Z[\tfrac{1}{2}]$-module, hence is flat.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = {August 2018 Problem 1, edited},ID=Aug18_1]
+For this problem, your answer will be graded on correctness alone, and no justification is necessary.
+\begin{enumerate}
+    \item Give an example of a ring $R$ and a short exact sequence of $R$-modules $0 \to A \to B \to C \to 0$ that is not split exact.
+    \item Give an example of a flat $\Z$-module that is not free.
+    \item Describe all zero-divisors and all units in $\Q[x]/(x^2-1)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The usual $0 \to \Z \to \Z \to \Z/2\Z \to 0$ will do.
+    \item $\Q$
+    \item Any polynomial divisible by either $x-1$ or $x+1$ descends to a zero-divisor. (You may want to exclude the polynomials divisible by both, depending on whether or not your definition allows 0 to be a zero-divisor.) Any polynomial that does not descend to a zero-divisor descends to a unit.
+\end{enumerate}
+\end{solution}
+
+% LOC
+\begin{question}[subtitle = January 2018 Problem 1,ID=Jan18_1]
+For this problem, your answer will be graded on correctness alone, and no justification is necessary.
+\begin{enumerate}
+    \item Give an example of a commutative ring $R$ and a nonzero element $f \in R$ where the localization $R_f = 0$.
+    \item Give an example of a commutative ring $R$ and a nonzero element $f \in R$ where the localization map $R \to R_f$ is neither injective nor surjective.
+    \item Give an example of a \emph{local} ring $R$ and an element $f\in R$ where $R_f \neq 0$ but $R_f$ is no longer a local ring.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $R = \Z/4\Z$, $f = 2$
+    \item Let $R = \C[x,y]/(xy)$ and $f = x$. Then
+    \begin{align*}
+        R_f &= (\C[x,y]/(xy))_x\\
+        &= \C[x,y]_x/(xy)_x\\
+        &= \C[x,x\inv,y]/(xy)\\
+        &= \C[x,x\inv,y]/(y)\\
+        &= \C[x,x\inv].
+    \end{align*}
+    Here, we can see this is not injective since $y \in R$ maps to 0, but it is also not surjective because nothing maps to $x\inv$.
+    \item Let $R = \C[x,y]_{(x,y)}$ and $f = y$. Remember the notation, $R$ is of the form $\C[x,y]_P$ for a prime ideal $P$. Let's look at the structure of the prime ideals in $R$, also known as its \textbf{Spectrum}, pictured in Figure \ref{fig:specR}. The ring $R$ is local, and has unique maximal ideal $\mf{m} = (x,y)$, but it has many other prime ideals contained in $\mf{m}$, such as the ideals $(x)$, $(y)$, $(x+y)$, $(2x-3y)$, and so on. When we localize at $f=y$, all the primes which contain $y$ will become the unit ideal, but any prime which does not contain $y$ will remain prime in the localization. Thus, the spectrum of $R_f$ is pictured in Figure \ref{fig:specR_f}. We can see that the primes like $(x)$ or $(x+y)$ become maximal in the localization, so that $R_f$ is no longer a local ring.
+\end{enumerate}
+
+\begin{figure}[hbt]
+\centering
+\begin{tikzcd}[ampersand replacement = \&]
+    \& {\mf{m} = (x,y)} \arrow[ld, no head] \arrow[d, no head] \arrow[rd, no head] \arrow[rrd, no head] \arrow[rrrd, no head] \& \& \& \\
+    (x) \arrow[rd, no head] \& (y) \arrow[d, no head] \& (x+y) \arrow[ld, no head] \& (2x-3y) \arrow[lld, no head] \& \dots \arrow[llld, no head] \\
+    \& (0) \& \& \&                            
+\end{tikzcd}
+\caption{The spectrum of $R$ from \hyperref[qu:Jan18_1]{\citeQ{Jan18_1}}(c)}
+\label{fig:specR}
+\end{figure}
+
+\begin{figure}[hbt]
+\centering
+\begin{tikzcd}[ampersand replacement = \&]
+    \& \hcancel[red]{\mf{m} = (x,y)}\ (1) \arrow[ld, no head] \arrow[d, no head] \arrow[rd, no head] \arrow[rrd, no head] \arrow[rrrd, no head] \& \& \& \\
+    (x) \arrow[rd, no head] \& \hcancel[red]{(y)}\ (1) \arrow[d, no head] \& (x+y) \arrow[ld, no head] \& (2x-3y) \arrow[lld, no head] \& \dots \arrow[llld, no head] \\
+    \& (0) \& \& \&                            
+\end{tikzcd}
+\caption{The spectrum of $R_f$ from \hyperref[qu:Jan18_1]{\citeQ{Jan18_1}}(c)}
+\label{fig:specR_f}
+\end{figure}
+\end{solution}
+
+% I had excised the matrix ring from this problem on a past worksheet.
+\begin{question}[subtitle = January 2018 Problem 2,ID=Jan18_2]
+Recall that that a (left) zero-divisor in a ring $R$ is an element $a$ such that $ab = 0$ for some nonzero $b \in R$. Consider the rings
+\[R_1 = \C[x]/(x^3) \qquad \text{and} \qquad R_2 = M_n(\C) \qquad (\text{$n \times n$ matrices over $\C$, where $n > 1$}).\]
+\begin{enumerate}
+    \item Give an example of a nonzero zero-divisor in $R_1$.
+    \item Give an example of a nonzero left zero-divisor in the ring $R_2$.
+    \item Show that the set of zero-divisors in $R_1$ form an ideal, but the set of left zero-divisors of $R_2$ is not a left ideal.
+    \item Let $S$ be a commutative ring. Prove that if the set of zero-divisors is an ideal $I$, then $I \subset S$ is a prime ideal. (\textbf{NB} you also have to assume $S$ isn't the zero ring.)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The element $x$ is a nonzero zero-divisor.
+    \item In $M_2(\C)$, the matrix $A = \twomatrix{0}{1}{0}{0}$ is a nonzero left zero-divisor since $A^2 = 0$. For general $n$, the matrix $A$ consisting of all 0s and a 1 in the top right corner is a left zero-divisor since $A^2 = 0$.
+    \item Notice that every element of the ideal $(x)$ is a zero-divisor. On the other hand, notice that the prime ideals of $R$ are prime ideals of $\C[x]$ which contain $(x^3)$. There is only one such prime ideal, namely $(x)$, so $R$ is a local ring with maximal ideal $(x)$. Thus, any element not in $(x)$ is invertible, and so isn't a zero-divisor. Thus, every zero-divisor lives in $(x)$.
+
+    On the other hand, the left zero divisors of $M_2(\C)$ do not form a left ideal because they are not closed under addition. For example, both $A$ above and $A^T$ are left zero-divisors, but $A+A^T = \twomatrix{0}{1}{1}{0}$ is not. Similarly, for any $M_n(\C)$, if $A$ is as above and $B$ is the matrix with 1s in the first subdiagonal and 0s elsewhere, then $A$ and $B$ are both left zero-divisors, but $A+B$ is full rank.
+    \item The set of zero-divisors is always a proper subset of $S$, because 1 is never a zero-divisor. Suppose $ab$ is a zero-divisor, but $a$ is not a zero-divisor. Then there exists some nonzero $c$ such that $(ab)c = 0$. Since $a$ is not a zero-divisor, and since $a(bc) = 0$, it must be that $bc = 0$. But then $b$ is a zero-divisor. Thus, if the set of zero-divisors is an ideal, it is a prime ideal.
+\end{enumerate}
+\end{solution}
+
+% TENS
+\begin{question}[subtitle = {August 2017 Problem 1, edited},ID=Aug17_1]
+For this problem, your answer will be graded on correctness alone, and no justification is necessary.
+
+Let $M=\C[x]/(x^2+x)$ and $N=\C[x]/(x-1)$. Compute the dimension of the following tensor products as vector spaces over $\C$:
+\begin{enumerate}
+    \item $M\tensor_{\C[x]} N$
+    \item $M\tensor_{\C} N$
+    \item $M\tensor_{\C[x^2]} N$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Recall that $R/I \tensor_R R/J \cong R/(I+J)$, so $M \tensor_{\C[x]} N \cong \C[x]/(x-1,x^2+x) = 0$. Thus, it is 0-dimensional over $\C$.
+    \item We have $M \tensor_{\C} N \cong M \tensor_{\C} \C \cong M$, which is 2-dimensional over $\C$ with basis $1,x$.
+    \item The only possible basis elements are $1 \tensor 1$ and $x \tensor 1$. Since we can multiply across the tensor by $x^2$, we have $x \tensor 1 = -x^2 \tensor 1 = -(1 \tensor x^2)=-(1\tensor 1)$. So this is 1-dimensional over $\C$ with basis $1 \tensor 1$.
+
+    Here is a more sophisticated way of doing this problem, which is not easier but which generalizes better to other situations involving tensor products. The ring $\C[x^2]$ is isomorphic to $\C[y]$. Under this identification, the inclusion $\C[x^2] \hookrightarrow \C[x]$ is the same as the composition of the inclusion $\C[y] \hookrightarrow \C[y][t]$ and the quotient $\C[y][t]/(t^2-y)$. That is to say, we have a commuting square
+    \begin{tikzcd}[ampersand replacement=\&]
+        \C[y] \ar[r,hook] \ar[d,"\sim"]\& \frac{\C[y][t]}{(t^2-y)} \ar[d,"\sim"]\\
+        \C[x^2] \ar[r,hook] \& \C[x] 
+    \end{tikzcd}
+    where the downward arrows are obtained by sending $y \mapsto x^2$, $t \mapsto x$.
+    
+    Now, we can rewrite the modules $M$ and $N$ as $\C[y]$-modules:
+    \[M = \frac{\C[x]}{(x^2+x)} \cong \frac{\C[y][t]}{(y+t,t^2-y)} \cong \C[y], \qquad N = \frac{\C[x]}{(x-1)} \cong \frac{\C[y][t]}{(t-1,t^2-y)} \cong \frac{\C[y]}{(1-y)}.\]
+    Thus, we get that $M \tensor_{\C[x^2]} N \cong M \tensor_{\C[y]} N \cong \C[y] \tensor_{\C[y]} \C[y]/(1-y) \cong \C[y]/(1-y)$, which is a 1-dimensional vector space.
+\end{enumerate}
+\end{solution}
+
+% FLAT
+\begin{question}[subtitle = {August 2017 Problem 5, modified},ID=Aug17_5]
+Let $B = \Q[x,y]/(xy)$.
+\begin{enumerate}
+    \item Consider the map $\Q[t] \to B$ sending $t$ to $x$. This map makes $B$ into a $\Q[t]$-module. Show that $B$ is \emph{not} a finite $\Q[t]$-module under this map.
+    \item Consider the map $\Q[t] \to B$ sending $t$ to $x+y$. Show that this map makes $B$ into a finite $\Q[t]$-module.
+    \item Consider $B$ as a $\Q[t]$-module under the map from part (a). Is $B$ a flat $\Q[t]$-module?  What about when considered as a $\Q[t]$-module under the map from part (b).
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Suppose $B$ were finitely generated, with generating set $\set{f_1,\dots,f_n}$. Then each of the $f_i$ has finite degree in the variable $y$, so there is a maximum degree, say $y^k$. But then the $y$-degree of a $\Q[t]$-linear combination $a_1f_1 + \dots + a_nf_n$ is at most $k$, so there is no way to write $y^{k+1}$ (or any higher power) in this way. Thus, $B$ cannot have a finite generating set.
+    \item We will show that under this map, $B$ has generating set $\set{1,x}$. All we need to show is that any power $x^k$ or $y^k$ can be written as a $\Q[t]$-linear combination of these two elements. We have $x$ already in our generating set, and for $k > 1$ we have $x^k = (x+y)x^{k-1} = tx^{k-1}$. On the other hand, we have $y^k = (x+y)^k - x^k = t^k - x^k$.
+    \item The ring $\Q[t]$ is a PID. Recall that a module over a PID is flat iff it is torsion-free. In part (a), $B$ has torsion because $ty = xy = 0$. However, in part (b) $B$ is torsion-free, hence flat.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2017 Problem 3,ID=Jan17_3]
+Let $R$ be a commutative ring with unity. Show that a polynomial
+\[f(t) = c_nt^n + c_{n-1}t^{n-1} + \dots + c_0 \in R[t]\]
+is nilpotent if and only if all of its coefficients $c_0, \dots,c_n \in R$ are nilpotent.
+\end{question}
+\begin{solution}
+We begin by showing that a sum of two nilpotent elements is nilpotent. Suppose $a,b$ are nilpotent, with least exponents $n,m$ respectively. Then $(a+b)^{n+m} = \sum_{k=0}^{n+m} \binom{n+m}{k} a^k b^{n+m-k}$. For each term of this sum, either $k \geq n$, in which case $a^k = 0$, or $k < n$ and $n+m-k > m$, in which case $b^{n+m-k} = 0$. Thus, $(a+b)^{n+m} = 0$, so $a+b$ is nilpotent.
+
+The above immediately shows that if all the coefficients are nilpotent, then in fact $f(t)$ is nilpotent.
+
+Now, suppose $f(t)$ is nilpotent, so that $f^k = 0$ for some $k > 0$. Then looking at the highest degree coefficient, we see that $c_n^k = 0$, so $c_n$ is nilpotent. Thus, also $c_nt^n$ is nilpotent, and so $f(t) - c_nt^n$ is a sum of two nilpotent elements, hence is nilpotent. Repeating the argument now gives that all the coefficients are nilpotent.
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2016 Problem 4,ID=Aug16_4]
+Let $R$ be the subring of $\C[x, y]$ consisting of the polynomials
+$P(x, y)$ such that $P(x, y) = P(y, x)$.
+\begin{enumerate}
+    \item Show that $R$ is generated as a $\C$-algebra by $x + y$ and $xy$.
+    \item  Show that the map $\C[u, v] \to R$ sending $u$ to $x + y$ and $v$ to $xy$ is an isomorphism.
+    \item  Let $S$ be the subring of $\C[x, y]$ consisting of the polynomials $P(x, y)$ such that $P(x, y) = P(-x, -y)$. Can $S$ be generated as a $\C$-algebra by two polynomials? Either give two generators, or prove that $S$ is not generated by 2 polynomials.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $P(x,y) \in R$. By induction on the degree of $P$, we may assume that $P$ is homogeneous of some degree $n$ and that all lower degree polynomials in $R$ are generated by $x+y$ and $xy$ over $\C$. Because $P(x,y)=P(y,x)$, we must have that the number of $x$ factors is the same as the number of $y$ factors. So, if $x^t$ divides $P$ for some $t>0$, then $y^t$ divides $P$, but then $(xy)^t$ divides $P$, and we are done by the induction hypothesis. Therefore, we can assume that $t=0$, i.e.\ no power of $x$ or $y$ divides $P$. In this case, we must have $P = x^n + y^n + xyQ(x,y)$ for some symmetric $Q(x,y)$ of lesser degree. But then $P - (x+y)^n$ is divisible by $xy$.
+    \item Part (a) gives that this map is surjective. So we just need to show injectivity. Suppose $Q(u,v) \in \C[u,v]$ is in the kernel, i.e.\ $Q(x+y,xy)=0$, and assume that $Q(u,v) \neq 0$. Observe that taking $y=0$ gives $Q(x,0)=0$, which implies $Q(u,0) = 0$, so every term of $Q$ has a factor of $v$. Similarly, taking $x=0$ gives that $Q(y,0)=0$ and by symmetry in $R$, we have $Q(0,y)=0$, so every term of $Q$ has a factor of $u$ as well. Therefore, by unique factorization, we have $Q(u,v)=uvQ'(u,v)$. Applying the map gives $(x+y)(xy)Q'(x+y,xy)=0$, which implies that $Q'(x+y,xy)=0$ since $(x+y)xy \neq 0$ and $R$ is a domain. This means that $Q'(u,v)$ is an element of the kernel of strictly smaller degree than $Q(u,v)$. But then we could just repeat the argument with $Q'(u,v)$ to produce infinitely many elements of the kernel of smaller and smaller degree, which is impossible. Thus, $Q(u,v) = 0$.
+    \item We first show that $S=\C[x^2,xy,y^2]$. The backwards containment is clear. For the forward containment, note that if $P(x,y) \in S$, then $P(x,x)=P(-x,-x)$ is a polynomial is $x$ where all terms must have even degree. Therefore, every term of $P(x,y)$ must have even total degree. So every monomial in $P(x,y)$ is of the form $x^iy^j$ with $i+j$ even and WLOG $i \geq j$. Then $x^iy^j = (xy)^j x^{i-j} \in \C[x^2,xy,y^2]$ since $i-j$ is also even. Then $S=\C[x^2,xy,y^2]$ cannot be generated as a $\C$-algebra by two polynomials because it is $3$-dimensional as an algebra over $\C$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2014 Problem 4,ID=Aug14_4]
+Let $R$ be a commutative ring and $M$ an $R$-module. Recall that a prime ideal $P$ is an associated prime of $M$ if there exists some $m \in M$ such that $P$ consists of those $f$ such that $fm = 0$; i.e.\ $P$ is the annihilator of some $m \in M$.
+\begin{enumerate}
+    \item Let $0 \to M' \to M \to M'' \to 0$ be an exact sequence of $R$-modules, and let $P$ be an associated prime of $M$. Prove that $P$ is an associated prime of either $M'$ or $M''$.
+    \item Is the converse true? That is, if $P$ is an associated prime of either $M'$ or $M''$, must it be the case that $P$ is an associated prime of $M$?
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Suppose $P$ is not an associated prime of $M'$, and write $P=\text{ann}(m)$ for some $m \in M$. We want to show that $P = \text{ann}(m'')$ for some $m'' \in M''$. Let $\phi$ be the map $M \to M''$ in the SES. Then a natural choice is $m''=\phi(m)$. We will show that this does indeed work. Let $f \in P$ so that $fm=0$. Then $f \phi(m) = \phi(fm)=0$, so $f \in \text{ann}(\phi(m))$. Thus, $P \subseteq \text{ann}(\phi(m))$. Conversely, if $f \in \text{ann}(\phi(m))$, then $\phi(fm)=f\phi(m)=0$, so $fm \in \ker(\phi) = \im(\varphi)$ by the exactness of the sequence where $\varphi: M' \to M$. Suppose towards a contradiction that $f \notin P$. Then $fm =\varphi(m')\neq 0$, so $m' \neq 0$ since $\varphi$ is injective. We will show that this gives $P = \text{ann}(m')$, contradicting our assumption. For any $g \in P$, we have $\varphi(gm')=g\varphi(m')=g(fm)=f(gm)=0$, so $gm'=0$ by injectivity, which gives $g \in \text{ann}(m')$. On the other hand, given $h \in \text{ann}(m')$, we have $0 = \varphi(hm') = h\varphi(m')=hfm$, so $hf \in P = \text{ann}(m)$. Since $f \notin P$ and $P$ is prime, we must have $h \in P$. This gives our contradiction; thus, $f \in P$ and $P = \text{ann}(\phi(m))$.
+    
+    \item No, take for example the SES of $\Z$-modules $0 \to \Z \to \Z \to \Z/2\Z \to 0$ where the first map is multiplication by $2$. Then $(2)$ is the annihilator of $1$ in $\Z/2\Z$, but $\Z$ is torsion-free, so its only associated prime is $(0)$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2013 Problem ?,ID=Aug13_?]
+Let $I$ and $J$ be ideals in a commutative ring $R$.
+\begin{enumerate}
+    \item Show that if $I + J = R$, then $I \cap J = IJ$.
+    \item Suppose that $I$ and $J$ are ideals in $\C[x]$, and suppose that $I + J = (x)$. Show that $(I \cap J)/IJ$ is 1-dimensional as a complex vector space, and moreover that it is isomorphic to $\C[x]/(x)$ as a $\C[x]$-module.
+    \item On the other hand, for general commutative rings $R$, once $R/(I+J)$ is not trivial, the difference between $I \cap J$ and $IJ$ can be large even if $R/(I \cap J)$ is small. Demonstrate this by showing that, if $R = \C[x,y]$, then there exists ideals $I$ and $J$ in $R$ such that $I + J = (x, y)$ and the dimension of $(I \cap J)/IJ$ as a $\C$-vector space is at least 100.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item It is always the case that $IJ \subseteq I \cap J$, so we need to show the reverse containment. Since $I+J = R$, there exist $i \in I$ and $j \in J$ such that $i+j=1$. Let $a \in I \cap J$, then we have $a = a\cdot 1 = a(i+j) = ai+aj \in IJ$ since $a \in I$ and $a \in J$.
+    \item Since $\C[x]$ is a PID, we have that $I=(f)$ and $J=(g)$ for some $f,g \in \C[x]$. Since $I+J = (x)$, we can find $a,b \in \C[x]$ such that $af+bg = x$. Because $x$ is a prime element in a UFD, this equation implies that $x$ is the only possible common factor of $f$ and $g$. But $f$ and $g$ must not be relatively prime, since then $I+J=\C[x]$. Thus, we can write $f= xf'$ and $g=xg'$ where $f',g' \in \C[x]$ are relatively prime. Now we will show that $I\cap J = (xf'g')$. It is clear that $xf'g' \in I \cap J$, so suppose $h \in I \cap J$. Then $h=cxf'=dxg'$ for some $c,d \in \C[x]$. Since $h$ is divisible by both $xf'$ and $g'$, which are relatively prime, $h$ is also divisible by $xf'g'$. Then $IJ = (fg) = (x^2f'g')$, so we have that
+    \[(I \cap J)/IJ = (xf'g')/(x^2f'g').\]
+    Consider the surjective $\C[x]$-module map $\varphi: (xf'g') \to \C[x]/(x)$ given by $xf'g' \mapsto 1$. Then $\ker \varphi = (x^2f'g')$, so we have $(I+J)/IJ = (xf'g')/(x^2f'g') \cong \C[x]/(x)$.
+    \item Let $I=(x,y)$ and $J= (x^{99},yx^{98},\dots, y^{98}x,y^{99})$. Then $J \subseteq I$ so $I+J=I = (x,y)$, and $IJ = (x^{100},yx^{99},\dots,y^{99}x,y^{100})$. This gives
+    \[(I\cap J)/IJ = J/IJ = (x^{99},yx^{98},\dots, y^{98}x,y^{99})/(x^{100},yx^{99},\dots,y^{99}x,y^{100})\]
+    which has basis $x^{99},yx^{98},\dots, y^{98}x,y^{99}$ as a vector space over $\C$, and thus has dimension $100$ as a $\C$ vector space.
+\end{enumerate}
+\end{solution}
+
+\subsection*{Noncommutative rings + applications to linear algebra}
+
+\begin{question}[subtitle=August 2025 Problem 5,ID=Aug25_5]
+Fix a prime $p$, and let $R$ be a finite ring of size $\abs{R} = p^2$. Here, we assume that rings are associative and have identity, but are not necessarily commutative.
+\begin{enumerate}
+    \item Prove that $R$ is in fact commutative.
+    \item List all possibilities for $R$, up to isomorphism. You need to show that the rings on your list are non-isomorphic, and that there are no other possibilities.
+\end{enumerate}
+\end{question}
+\begin{solution}
+Compare this problem to \citeQ{Aug18_5}.
+\begin{enumerate}
+    \item We have a ring homomorphism $\Z \to R$ which sends 1 to 1, and the kernel of this homomorphism must be either $(p)$ or $(p^2)$. If the kernel is $(p^2)$, then this map is a surjection and $R \cong \Z/p^2\Z$ is commutative. If the kernel is $(p)$, then the image of this homomorphism is a copy of $\F_p$ lying inside $R$. Let $x \in R$ be any element not in this $\F_p$, then the $p^2$ distinct elements $a + bx$ for $a,b \in \F_p$ must in fact be all of $R$. But all these elements commute with one another, so $R$ is commutative.
+    \item The possibilities are $R \cong \Z/p^2 \Z$, $R \cong \Z/p\Z \times \Z/p\Z$, $R \cong \F_p[x]/(x^2)$, and $R \cong \F_{p^2}$. We have that:
+    \begin{itemize}
+        \item $\Z/p^2\Z$ has cyclic additive group, while the other rings do not;
+        \item $\F_{p^2}$ is a field while the other rings are not;
+        \item $\F_p[x]/(x^2)$ has nilpotent elements, while the other rings do not.
+    \end{itemize}
+    These facts are enough to conclude that the four rings are non-isomorphic.
+
+    To prove that this list is exhaustive, let $R$ be a ring of order $p^2$ other than $\Z/p^2\Z$. Then the characteristic of $R$ is $p$, so we have a homomorphism $\F_p[x] \to R$ sending 1 to 1 and $x$ to any $x \in R \setminus \F_p$, and by part (a) this homomorphism is surjective, so $R \cong \F_p[x]/\ker$. Since $\F_p[x]$ is a PID, the kernel of this homomorphism is of the form $(f(x))$ for some polynomial $f$, and $\deg f = \dim_{\F_p}(R) = 2$. If $f$ is irreducible, then $R \cong \F_{p^2}$. If $f = f_1 f_2$ is reducible but not square, then by the Chinese Remainder Theorem $R \cong \F_p[x]/(f_1) \times \F_p[x]/(f_2) \cong \F_p \times \F_p$. If $f = g^2$ for a linear polynomial $g$, then after a change of variables we get $R \cong \F_p[x]/(x^2)$. Thus, our original list was exhaustive.
+\end{enumerate}
+\end{solution}
+
+\begin{question}[subtitle = January 2024 Problem 5,ID=Jan24_5]
+Let $\C$ denote the field of complex numbers. Pick a nonzero $q \in \C$ such that $q^n \neq 1$ for all positive integers $n$. Let $A$ denote the $\C$-algebra with generators $x,y$ subject to the relation $yx = qxy$.
+\begin{enumerate}
+    \item Let $V$ denote a nonzero $A$-module on which $x$ and $y$ are injective. Show that $V$ has infinite dimension. (\textbf{NB} The module $V$ is a $\C$-vector space, and the problem is asking you to show that $V$ has infinite dimension as a $\C$-vector space.)
+    \item Give an example of a nonzero $A$-module on which $x$ and $y$ are injective.
+    \item Show that the following is a basis for the $\C$-vector space $A$:
+    \[x^iy^j \qquad \qquad i,j \geq 0.\]
+\end{enumerate}
+\end{question}
+\begin{solution}
+I like this problem because part (a) is a rephrasing of a problem I like from the 2015 qual.
+\begin{enumerate}
+    \item I think it might be tricky to look at this problem and get going down the right track. A few key facts that would help to point you in the right direction are: an $A$-module is the same thing as a vector space $V$ together with two linear operators $x,y$ which satisfy the given commutation relation; any linear operator on a finite-dimensional complex vector space has an eigenvalue; and commuting linear operators have a tendency to interact well with eigenvalues.
+    
+    Suppose that $V$ has finite dimension $D$, and that $x$ is injective. Since $V$ is a finite-dimensional complex vector space, $y$ has an eigenvector, so say $v$ is an eigenvector of eigenvalue $\lambda$. Then $yx(v) = qxy(v) = q\lambda xv$, and since $x$ is injective, $xv \neq 0$, so $xv$ is an eigenvector of $y$ of eigenvalue $q \lambda$. Continuing similarly, we get that each of the vectors $x^i v$ is an eigenvector of $y$ of eigenvalue $q^i \lambda$, and by the assumption that $q^i \neq 1$, these eigenvectors are all linearly independent. However, this contradicts the assumption that $V$ is finite-dimensional.
+    \item $A$ is a module over itself on which $x$ and $y$ act injectively. For suppose it didn't, then we would have some nonzero $f \in A$ so that say $x \cdot f = 0$. Using the commutation relation, we can write all the terms of $f$ as $c_{ij} x^i y^j$, but then $x \cdot f = \sum c_{ij} x^{i+1} y^j$, which is not zero because by part (c), the $x^i y^j$ are a vector space basis for $A$.
+    \item As above, we can certainly write any element of $A$ as a linear combination of such elements, because whenever we have a $y$ that comes before an $x$ we can use $yx = qxy$ to swap them. I'm not sure how careful the problem wants you to be to show that these are linearly independent, but to me it seems enough to say that the only relation we have allows us to swap $x$ and $y$, and so there's no way for us to convert some linear combination $\sum c_{ij} x^i y^j$ into 0.
+\end{enumerate}
+\end{solution}
+
+%This one took me by surprise, it does not seem easy. As I note below, the hardest part is translating the statement into a problem you can actually attack.
+%Josh did it quickly with some trickery known only to representation theorists.
+%On reflection, some things that make this problem difficult include: (i) it's not obviously like any other standard problem, so it's hard to even decipher what it is asking for or why (hence the need for so much translation); (ii) also as a consequence of being out-of-the-blue, it's difficult to know in advance what techniques will be successful; (iii) there are very many degrees of freedom, even after maximally reducing them down there is still a 1-dimensional family of candidates, and the problem seems to suggest that there might be a best candidate but actually there isn't; (iv) there are appealling-sounding non-solutions, like ``pick an eigenbasis, and pick v_i = e_i + e_{i+1}''. 
+\begin{question}[subtitle = {August 2022 Problem 5, edited},ID=Aug22_5]
+Let $V$ be a vector space over $\C$ of dimension $n \geq 2$. Let
+\[A \colon V \to V\]
+denote a $\C$-linear map with $n$ mutually distinct eigenvalues. Prove that $V$ contains one-dimensional subspaces $V_1,\dots, V_n$ such that
+\begin{enumerate}[(i)]
+    \item we have
+    \[V = \sum_{i=1}^n V_i\]
+    and if $i \neq j$, $V_i \cap V_j = \set{0}$ (\textbf{NB} these two conditions are equivalent in this case);
+    \item $AV_i \subseteq V_i + V_{i+1}$ for $1 \leq i \leq n-1$ and $AV_n \subseteq V_n + V_1$; and
+    \item $V_i$ is not an eigenspace of $A$ for $1 \leq i \leq n$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\textbf{Ivan's homely solution:} Let's begin by translating what the problem asks into things we can actually work with. First, we note that since $A$ has $n$ distinct eigenvalues, we can choose a basis $e_1,\dots,e_n$ for $V$ so that the matrix of $A$ is diagonal with distinct diagonal entries. So, from now we can just pretend we started with a diagonal matrix with distinct entries.
+
+Decomposing $V$ into 1-dimensional subspaces $V_i$ is almost the same as choosing a set of $n$ vectors $v_i$, except that we can scale the vectors arbitrarily without changing the 1-dimensional subspaces chosen. Condition (i) above tells us that these vectors should form a basis for $V$. Condition (ii) says that the matrix of $A$ with respect to this basis looks like (in the case $n = 3$)
+\[\begin{pmatrix}a & 0 & f\\ b & c & 0\\ 0 & d & e \end{pmatrix}.\]
+(In general, $A$ will have this shape of having possibly nonzero entries only on the main diagonal, the first subdiagonal, and one entry in the top right corner. To myself, I call this shape ``a staircase under a star''.) Condition (iii) says that the off-diagonal entries of $A$ are not allowed to be 0 (or else $v_i$ is an eigenvector for $A$ for that $i$).
+
+I found it useful to do one more bit of translation. Since we only care about the $v_i$ up to scaling, and since we know the subdiagonal entries are not zero, we can rescale the $v_i$ so that the subdiagonal entries are equal to 1 (in the $n = 3$ case, $b = d = 1$). We cannot also make the ``star'' be 1 in this way, because scaling all the $v_i$'s by the same amount doesn't change the matrix of $A$, so rescaling only gives us $n-1$ degrees of freedom in this regard. After all this translation, our original problem is equivalent to: ``given a diagonal matrix with distinct entries $A$, does there exist $d_1,\dots,d_n,s$ so that $A$ is similar to the matrix
+\[\begin{pmatrix} d_1 & 0 & \dots & 0 & s \\ 1 & d_2 & \ddots & \dots & 0 \\ 0 & \ddots & \ddots & \ddots & \vdots\\ \vdots & \ddots & \ddots & \ddots & 0 \\ 0 & \dots & 0 & 1 & d_n \end{pmatrix}\text{?''}\]
+
+Now, I played around with examples for a long time. Eventually, I came around to thinking about the characteristic polynomial of such a matrix. In general, two matrices with the same characteristic polynomial need not be similar, but in our case we have been told that $A$ has distinct eigenvalues. So, a matrix with the same characteristic polynomial as $A$ has the same (distinct) eigenvalues as $A$, and is therefore diagonalizable to the same diagonal matrix as $A$, and therefore is similar to $A$. So, in this case, it is enough to construct a ``staircase under a star'' matrix that has the same characteristic polynomial as $A$. But this is easy, since a staircase under a star matrix has characteristic polynomial $s + \prod_{i=1}^n (x-d_i)$. Let $a(x)$ be the characteristic polynomial of $A$, then for \emph{any} $s \neq 0$ let $d_1,\dots,d_n$ be the $n$ complex roots of $a(x) - s$ (which must exist by the fundamental theorem of algebra), so $a(x) - s = \prod_{i=1}^n (x-d_i)$. Then the staircase under a star matrix for that $s$ and those $d_i$ has the same characteristic polynomial as $A$, and so must be similar to $A$ by our reasoning above. (Indeed, we usually get $n!$ different matrices for a fixed $s$, by permuting the $d_i$, and we get a different set of matrices by changing $s$, so the representation is highly non-unique.)
+
+\textbf{Josh's fast solution:} Consider $V$ to be a $\C[x]$-module, where $x$ acts by multiplication by $A$. Let $p(x)$ be the minimal polynomial of $A$. By the classification of finitely generated modules over a PID, $V$ is isomorphic to a module of form $\C[x]/f_1 \oplus \dots \oplus \C[x]/f_r$, where the $f_i$ are polynomials, $f_1 \mid f_2 \mid \dots \mid f_r$, and $f_r = p(x)$. In this case, since the eigenvalues of $A$ are distinct, $\deg p(x) = n$, so $\C[x]/p(x)$ has dimension $n$ as a complex vector space, so in fact $V \cong \C[x]/p(x)$.
+
+Under this isomorphism, there is some vector $v \in V$ which corresponds to the element $1 \in \C[x]/p(x)$. (Such a vector is called a ``cyclic vector'' for $A$, because $v, Av, \dots A^{n-1}v$ form a basis for $V$.) Define $v_1 = v$, and $v_{i+1} = (A-d_i)v_i$ for $1 \leq i < n-1$, for constants $d_i$ yet to be determined. We want to have $Av_n = d_n v_n + v_1$, and we observe that by unravelling the construction, we get $(A - d_n)v_n = g(x) v_1$ where $g(x) = \prod_{i=1}^n (x-d_i)$. So, choose $g(x) = p(x) + 1$, and set the $d_i$ to be the roots of $g$, and we are done.
+
+(This solution highlights nicely that the hypothesis that $A$ have distinct eigenvalues is weaker than what we need: all we actually need is that the minimal polynomial of $A$ has degree $n$, in which case it will be equal to the characteristic polynomial. A matrix $A$ whose minimal polynomial is equal to its characteristic polynomial is called a ``regular matrix''.)
+
+(Notice also that the form of the matrix we're trying to produce is very similar to a Jordan form matrix with a single Jordan block. I think if I were familiar enough with the theory of Jordan normal form, from the perspective of thinking about $\C[x]$-modules, this solution might have been easier to think of.)
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2021 Problem 5,ID=Aug21_5]
+Let $A$ be an algebra over $\C$ with two generators $e$ and $f$ and  defining relations $e^2=e,f^2=f$.
+\begin{enumerate}
+    \item Let $B$ be the ring of $2\times2$ matrices over the polynomial ring $\C[t]$. Consider $B$ as an (infinite-dimensional) algebra over $\C$. Show that there exists a unique $\C$-algebra homomorphism $\phi\colon A \to B$ such that $\phi(e) =\begin{pmatrix} 1 & t\\ 0 & 0\end{pmatrix}$ and $\phi(f) =\begin{pmatrix} 0 & 0\\ 1 & 1\end{pmatrix}$.
+    \item Prove that the homomorphism $\phi$ from part (a) is injective.
+    \item Consider the algebra $A$ as a vector space over $\C$. Write down a basis for $A$ and prove that your answer is correct.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item We need to show that the map $\phi$ given is well-defined. So, we just need to show that it respects the relations in $A$, i.e.\ that $\phi(e^2-e)=\phi(f^2-f)=0$. It is straightforword to compute that $\phi(e^2)=\phi(e)^2 = \phi(e)$ and similarly $\phi(f^2)=\phi(f)$, so this is a well-defined $\C$-algebra homomorphism $A \to B$. It is unique because it is defined on the generators of $A$.
+    \item Any element in $A$ can be written as a $\C$-linear combination of $\set{1,e,f,ef,fe,efe,fef,...}$. So, let's think about the image of these elements under $\phi$. We find that $\phi(efe) = t \phi(e)$, $\phi(fef) = t \phi(f),$ $\phi(efef) = t^2 \phi(ef)$, $\phi(fefe)=t^2\phi(fe)$,\dots, $\phi(efef\cdots e) = t^n \phi(e)$, $\phi(fefe\cdots f) = t^n \phi(f)$, $\phi(efef\cdots f)=t^n\phi(ef)$, and $\phi(fefe\cdots e) = t^n \phi(fe)$ for some $n$. Therefore, $\phi(a)$ for any $a \in A$ can be written as
+    \[\phi(a) = \begin{pmatrix}
+    a_1 & 0\\
+    0 & a_1
+    \end{pmatrix}
+    + p_e(t) \begin{pmatrix}
+    1 & t\\
+    0 & 0
+    \end{pmatrix}
+    + p_f(t) \begin{pmatrix}
+    0 & 0 \\
+    1 & 1
+    \end{pmatrix}
+    +p_{ef}(t) \begin{pmatrix}
+    t & t \\
+    0 & 0
+    \end{pmatrix}
+    + p_{fe}(t) \begin{pmatrix}
+    0 & 0\\
+    1 & t
+    \end{pmatrix}
+    \]
+    where the $p_i(t) \in \C[t]$ are determined by the coefficients of the elements in $a$. Therefore, if $\phi(a) = 0$, we have
+    \[ \begin{pmatrix}
+    a_1+p_e(t)+t p_{ef}(t) & t(p_{e}(t)+p_{ef}(t))\\
+    p_f(t)+p_{fe}(t) & a_1+p_f(t)+t p_{fe}(t)
+    \end{pmatrix}
+    = \begin{pmatrix}
+    0 & 0\\
+    0 & 0
+    \end{pmatrix}.
+    \]
+    Solving this system gives that $p_e(t)=p_f(t)=\shortminus p_{ef}(t)=\shortminus p_{fe}(t)$, which then gives that $a_1+(1-t)p_e(t)=0$. Considering the degrees of the polynomials, we see this is only possible if $p_e(t)=0$, and then $a_1=0$. Thus, $a=0$, and $\phi$ is injective.
+    \item A basis for $A$ as a $\C$-vector space is given by $\set{1,e,f,ef,fe, efe, fef,\cdots}$, so this is an infinite-dimensional $\C$-vector space.
+\end{enumerate}
+\end{solution}
+
+% Whoops, apparently I misattributed this to the 2020 qual in last year's worksheets. I also modified it so that it said 2x2 matrices instead of nxn, which was a clever change.
+% TENS
+\begin{question}[subtitle = January 2021 Problem 2,ID=Jan21_2]
+Let $k$ be a field, and let $R = M_n(k)$, the non-commutative ring of $n \times n$ matrices over $k$.
+\begin{enumerate}
+    \item Give examples of a simple left $R$-module $M$ and a simple right $R$-module $N$.
+    \item Can you find another simple left $R$-module $M'$ that is not isomorphic to $M$? (Either find one or explain why there is none such.)
+    \item Compute $\dim_k (N \tensor_R M)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item To do this problem, you have to remember (or make an educated guess about) what a simple module is. A (left/right/two-sided)-module is \emph{simple} if it is nonzero, and contains no proper, nonzero (left/right/two-sided)-submodules. Luckily, the ring $R$ has a module that we already know and love: the vector space $k^n$. Indeed, let $v$ be a nonzero vector, and $v' \in k^n$ an arbitrary vector, then there exists a linear transformation that takes $v$ to $v'$ (and say, takes some complementary subspace of $\genset{v}$ to 0). Thus, $Rv = k^n$, so any nontrivial submodule of $k^n$ must be all of $k^n$, so $k^n$ is a simple left module.
+    
+    For a simple right module, we could take $k^n$ viewed as row vectors rather than column vectors with matrix multiplication on the right, or equivalently we could take $k^n$ viewed as column vectors with $v \cdot A = A^Tv$, or equivalently we could take the dual vector space $\Hom_k(k^n,k)$ with $\phi \cdot A = \phi \circ A$. Confirm to yourself that these are the same.
+    \item (Previously, there was a subtle error in my argument here. Thanks to Gabriela Brown for bringing it to my attention.) If I were guessing the answer this problem based only on the phrasing, I would guess that the answer is ``none exists''. Let us show that is the case.
+    
+    Suppose we have a simple left $R$-module $M'$. We will show that $M'$ is isomorphic to $k^n$. Since $M'$ is simple, it is generated by any nonzero $m' \in M'$. So, we can define an $R$-module homomorphism $\phi\colon M' \to M$ by specifying where to send just $m'$ and then extending $R$-linearly. The only thing we need to do to make sure the resulting map is a homomorphism is to make sure that whenever $Am' = 0$, we also have $A\phi(m') = 0$. So, let $I = \set{A \in R: Am' = 0}$ be the annihilator of $m'$, which is a left ideal of $R$. Any matrix in $I$ must have nontrivial kernel, because an invertible matrix cannot kill a nonzero element. Indeed, the matrices in $I$ must all have a nontrivial mutual kernel, because if they didn't then a linear combination of them would have trivial kernel, which we just said cannot happen. Thus, there is a nonzero vector $v \in k^n$ that is in the kernel of every matrix in $I$. We define our map $\phi$ by sending $m' \mapsto v$.
+    
+    The image of this map is a nontrivial submodule of $k^n$, hence is all of $k^n$ since $k^n$ is simple, and so this map is onto. Notice now that its kernel is a submodule of $M'$, hence is either 0 or all of $M'$. Since this map is not the zero map, the kernel cannot be all of $M'$, so is 0, and so this is an isomorphism between $M'$ and $k^n$. (There's actually some cool afterlife to this fact: look up ``Morita  equivalence''.)
+    \item (Previously I had an incorrect solution here. Thanks to Abbi Jones, Hannah Ashbach, and Bella Finkel for pointing out my error.) Let's view $M$ as $k^n$ viewed as column vectors and matrix multiplication on the left, and $N$ as $k^n$ viewed as row vectors and matrix multiplication on the right. Let $e_1$ be the first standard basis (column) vector for $M$. Then, given any other vector $v \in M$, we can choose the matrix $A$ which has $v$ as its first column and all other entries 0, and this matrix satisfies $Ae_1 = v$. We can therefore rewrite any simple tensor $u \tensor v = u \tensor Ae_1 = uA \tensor e_1$. Now, since $u \in k^n$, we should view $u$ as a row vector, and by our choice of $A$, $uA = (\lambda,0,\dots,0)$ for some $\lambda \in k$. Thus, every vector in $N \tensor_R M$ is equivalent to a vector of the form $(\lambda,0,\dots,0) \tensor e_1$, and projection onto the first factor gives an isomorphism between $N \tensor_R M$ and $\genset{(\lambda,0,\dots,0)}$, so $\dim_k N \tensor_R M = 1$.
+
+    Here's another, more abstract way of putting it. Any simple left (right) module is isomorphic to $R/\mf{m}$ for some left (right) maximal ideal $\mf{m}$. I know of some maximal ideals of $M_n(\C)$: there's the maximal left ideal $I$ consisting of matrices where the first column contains all 0s, and the maximal right ideal $J$ consisting of matrices where the first row contains all 0s. So, I can write $M = R/I$, $N = R/J$. Then, we have a theorem that tells us that for any right module $N$ and left ideal $I$, $N \tensor_R R/I \cong N/NI$. Thus, we get that $N \tensor_R M \cong N/NI = R/(I+J)$ where by $I+J$ I mean the additive subgroup of $R$ consisting of matrices that can be written as a sum of matrices from $I$ and matrices from $J$. The subgroup $I+J$ is just the vector subspace of $R$ consisting of matrices with a 0 in the $(1,1)$ position, and when we mod out by this subgroup we get a 1-dimensional vector space (parametrized by the possible values in the $(1,1)$ position of a matrix).
+\end{enumerate}
+\end{solution}
+
+% The Ellenberg Problem. Parts (a) and (b) are rather easy, but (c) is not. It took me a while to think of the right technique to use. On the other hand, I do think it's neat, if a bit confusing. It's the sort of problem that expands your mind.
+% TENS
+\begin{question}[subtitle = {August 2020 Problem 5, edited},ID=Aug20_5]
+Let $U \colon \Z \to \Z$ be the function defined by $U(n) = \shortminus n$, and let $T \colon \Z \to \Z$ be the function defined by $T(n) = n+1$. Denote by $M$ the space of all functions from $\Z$ to $\C$. Then $T$ and $U$ can be thought of as elements of $\End_\C(M)$ (the algebra of $\C$-linear maps from $M$ to $M$) by the operation of composition of functions. (For instance, if $m$ is the function $m(n) = 3n$, then $mU$ is the function sending $n$ to $3(\shortminus n) = \shortminus 3n$, $mT$ is the function sending $n$ to $3(n+1) = 3n+3$, and, taking $V$ to be $2TU + 1$, $mV$ is the function sending $n$ to $2\cdot 3(-n+1) + 3n = -3n + 6$.
+
+(\textbf{NB} there are a couple confusing things here. One is that the function composition $mU$ and $mT$ occurs \emph{inside} the parentheses, i.e.\ $mU(n) = m(U(n))$, but the scalar multiplication occurs \emph{outside} the parentheses, $m(2U)(n) = 2m(U(n))$. This is because the scalar multiplication is scalar multiplication in the complex vector space $M$, and the scalar multiplication there is scaling the function, not the input. Indeed, I can scale by any complex number, but the input cannot be scaled by an arbitrary complex number and remain an integer. The second thing is that the element written above as 1 in $2TU+1$ is really the identity map on $M$, so $m(2TU+1)(n) = 2mTU(n) + m(n)$.)
+
+Let $R$ be the subalgebra of $\End_\C(M)$ generated by $U$ and $T$; that is, it is a complex vector space spanned by all linear maps obtainable by repeatedly composing copies of $T$ and copies of $U$.
+\begin{enumerate}
+    \item Show that $R$ is not commutative.
+    \item $M$ is an infinite-dimensional complex vector space which carries the structure of a right $R$-module by function composition. The space $P_0$ of constant functions is a 1-dimensional submodule of $M$. Give an example of a 1-dimensional submodule of $M$ containing non-constant functions, and show that it is the only one. (\textbf{NB} This is \emph{not} asking for a submodule that is generated by just one $f \in M$, it is asking for a submodule that is \emph{also} a 1-dimensional complex vector space.)
+    \item There is a ring homomorphism $\phi \colon R \to \C$, called \emph{augmentation}, defined by $\phi(T) = \phi(U) = 1$. Let $I$ be the kernel of $\phi$, which is a two-sided ideal. Prove that $M \tensor_R R/I = 0$.
+\end{enumerate}
+
+%Possibly helpful: U^2 = 1, (UT)^2 = 1, so R = \C[D_\infty] is the group ring of the infinite dihedral group
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $\iota \colon \Z \to \C$ be the inclusion $\iota(n) = n$. Then $\iota TU(n) = -n+1$, while $\iota UT(n) = -n-1$. Thus, $TU \neq UT$. (Why am I mentioning the function $\iota$ at all? For technical reasons: it's hypothetically possible that the functions $TU$ and $UT$ are different \emph{as functions $\Z \to \Z$}, but nevertheless act identically \emph{as linear maps $M \to M$}. This would be the case if, e.g., we restricted to the subspace of functions $\Z \to \C$ satisfying $f(n+2) = f(n)$.)
+    \item To specify such a submodule, it is enough to demonstrate a function $f\colon \Z \to \C$ so that $fT$ and $fU$ are both scalar multiples of $f$ (i.e.\ $f$ is an eigenfunction of both $T$ and $U$). If $f$ is nonzero and $fT = \lambda f$, this says that $f(n+1) = \lambda f(n)$, and so $\lambda \neq 0$ and $f(n) = \lambda^n f(0)$ for all $n \in \Z$. On the other hand, $fU = \mu f$ means that $f(-n) = \mu f(n)$, so $\lambda^{-n} = \mu \lambda^n$, so $\lambda$ satisfies $\mu x^{2n} - 1$ for all values of $n$. The only way that can be true is if $\mu = 1$ and $\lambda = \pm 1$, and if $\lambda = 1$, then $f$ is a constant function. So, we must have that $f(n) = (-1)^n f(0)$. The set of such functions $f$ forms a 1-dimensional $\C$-vector space (parametrized by $f(0)$), and the argument above shows that it is an $R$-submodule of $M$.
+
+    (Alternative argument: such a submodule must be a module over the abelianization of $R$, $R/(TU-UT)$, and a function on which $TU$ and $UT$ act identically must satisfy $f(n+2) = f(n)$, as I noted in the parenthetical comment in part (a). Similar to above, the assumption that $fT = \lambda f$ implies that $\lambda^2-1 = 0$, and so if $f$ is nonconstant, then $\lambda = -1$.)
+    \item By a standard result, $M \tensor_R R/I \cong M/MI$, where $MI$ is the right $R$-submodule of $M$ generated by elements of the form $mi$ for some $m \in M$, $i \in I$. So, our goal is to show that $MI = M$. To do this, we need to know some specific elements of $I$. Looking at $\phi$, I can spot some elements in the kernel: for example $T-1$ and $U-1$. (It is true that these elements actually generate $I$, but we won't need that fact.) Notice in particular what $T-1$ does to an element $f \in M$: $f(T-1)(n) = f(n+1)-f(n)$ takes the difference between successive terms of $f$. If we start with some targe $m \in M$, it seems reasonable to say that there \emph{exists} some $f\in M$ where $m(n) = f(n+1)-f(n) = f(T-1) \in MI$. Indeed, define $f$ inductively by
+    \[f(n) = \left\{ \begin{array}{ll} 0 & \text{if } n = 0\\
+    f(n-1) + m(n) & \text{if } n > 0\\
+    f(n+1) - m(n) & \text{if } n < 0.
+    \end{array} \right.\]
+    Then $f(n+1) - f(n) = m(n)$, and so $MI = M$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2020 Problem 1,ID=Jan20_1]
+On this problem, no justification is required; only the answer will be graded. Let $S_3$ be the symmetric group on 3 letters, and let $R$ be the group ring $\Z[S_3]$.
+\begin{enumerate}
+    \item Write down a nonzero element of $R$ which is a zero-divisor.
+    \item Write down an element in the center of $R$ which is not in $\Z$.
+    \item Write down an $R$-module which is not a free module.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $e$ be the identity in $S_3$ and let $\sigma = (12)$. Then $e+\sigma$ is a nonzero element of $R$ that is a zero-divisor since $(e+\sigma)(e-\sigma)=0$.
+    \item Let $\tau = (123)$, and consider the element $x = e + \tau + \tau^2$. The element $x$ clearly commutes with $\tau$, so it is enough to check that $x$ commutes with $\sigma$. We have
+    \begin{align*}
+        \sigma x &= \sigma + \sigma \tau + \sigma \tau^2\\
+        &= \sigma + \tau\inv \sigma + \tau^{-2} \sigma\\
+        &= \sigma + \tau^2 \sigma + \tau \sigma\\
+        &= x \sigma.
+    \end{align*}
+    \item Consider $\Z^3$ as an $R$-module, where $S_3$ acts by permuting the entries. So for example, $(2\sigma + \tau)(a,b,c) = (2b+c,3a,2c+b)$. For any free $R$-module $M$ of finite rank we have $\rank_{\Z\text{-mod}}(M) = 6\ \rank_{R\text{-mod}}(M)$, since $R$ has rank $6$ as a free $\Z$-module. However, $\Z^3$ has rank 3 as a $\Z$-module, which is not divisible by 6, so it cannot be a free $R$-module.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2018 Problem 3,ID=Jan18_3]
+Consider the field with 11 elements $F=\F_{11}$. Let $G$ denote the cyclic group of order 11 (written multiplicatively), with generator $r \in G$. Denote by $FG$ the group algebra of $G$ (also sometimes denoted $F[G]$). We consider $r$ as an element of $FG$, and let $T\colon FG \to FG$ be the $F$-linear map given by $T(x) = rx$ for all $x \in FG$. Find the Jordan canonical form of $T$.
+\end{question}
+\begin{solution}
+We’ll start by determining the minimal and characteristic polynomials of $T$. On the one hand, we know that $T^{11} = Id$ so the minimal polynomial $f(y)$ divides $y^{11}-1$. On the other hand, if the degree of $f$ is less than 11, then $f(T): FG \to FG$ takes $1$ to $f(r) \neq 0$ so $f(T)\neq 0$. This tells us that $y^{11}-1$ is the minimal polynomial, and since it has degree 11 it is also the characteristic polynomial of $T$. In characteristic 11, $y^{11}-1 = (y-1)^{11}$ so 1 is the only eigenvalue of $T$ and the size of the largest Jordan block with eigenvalue 1 is 11, so the Jordan canonical form of $T$ consists of a single $11 \times 11$ Jordan block with eigenvalue 1.
+\end{solution}
+
+% TENS
+\begin{question}[subtitle = January 2017 Problem 5,ID=Jan17_5]
+Consider the ring $R = \C[x]$.
+\begin{enumerate}
+    \item Describe all simple $R$-modules.
+    \item Give an example of an $R$-module that is indecomposable, but not simple. (Recall that a module is \emph{indecomposable} if it cannot be written as a direct sum of non-trivial submodules.)
+    \item Consider $R$-modules $M = R/(x^3+x^2)$, and $N = R/(x^3)$, and take their tensor product over $R$: $M \tensor_R N$. It is an $R$-module, and in particular a vector space over $\C$. What is its dimension over $\C$?
+    \item Let $M$ be any $R$-module such that $\dim_\C(M) < \infty$, and let $N = R/(x^3)$ as before. Show that
+    \[\dim_\C(M \tensor_R N) = \dim_\C \Hom_R(N,M).\]
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Recall that a simple $R$-module is a non-zero $R$-module $M$ whose only $R$-submodules are the 0 module and $M$ itself. In this case, we know that a $\C[x]$-module is the same thing as a complex vector space $V$ together with a choice of a linear transformation $x\colon V \to V$. Suppose $V$ is simple, then, since $V$ is a complex vector space, we know that the linear transformation $x$ has an eigenvector $v$ of some eigenvalue $\lambda$. Then the subspace generated by $v$ is stable under multiplication by $x$, and of course is stable under addition and scalar multiplication. So, $\genset{v}$ is a non-zero submodule of $V$, and so must in fact equal all of $V$. This shows that any simple $R$-module must be a 1-dimensional complex vector space. On the other hand, given any scalar $\lambda \in \C$, $\C$ considered as an $R$-module where $x\colon \C \to \C$ is multiplication by $\lambda$ is a simple $R$-module, so we have described all the possible simple modules.
+    \item As we discovered in part (a), a submodule of an $R$-module $V$ is a vector subspace which is stable under multiplication by $x$, and such subspaces are closely related to eigenspaces of $x$. Indeed, if $x$ is diagonalizable, then its eigenvectors form a basis for $V$, which is the same as saying that $V$ is the direct sum of the eigenspaces of $x$, which is to say that $V$ is decomposable as an $R$-module. So, we certainly need $x$ not to be diagonalizable, so consider $V = \C^2$ considered as an $R$-module with $x$ acting as
+    \[\twomatrix{1}{1}{0}{1}.\]
+    This module is not simple, because we already showed every simple module is 1-dimensional as a vector space. However, $x$ has only one eigenspace, so $V$ has only one $R$-submodule, and thus there's no way to write $V$ as a direct sum of nontrivial $R$-submodules (we would need at least 2 submodules in order to do that). Thus, $V$ is indecomposable.
+    \item Using standard properties of tensor products, we have
+    \begin{align*}
+        \C[x]/(x^3+x^2) \tensor_{\C[x]} \C[x]/(x^3) &= \C[x]/(x^3,x^3+x^2)\\
+        &= \C[x]/(x^2,x^3)\\
+        &= \C[x]/(x^2).
+    \end{align*}
+    Thus, $\dim_{\C} (M \tensor_R N) = \dim_{\C} \C[x]/(x^2) = 2$.
+    \item Here is the longer, but perhaps more ``elementary'' way to approach this one. Since $\dim_\C(M) < \infty$, in particular $M$ must be finitely generated as an $R$-module. Since $R$ is a PID, by the classification theorem, we must have that $M \cong \bigoplus_{i=1}^n (R/(f_i(x)))^{\oplus e_i}$ for some $n$ and polynomials $f_i(x)$. Then, as in part (c), we have
+    \begin{align*}
+        M \tensor_R N &\cong \paren{\bigoplus_{i=1}^n \paren{\frac{R}{(f_i(x))}}^{\oplus e_i}} \tensor_R N\\
+        &\cong \bigoplus_{i=1}^n \paren{\frac{R}{(f_i(x))}}^{\oplus e_i} \tensor_R \frac{R}{(x^3)}\\
+        &\cong (R/(x))^{\oplus e_1} \oplus (R/(x^2))^{\oplus e_2} \oplus (R/(x^3))^{\oplus e_3}.
+    \end{align*}
+    Now, all you need to check really is that $\Hom_R(N,R/(x^i))$ is an $i$-dimensional vector space for $i = 1,2,3$, and that the dimensions add correctly over these direct sums, and then you will conclude that $\dim_\C (M \tensor N) = e_1 + 2e_2 + 3e_3 = \dim_\C \Hom_R(N,M)$.
+
+    Alternatively, we know that $M \tensor_R N = M \tensor_R (R/(x^3))$, and by a standard result, this is isomorphic to $M/(x^3)M$. On the other hand, to specify a function from $N = R/(x^3)$ to $M$, we just need to say where $1 \in R/(x^3)$ will map to, and the rest of the map will be determined by $R$-linearity. Furthermore, since $1 \in R/(x^3)$ satisfies $x^3 \cdot 1 = 0$, the image of 1 in $M$ must be an element $m$ satisfying $x^3 \cdot m = 0$. That is, $\Hom_R(N,M) \cong M[x^3]$, the $x^3$-torsion submodule of $M$. Notice that we have an exact sequence (but not a short exact sequence) of $R$-modules
+    \[0 \to M[x^3] \to M \tonamed{\cdot x^3} M \to M/(x^3)M \to 0.\]
+    In the case where $\dim_\C M < \infty$, this is also an exact sequence of finite-dimensional $\C$-vector spaces. Since the sequence is exact, its Euler characteristic must be 0, so we have
+    \[\dim_\C M[x^3] - \dim_\C M + \dim_\C M - \dim_\C M/(x^3)M = 0.\]
+    Thus, $\dim_\C M[x^3] = \dim_\C M/(x^3)M$ as desired.
+\end{enumerate}
+(Notice also that the module $N$ is another example of an indecomposable $R$-module which is not simple.)
+\end{solution}

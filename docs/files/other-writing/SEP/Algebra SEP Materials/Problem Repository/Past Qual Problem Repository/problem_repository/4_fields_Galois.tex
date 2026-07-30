@@ -1,0 +1,377 @@
+\section{Field and Galois Theory}
+
+\begin{question}[subtitle = January 2026 Problem 3,ID=Jan26_3]
+Consider the field $K = \Q(i)$, and put $L = K[t]/(t^4 - 5)$. Clearly, $L$ is a ring containing the field $K$ (so it is a $K$-algebra).
+\begin{enumerate}
+    \item Show that $L/K$ is a Galois field extension.
+    \item List the roots of the polynomial $x^4 - 5$ in $L$.
+    \item Determine the action of the Galois group $\Gal(L/K)$ on the roots of the polynomial $x^4 - 5$ in $L$.
+    \item Consider $L$ as an extension of $\Q \subset K$. Show that this is a Galois extension and determine the action of the Galois group $\Gal(L/\Q)$ on the roots of the polynomial $x^4 - 5$ in $L$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+
+\begin{enumerate}
+    \item First, let us show that $L$ is a field. This requires us to show that $t^4 - 5$ is irreducible over $K$. Below, I'll give three arguments, the first elementary and computational, the second more conceptual and clean but a tad tricky, the third short and easy but requiring some insight into the ring $\Q(i)$.
+    \begin{enumerate}[i.]
+        \item We can see that $t^4 - 5$ has no roots in $K$, so it certainly has no linear factors. Suppose it factors as $(t^2 + at + b)(t^2 + ct + d)$. Multiplying out and comparing coefficients, this means that: $a + c = 0$, $b + d + ac = 0$, $a(d-b) = 0$, and $bd = 5$. Since $\sqrt{5} \notin K$, the last equation implies $b \neq d$. But then the third equation implies $a = 0$, and the second implies that $b = -d$, but $-\sqrt{5} \notin K$, so this is a contradiction. Thus, no such factorization exists.
+        \item Note that $t^4 - 5$ is irreducible over $\Q$ by Eisenstein's criterion for $p = 5$. Thus, if it factors over $K$, it must factor as $g(t) \widebar{g}(t)$ for some $g \in K[t]$, where $\widebar{g}$ is the polynomial whose coefficients are the complex conjugates of the coefficients of $g$. The roots of $\widebar{g}$ are the complex conjugates of the roots of $g$. Since $\sqrt[4]{5}$ is a root of $t^4 - 5$, it must be a root of either $g$ or $\widebar{g}$, but then since $\sqrt[4]{5}$ is real it must be a root of both of them, so it must be a double root of $t^4 - 5$. However, $t^4 - 5$ is separable, so this is a contradiction.
+        \item The polynomial $t^4 - 5$ is Eisenstein over the ring $\Z[i]$ for the prime $2+i$, hence is irreducible.
+    \end{enumerate}
+
+    To show that $L$ is Galois, probably the easiest way is to do part (b), and observe that $L$ is the splitting field of $t^4 - 5$ over $K$, hence is Galois.
+    \item The roots are $\pm \sqrt[4]{5}$, $\pm i \sqrt[4]{5}$.
+    \item Since the ratio of any two roots is in $K$, any element of $\Gal(L/K)$ must fix the ratios between the roots. Thus, the action of any $\sigma \in \Gal(L/K)$ is determined completely by where it sends $\sqrt[4]{5}$, for which there are 4 options. The Galois group is thus cyclic of order 4, and it acts by cyclically permuting the roots of $x^4 - 5$.
+    \item $L$ is still the splitting field of $x^4 - 5$ over $\Q$, so still Galois. In addition to the four automorphisms found above, $\Gal(L/\Q)$ contains complex conjugation and its product with the other three nontrivial automorphisms of $L/K$. (This is another way to argue that $L/\Q$ is Galois: by finding $8 = [L:\Q]$ automorphisms.) Thus, $\Gal(L/\Q)$ is the dihedral group $D_4$. Picturing the roots of $x^4 - 5$ as the vertices of a diamond in the complex plane, $\Gal(L/\Q)$ acts as the full group of symmetries of that diamond.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2025 Problem 2,ID=Aug25_2]
+Let $E/F$ be a Galois field extension whose Galois group $G = \Gal(E/F)$ is isomorphic to $\Z/8\Z$.
+\begin{enumerate}
+    \item Give an example of such a Galois extension. No proof is required.
+    \item Let $\sigma \in G$ be a generator. Suppose $a \in E$ is such that the elements
+    \[\set{a,\sigma(a),\sigma^2(a),\dots,\sigma^7(a)}\]
+    form a basis of $E$ over $F$. Let $b \in E$ be a non-zero linear combination
+    \[b = c_0 a + c_1 \sigma(a) + c_2 \sigma^2(a) + c_3 \sigma^3(a),\]
+    where $c_0,c_1,c_2,c_3 \in F$ are not all zero. Show that $b$ is a primitive element: $E = F(b)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The easiest way to do this would be to find a prime $p$ which is 1 mod 8, and look for a subfield of $\Q(\zeta_p)$. Since $\Gal(\Q(\zeta_p)/\Q) \cong (\Z/p\Z)\mult$ is cyclic, it has a normal subgroup $H$ with $[G:H] = 8$, and then the fixed field $\Q(\zeta_p)^H$ has Galois group cyclic of order 8. So, in particular, $\Q(\zeta_{17})$ has Galois group $(\Z/17\Z)\mult \cong \Z/16\Z$, and complex conjugation forms the unique order 2 subgroup. The fixed field of complex conjugation is $\Q(\zeta_{17}) \cap \R = \Q(\cos(2\pi/17))$, so this is an example of a field with Galois group $\Z/8\Z$.
+    \item It is easy to see that no power of $\sigma$ fixes the element $b$, so the orbit of $b$ under the action of the Galois group has size 8. Since the orbit of $b$ is the same thing as the roots of the minimal polynomial of $b$, the minimal polynomial of $b$ must have degree 8. Thus, $F(b)$ is a degree 8 extension of $F$ contained in $E$, so must in fact be equal to $E$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2025 Problem 3,ID=Jan25_3]
+Let $F$ be a field, $K \supset F$ be a finite extension of $F$, and let $a$ be an element of $K$.
+\begin{enumerate}
+    \item Suppose the degree $[K:F]$ is relatively prime to 6. Show that $F(a) = F(a^3)$.
+    \item Suppose the degree $[K:F]$ is not divisible by 3. Either prove that we still have $F(a) = F(a^3)$, or show by example that this is false.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item We have that $F(a^3) \subset F(a)$, so we have a tower of field extensions:
+    \begin{center}
+    \begin{tikzcd}[ampersand replacement = \&,every arrow/.append style={no head}]
+    K \ar[d]\\
+    F(a) \ar[d]\\
+    F(a^3) \ar[d]\\
+    F
+    \end{tikzcd}
+    \end{center}
+    Also, $a$ is a root of the polynomial $x^3 - a^3$ over $F(a^3)$, so the degree $[F(a):F(a^3)]$ is at most 3. On the other hand, the degree of $[F(a):F(a^3)]$ divides $[K:F]$, which we are told is coprime to 6, so we must have $[F(a):F(a^3)] = 1$, i.e.\ $F(a) = F(a^3)$.
+    \item This can be false. For example, let $\omega$ be a primitive cube root of unity, and consider the extension $F = \Q$, $K = \Q(\omega)$. Then $[K:F] = 2$, which is coprime to 3, but $\Q(\omega^3) = \Q(1) = \Q$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2024 Problem 5,ID=Aug24_5]
+Denote by $\zeta_m$ a primitive $m$th root of unity, i.e.\ a complex number such that $\zeta_m^m = 1$ but $\zeta_m^k \neq 1$ for any $k < m$.
+\begin{enumerate}
+    \item Prove that, for any $m$, the field extension $\Q(\zeta_m)/\Q$ is Galois.
+    \item What is the Galois group of $\Q(\zeta_6)/\Q$?
+    \item Give an example of an $m$ such that the Galois group of $\Q(\zeta_m)/\Q$ is not cyclic.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item There are several equivalent definitions of what it means for a field extension to be Galois, and for this question it's important to choose one that makes your life easiest. The easiest way I know to do this is to note that $\zeta_m$ is a root of the $m$th cyclotomic polynomial $\Phi_m(x)$, and the degree of the $m$th cyclotomic polynomial is $\phi(m)$, so we have $\abs{\Aut(\Q(\zeta_m)/\Q)} \leq [\Q(\zeta_m):\Q] \leq \phi(m)$. Now, we construct $\phi(m)$ automorphisms of $\Q(\zeta_m)$ as follows: for each $1 \leq a \leq m$ such that $\gcd(a,m) = 1$, we have an automorphism given by $\zeta_m \mapsto \zeta_m^a$. Thus, in fact we must have $\abs{\Aut(\Q(\zeta_m)/\Q)} = [\Q(\zeta_m):\Q] = \phi(m)$, and the size of the automorphism group being equal to the degree of the extension is one of the equivalent definitions of a Galois extension, so $\Q(\zeta_m)$ is Galois. (Incidentally, along the way this also proves that $\Phi_m(x)$ is irreducible, which we did not need to assume for any other part of the proof.)
+    \item $(\Z/6\Z)\mult \cong \Z/2\Z$
+    \item By the Chinese Remainder Theorem, if we factor $m = p_1^{e_1} \dots p_n^{e_n}$, then
+    \[(\Z/m\Z)\mult \cong \prod_{i=1}^n (\Z/p_i^{e_i}\Z)\mult.\]
+    Thus, the Galois group will be non-cyclic as soon as we either have a non-cyclic $(\Z/p_i^{e_i}\Z)\mult$ or if we have more than one nontrivial factor. The latter is easier to manufacture, as any number divisible by more than one odd prime works, for example $m = 15$. Another thing that would work is any number divisible by 4 and an odd prime, so $m = 12$ also works. Something that you don't need to know, but which is neat, is that the only time $(\Z/p_i^{e_i}\Z)\mult$ is \emph{not} cyclic is if $p_i = 2$ and $e_i \geq 3$, so any $m$ divisible by 8 also works, and $m = 8$ is in fact the minimal such example. (You could also easily find $m = 8$ by just checking small values of $m$, since $m = 2,\dots,7$ don't work by basic group theory knowledge.)
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2024 Problem 2,ID=Jan24_2]
+The irreducible factors of $x^{11}-1$ over $\Q$ are $f_1 = x-1$ and $f_2 = x^{10} + x^9 + x^8 + \dots + 1$. (You do not need to prove this.) Let $K$ be the splitting field of $f_2$.
+\begin{enumerate}
+    \item What is the Galois group of $K$ over $\Q$?
+    \item Let $a = \cos(2\pi/11) = (\exp(2\pi i/11) + \exp(\shortminus 2\pi i/11))/2$. Show that $K/\Q(a)$ is a Galois extension and find its Galois group.
+    \item Show that $\Q(a)/\Q$ is a Galois extension and find its Galois group.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item $(\Z/11\Z)\mult \cong \Z/10\Z$
+    \item Since $K$ is Galois over $\Q$, $K$ is Galois over any intermediate field extension, and in particular is Galois over $\Q(a)$. Notice that $\Q(a)$ is the fixed field of complex conjugation, so $[K:\Q(a)] = 2$, so $\Gal(K/\Q(a)) = \Z/2\Z$ generated by complex conjugation.
+    \item Since $\Gal(K/\Q)$ is abelian, all its subgroups are normal, and hence every intermediate field is Galois over $\Q$. We have that $\Gal(\Q(a)/\Q) \cong (\Z/10\Z) / (5\Z/10\Z) \cong \Z/5\Z$. (Here, I have modded out by the unique subgroup of $\Z/10\Z$ of order 2, which we determined is the Galois group of $K/\Q(a)$.)
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2023 Problem 2,ID=Aug23_2]
+Let $p$ be an odd prime number. Prove that any two fields of order $p^2$ are isomorphic. (Do not just quote the theorem that there's a unique isomorphism class of fields of any prime power order; your job is to prove a case of that theorem!)
+
+% \textbf{NB} The problem originally had $p$ be odd, but there's no reason to exclude 2.
+\end{question}
+\begin{solution}
+Any field of order $p^2$ must be a degree 2 extension of $\F_p$, and hence is of the form $\F_p[\sqrt{a}]$ for some non-square $a \in \F_p$, since $p \neq 2$. The multiplicative group $\F_p\mult$ is cyclic, so let $g \in \F_p\mult$ be some generator. Suppose $a \in \F_p\mult$ is nonsquare, and write $a = g^k$ for some odd $k$. Then we have that $(\sqrt{g}^k)^2 = a$, and thus $\sqrt{g}^k$ is a square root of $a$, so $\sqrt{a} \in \F_p[\sqrt{g}]$. Thus, $\F_p[\sqrt{a}] \subset \F_p[\sqrt{g}]$, but both are degree 2 extensions of $\F_p$, so they must be equal. Hence, every field of order $p^2$ is $\F_p[\sqrt{g}]$.
+
+(Of course, this result is true also if $p=2$, and for higher powers than just $p^2$. However, imitating the above argument is not a good way to try to prove the general case, a more clever argument is required. You can think for a while about how you might do this, then see the argument in Dummit and Foote.)
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2023 Problem 4,ID=Jan23_4]
+Consider the finite field $\F_p$ where $p$ is a prime number.
+\begin{enumerate}
+    \item How many monic irreducible polynomials of degree 5 are there over $\F_p$?  (Your answer should be a function of $p$.)
+    \item Let $P(x),Q(x) \in \F_p[x]$ be irreducible polynomials. Give a necessary and sufficient condition for there to exist a third polynomial $R(x) \in \F_p[x]$ such that $Q(x)$ divides $P(R(x))$. (The polynomial $R(x)$ need not be irreducible.)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item If $f$ is an irreducible polynomial of degree 5, then it has 5 distinct roots in $\F_{p^5}$, which is the unique degree 5 extension of $\F_p$. Distinct irreducible polynomials will have distinct roots. There are $p^5$ total elements of $\F_{p^5}$, but $p$ of those elements lie in the base field $\F_p$. Thus, the number of degree 5 elements of $\F_{p^5}$ is $p^5-p$, and since each irreducible polynomial corresponds to 5 distinct roots, we have that the number of irreducible polynomials is $\frac{p^5-p}{5}$. (Can you independently confirm that for any prime number $p$, $p^5-p \equiv 0 \pmod{5}$?)
+    \item Saying that $Q(x) \mid P(R(x))$ is the same as saying $P(R(x)) = 0 \mod Q(x)$. But $\F_p[x]/Q(x) \cong \F_{p^d}$ for $d = \deg Q(x)$, where the isomorphism is given by $x \mapsto \alpha$ for some $\alpha$ a root of $Q(x)$ in $\F_{p^d}$. Then saying $P(R(x)) = 0 \mod Q(x)$ is the same as saying $P(R(\alpha)) = 0$ in $\F_{p^d}$. But then $R(\alpha)$ is simply some element in $\F_{p^d}$, and every element of $\F_{p^d}$ can be written as $R(\alpha)$ for some $R$, so this is the same as saying $P$ has a root in $\F_{p^d}$, which happens if and only if $\deg P \mid \deg Q$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2022 Problem 4,ID=Aug22_4]
+Let $p$ be a prime number, $\F_p$ the finite field with $p$ elements, and $K = \F_p(t)$ the field of rational functions in one variable $t$ over $\F_p$. (So that $K$ is the fraction field of the polynomial ring $\F_p[t]$).
+\begin{enumerate}
+    \item Show that the splitting field of the polynomial $x^p-t \in K[x]$ over $K$ is inseparable.
+    \item Show that the splitting field of $x^p - t - 1 \in K[x]$ over $K$ is the same as the splitting field of $x^p-t$.
+    \item Show that $K$ has a single degree $p$ inseparable extension.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item A field extension $L/K$ is said to be \emph{inseparable} if there exists some $\alpha \in L$ whose minimal polynomial is inseparable. In this case, let $L$ be the splitting field of $x^p-t$, and let $\alpha=\sqrt[p]{t}$ be a root of $x^p-t$. The polynomial $x^p-t$ is irreducible over $K$ by Eisenstein's criterion, so this is the minimal polynomial of $\sqrt[p]{t}$. However, $x^p-t$ factors as $(x-\sqrt[p]{t})^p$, so this polynomial is not separable.
+    \item Note that $(\sqrt[p]{t}-1)^p = (\sqrt[p]{t})^p - 1^p = t-1$, so $\sqrt[p]{t-1} \in K(\sqrt[p]{t})$ and visa versa, so these are the same extension.
+    \item Let $L/K$ be a degree $p$ inseparable field extension. First, we want to show that $L = K(\alpha)$ for some inseparable element $\alpha$. Certainly, $L$ has an element $\alpha$ whose minimal polynomial is inseparable. Furthermore, since field degrees are multiplicative, we have $p = [L:K] = [L:K(\alpha)][K(\alpha):K]$, and moreover $[K(\alpha):K] \neq 1$ (or else $\alpha \in K$ is separable), so $[K(\alpha):K] = p$ and thus $K(\alpha) = L$.
+    
+    Now, it is a fact that any inseparable irreducible polynomial is of the form $g(x^p)$ for some irreducible polynomial $g(x)$. Thus, the only inseparable irreducible polynomials of degree $p$ are of the form $x^p - f$ for some $f \in K$. But notice that $f(\sqrt[p]{t})^p = f(\sqrt[p]{t}^p) = f(t)$, so that $\sqrt[p]{f} \in K(\sqrt[p]{t})$. Thus, the only degree $p$ inseparable extension of $K$ is $K(\sqrt[p]{t})$.
+\end{enumerate}
+\end{solution}
+
+%An example where showing something is Galois by constructing enough automorphisms is easier than showing a polynomial is irreducible!
+\begin{question}[subtitle = January 2022 Problem 5,ID=Jan22_5]
+Let $F$ be a field of prime characteristic $p$. Suppose $E = F(\alpha)$ is a simple extension such that $\alpha \notin F$ but $\alpha^p - \alpha \in F$.
+\begin{enumerate}
+    \item Find $[E:F]$.
+    \item Prove that $E/F$ is a Galois extension.
+    \item Find the Galois group $\Gal(E/F)$.
+\end{enumerate}
+Hint: What is $(x+1)^p-(x+1)$ in characteristic $p$?
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $\alpha^p - \alpha = b \in F$, so that $\alpha$ is a root of the polynomial $f(x) = x^p-x-b$. Thus, $[E:F] \leq p$. We will show that $[E:F] = p$, but we will come back to it, because it's easier to first show that $E$ is Galois.
+    \item Notice that $(x+1)^p - (x+1) = x^p - x$, so $\alpha, \alpha+1,\dots, \alpha+p-1$ are the $p$ roots of $f$. Thus, $f$ splits in $E$. Furthermore, $f$ clearly has no repeated roots, so $f$ is separable. Thus, $E$ is the splitting field of a separable polynomial, and thus is Galois.
+    \item The Galois group $\Gal(E/F)$ has size at most $p$, since we have already seen that $[E:F] \leq p$. But it is easy to check that $\alpha \mapsto \alpha +i$ gives $p$ different automorphisms of $\Gal(E/F)$, so this must be all of them. Thus, $\Gal(E/F) \cong \Z/p\Z$, generated by $\alpha \mapsto \alpha + 1$.
+    \setcounter{enumi}{0}
+    \item (again) Since $E/F$ is a Galois extension and $\abs{\Gal(E/F)} = p$, we must have $[E:F] = p$.
+\end{enumerate}
+\end{solution}
+
+%Not a huge fan of this one, it's a somewhat awkward version of this problem.
+\begin{question}[subtitle = August 2021 Problem 2,ID=Aug21_2]
+Let $n > 1$ be a square-free integer.
+\begin{enumerate}
+    \item Let $\alpha \in \C$ be a fourth root of $n$, i.e.\ $\alpha^4 = n$. Prove that $K = \Q(\alpha)$ is a degree 4 extension of $\Q$.
+    \item Find (with proof) the Galois group of the normal closure of $K$ (in $\C$) over $\Q$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The polynomial $x^4-n$ is $p$-Eisenstein for any $p \mid n$, so it is irreducible, and thus is the minimal polynomial of $\alpha$. Hence, $[K:\Q] = \deg \alpha = 4$.
+    \item One can see that $x^4-n$ does not split over $K$, but does split over $K(i)$, and $[K(i):K]=2$, so $\Q(\alpha,i)$ is the normal closure of $K$. The Galois group is $D_4$, which can be shown by demonstrating two generating automorphisms which satisfy the relationships $\sigma^2 = \mathrm{id}$, $\tau^4 = \mathrm{id}$, $\sigma \tau \sigma = \tau\inv$.
+\end{enumerate}
+\end{solution}
+
+%Another case where working on the field side is easier than directly working with polynomials. Part (c) here is much more difficult than it looks like it should be.
+\begin{question}[subtitle = January 2021 Problem 5,ID=Jan21_5]
+Let $\F_p$ denote the field with $p$ elements.
+\begin{enumerate}
+    \item What is the factorization of the polynomial $x^4+1$ into irreducible factors in $\F_3[x]$?
+    \item Give an example of an element $a \in \F_5$ such that $x^4-a$ is irreducible in $\F_5[x]$, and prove that $x^4-a$ is irreducible with this choice of $a$.
+    \item Prove that for any nonzero choice of $a \in \F_{103}$, the polynomial $x^4-a$ factors either as a product of two irreducible quadratic polynomials, or as a product of two linear polynomials and an irreducible quadratic.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Observe that $x^4+1 = \Phi_8(x)$, so the roots of this polynomial are primitive 8th roots of unity. There are no primitive 8th roots of unity in $\F_3$, but in $\F_9$ every element is a root of $x^9-x$, so every nonzero element is a root of $x^8-1$, and so there are primitive 8th roots of unity. In particular, if $i^2 = \shortminus 1$ in $\F_9$, then $\pm 1 \pm i$ are primitive 8th roots of unity. Pairing these up, we can find that $x^4+1 = (x^2+x-1)(x^2-x-1)$.
+    \item Consider $a=2$. Then $x^4-2$ is irreducible in $\F_5[x]$. Indeed, it has no linear factors since $\alpha^4\in\set{0,1}$ for all $\alpha \in \F_5$. To show it has no quadratic factors, we need to show that $x^4-2$ does not split over $\F_{25}$. For every $x \in \F_{25}$, we have that $x^5 \in \F_5$, so if $x \in \F_{25} \setminus \F_5$ and $x^5 = n \in \F_5$, then $x^4 = n/x \not\in \F_5$. Thus, $x^4-2$ has no roots in $\F_{25}$, and hence has no quadratic factors over $\F_5$.
+    \item First, let's rephrase the question in terms of field theory facts. Saying $x^4-a$ factors that way is the same as saying that it has an irreducible quadratic factor. On the other hand, every irreducible quadratic over $\F_{103}$ splits in $\F_{103^2}$ (because finite fields are neat), so saying $x^4-a$ has an irreducible quadratic factor is the same as saying (i) $x^4-a$ does not split in $\F_{103}$, but (ii) $x^4-a$ \emph{does} split in $\F_{103^2}$. We'll prove those two statements, in that order.
+    
+    First, note that the map $\text{pow}_4: \F_{103}\mult \to \F_{103}\mult$ given by $x \mapsto x^4$ is a group homomorphism. The kernel of this map is an abelian 2-group (since every element satisfies $x^4 = 1$) which contains $\pm 1$, and has order dividing $103 - 1 = 102$. Since $4 \nmid 102$, we must have $\ker \text{pow}_4 = \set{\pm 1}$. Since for any $a \in \F_{103}$, the solutions to $x^4-a$ are the preimages of $a$ under $\text{pow}_4$, there are either 0 or 2 such solutions, and $x^4-a$ so cannot split over $\F_{103}$.
+
+    On the other hand, notice that $x^2+1$ has a root $i = \sqrt{\shortminus 1}$ in $\F_{103^2}$, so if $x^4-a$ has a root $\alpha$ in $\F_{103^2}$, then $\pm \alpha, \pm i \alpha$ are 4 distinct roots lying in $\F_{103^2}$. Thus, to show that $x^4-a$ splits in $\F_{103^2}$, we need only show that $x^4-a$ has a root in $\F_{103^2}$.
+    
+    The multiplicative group $\F_{103^2}\mult$ is cyclic, so let it be generated by $g$, so $g$ has exact order $103^2-1 = 102\cdot 104$. Recall that the Galois group of $\F_{103^2}$ is cyclic of order 2, generated by the Frobenius automorphism $x \mapsto x^{103}$. Then notice that for any $k$, $g^{104k} \in \F_{103}$, since $(g^{104k})^{103} = (g^{102 \cdot 104})^k g^{104k} = g^{104k}$, so $g^{104k}$ is fixed by the Galois group. Moreover, there are 102 choices for $k$, which give the 102 distinct elements of $\F_{103}\mult$. Since any $a \in \F_{103}\mult$ can be written as $g^{104k}$ for some $k$, this means that $g^{26k}$ is a solution to $x^4-a=0$, and we're done.
+
+    (In fact, if $a$ is not a 4th power in $\F_{103}$, then both $a$ and $\shortminus 1$ represent the nontrivial element in $\F_{103}\mult / \im \text{pow}_4 \cong \Z/2\Z$. Thus $\shortminus a$ is a 4th power, so say $d^4 = \shortminus a$. Since $103 \equiv 7 \mod 8$, number theory tells us that $\sqrt{2} \in \F_{103}$, and so we can factor $x^4-a$ as \newline$(x^2+\sqrt{2}d+d^2)(x^2-\sqrt{2}d+d^2)$.)
+\end{enumerate}
+
+Below are alternative, more explicit computational solutions for (a) and (b):
+\begin{enumerate}
+    \item Observe that $x^4+1$ has no roots in $\F_3$, so it has no linear factors over $\F_3[x]$. Therefore, if it factors it must be as $(x^2+ax+b)(x^2+cx+d)$ for some $a,b,c,d \in \F_3$. Multiplying out, we see that we must have $a+c=0, ac+b+d=0,$ and $bd=1$. The last equation only has solutions $b=d=1$ and $b=d=2$. The former gives no solutions to the remaining equations, and the latter gives the solutions $a=1,c=2$ and $a=2,c=1$. Thus, $x^4+1=(x^2+x+2)(x^2+2x+2)$ over $\F_3[x]$.
+    \item Consider $a=2$. Then $x^4-2$ is irreducible in $\F_5[x]$. Indeed, it has no linear factors since $\alpha^4\in\set{0,1}$ for all $\alpha \in \F_5$. So, we just need to show that it has no quadratic factors $x^2+bx+c$ with $b,c \in \F_5$. Observe that if $x^2=-bx-c$, then $x^4 = (-b^3+2bc)x-b^2c+c^2$. So, we need to show that if $-b^3+2bc=0$, then $-b^2c+c^2 \neq 2$. If $b=0$, then it is clear that $c^2 \neq 2$ for any choice of $c$. If $b\neq 0$, then the only possible solutions for $-b^3+2bc=0$ are $c = 3, b \in \set{1,4}$ and $c = 2, b \in {2,3}$. In the first case, $-b^2c+c^2=0$, and in the second case, $-b^2c+c^2=3$. Therefore, $x^4-2$ is irreducible in $\F_5[x]$.
+\end{enumerate}
+\end{solution}
+
+%The linear independence of characters one.
+\begin{question}[subtitle = August 2020 Problem 3,ID=Aug20_3]
+Let $L/K$ be a degree $p$ Galois extension, where $p$ is prime, and let $\sigma$ be a nontrivial element of $\Gal(L/K)$. Then $\sigma$ is a linear transformation of the $K$-vector space $L$.
+\begin{enumerate}
+    \item What is the characteristic polynomial of $\sigma$?
+    \item Write $L^0$ for the subspace of $L$ consisting of elements with trace 0. Show that $\sigma$ sends $L^0$ to $L^0$.
+    \item What is the characteristic polynomial of $\sigma$ acting on $L^0$?
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Since $\abs{\Gal(L/K)} = [L:K] = p$, $\Gal(L/K)$ must be the cyclic group of order $p$. So, in particular, $\sigma$ satisfies $x^p - 1 = 0$. Furthermore, $\sigma$ in fact generates $\Gal(L/K)$, so $\text{id}, \sigma, \sigma^2,\dots,\sigma^{p-1}$ are all the automorphisms of $L/K$. By linear independence of characters, these automorphisms are all linearly independent over $K$, so $\sigma$ does not satisfy any polynomial of degree $<p$ over $K$. Hence, $x^p-1$ is both the minimal and characteristic polynomial of $\sigma$.
+    \item Recall that the trace of an element is the sum of its Galois conjugates. So, if $\Tr(\alpha) = 0$, then we have $\Tr(\sigma(\alpha)) = \sum_{g \in \Gal} g(\sigma(\alpha)) = \sum_{g' \in \Gal} g'(\alpha) = 0$. Here we have used that the action of a group on itself by right multiplication is free.
+    \item Since $\Tr(\alpha) = 0$ is a single $K$-linear condition, we know that $L^0$ is a dimension $p-1$ vector space over $K$. So, we're looking for a degree $p-1$ polynomial. We recall that the roots of the characteristic polynomial are the eigenvalues of $\sigma$. Since $L^0$ is a subspace of $L$, every eigenvector of $\sigma$ acting on $L^0$ is also an eigenvector of $\sigma$ acting on $L$, thus the characteristic polynomial of $\sigma$ acting on $L^0$ divides $x^p-1$.
+
+    Now we divide into cases based on the characteristic. If $\operatorname{char}(K) = p$, then $x^p-1= (x-1)^p$, so the only degree $p-1$ divisor of $x^p-1$ is $(x-1)^{p-1}$. If $\operatorname{char}(K) \neq p$, then all but one of the distinct roots of $x^p-1$ is an eigenvalue of $\sigma$ acting on $L^0$. And let's be honest, it'd be pretty weird if the missing eigenvalue wasn't 1. If $\alpha \in L^0$ is an eigenvector for $\sigma$ of eigenvalue 1, that means $\sigma(\alpha) = \alpha$, which means that $\alpha$ is fixed by $\Gal(L/K)$ since $\sigma$ generates the Galois group, which means that $\alpha \in K$. But then $\Tr(\alpha) = p\alpha$, and since $\operatorname{char}(K) \neq p$, if $p\alpha = 0$ then $\alpha = 0$, so $\sigma$ has no eigenvectors of eigenvalue 1 in $L^0$. Thus, the characteristic polynomial of $\sigma$ acting on $L^0$ is $\tfrac{x^p-1}{x-1}$.
+
+    %sigma acting on L is the reg rep of C_p, L^0 is the complementary subspace to the copy of the trivial representation
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2020 Problem 2,ID=Jan20_2]
+\begin{enumerate}
+    \item Let $a$ be a root of the polynomial $x^4-7 \in \Q[x]$. Show that $\Q(a)$ is not Galois over $\Q$.
+    \item Let $F$ be a field of characteristic 5, and let $b$ be a root of $x^4-7 \in F[x]$. Show that $F(b)$ is Galois over $F$.
+    \item Compute the Galois group $\Gal(F(b)/F)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The roots of $x^4-7$ are $\pm \sqrt[4]{7}$ and $\pm i\sqrt[4]{7}$. If $a =\pm \sqrt[4]{7}$, then $\Q(a)$ does not contain $i\sqrt[4]{7}$ so it is not a splitting field, and thus not Galois. If $a= \pm i\sqrt[4]{7}$, then $\Q(a)$ does not contain $\sqrt[4]{7}$, so again is not a splitting field so not Galois over $\Q$.
+    \item Since $x^4-7 \equiv x^4-2 \mod 5$, we get that the roots of this polynomial over $F$ are $\pm b$ and $\pm ib$, where $i=\sqrt{-1}$. Again, since $\text{char}(F)=5$, 2 is a square root of $-1 = 4$, so the roots are $\pm b$ and $\pm 2b$, or, more simply, $b,2b, 3b,$ and $4b$. Since each of these is in $F(b)$, it is the splitting field of $x^4-7$, and since this polynomial is separable, $F(b)$ is Galois over $F$.
+    \item An automorphism $\sigma \in \Gal(F(b)/F)$ is determined by which root it sends $b$ to. Thus, the elements in $\Gal(F(b)/F)$ are $\sigma_1=Id: b \mapsto b$, $\sigma_2: b \mapsto 2b$, $\sigma_3: b \mapsto 3b$, and $\sigma_4: b\mapsto 4b$. Observe that $\sigma_2^2=\sigma_3^2=\sigma_4$ and $\sigma_4^2=Id$. Therefore, $\Gal(F(b)/F)\cong (\Z/5\Z)\mult$ where the isomorphism is given by $\sigma_n \mapsto n$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2019 Problem 4,ID=Jan19_4]
+\begin{enumerate}
+    \item Let $E$ be the splitting field over $\Q$ of $e(x)=x^3+2x^2+3x+4$, which has discriminant $-200$. Find $\Gal(E/\Q)$.
+    \item Let $F$ be the splitting field over $\Q$ of $f(x)=x^3+4x^2+7x+6$, which has discriminant $-72$. Find $\Gal(F/\Q)$.
+    \item Find $\Gal(EF/\Q)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item First, check to see if $e(x)$ has any rational roots. The possible rational roots are $\pm 1, \pm 2, \pm 4$, none of work actually work. Since this is a degree $3$ polynomial with no roots in $\Q$, this means that it is irreducible over $\Q$, so $\Gal(E/\Q)$ is a transitive subgroup of $S_3$. So, it is either $A_3$ or $S_3$. Also, since $e'(x)=3x^2+4x+3$ has no real roots, $e(x)$ has no relative extrema, so $e(x)$ must just have one real root. This means that the other two roots are complex conjugates, so complex conjugation is an order 2 element of $\Gal(E/\Q)$. Thus, $\Gal(E/\Q)=S_3$.
+    
+    Another way to get that $\Gal(E/\Q) \neq A_3$ is because $\Gal(E/\Q) \subseteq A_3$ iff the discriminant of $e(x)$ is a square in $\Q$. Since $-200$ is not a square, we get that $\Gal(E/\Q) \not\subseteq A_3$.
+    \item Using the rational root theorem again, we find that $-2$ is a root of $f(x)$, and it factors as $f(x)=(x+2)(x^2+2x+3)$. Therefore, the roots of $f(x)$ are $-2, -1+\sqrt{-2}, -1-\sqrt{-2}$. This gives that $F=\Q(\sqrt{-2})$, so $\Gal(F/\Q)=\Z/2\Z$.
+    \item By definition, the discriminant of $e(x)$ is $[(\alpha_1-\alpha_2)(\alpha_1-\alpha_3)(\alpha_2-\alpha_3)]^2$ where $\alpha_1,\alpha_2,\alpha_3$ are the roots of $e(x)$. Therefore, the square root of the discriminant is an element in $E$. This gives that $\sqrt{-200}=10\sqrt{-2} \in E$, so in particular, $F=\Q(\sqrt{-2})\subseteq E$. Therefore, $EF=E$ and $\Gal(EF/\Q)=S_3$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2018 Problem 4,ID=Aug18_4]
+\begin{enumerate}
+    \item Give an example of a Galois extension $K/\Q$ with Galois group $\Z/4\Z$, and prove that it is such an example.
+    \item Let $K = \F_q(t)$, and let $L = \F_q(t^{1/p})$ where $q$ is a power of $p$. Prove that there are no automorphisms of $L$ fixing $K$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Consider $K=\Q(\zeta_5)$ where $\zeta_5$ is a primitive $5$th root of unity. We have that $\Gal(K/\Q) = \Z/5\Z\mult = \Z/4\Z$.
+    \item Observe that $t^{1/p}$ satisfies $x^p-t \in K[x]$, and because $K$ is characteristic $p$, this polynomial factors as $x^p-t=x^p-(t^{1/p})^p = (x-t^{1/p})^p$. Therefore, $t^{1/p}$ is its only root. Since $L$ is the splitting field of $x^p-t$ over $K$, any automorphism of $L$ over $K$ is determined by how it permutes the roots of $x^p-t$. But since there is only one root, the only automorphism is the identity on $L$ sending $t^{1/p} \mapsto t^{1/p}$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2018 Problem 5,ID=Jan18_5]
+Let $K$ be the splitting field of the polynomial $f(x)=x^4-x^2-1$ over $\Q$. Compute $\Gal(K/\Q)$. (For partial credit, find the degree $[K:\Q]$.)
+\end{question}
+\begin{solution}
+Since $f(x)$ has degree 4, we know that $\abs{\Gal(K/\Q)}\leq 4!$ and that $\Gal(K/\Q)$ is a transitive subgroup of $S_4$. So, it could be $\Z/4\Z$, $\Z/2\Z\times\Z/2\Z$, $D_4$, $A_4$, or $S_4$. To find the roots of $f(x)$, notice that it is a quadratic in disguise. Letting $t=x^2$, we have that $f(t)=t^2-t-1$, which has roots $\alpha=\frac{1+\sqrt{5}}{2}$ and $\beta=\frac{1-\sqrt{5}}{2}$. Therefore, the roots of $f(x)$ are given by $x= \pm \sqrt{\alpha}, \pm \sqrt{\beta}$, and thus, $K=\Q(\sqrt{\alpha},\sqrt{\beta})$.
+
+Observe that $K$ contains the quadratic subfield $\Q(\alpha)=\Q(\beta)=\Q(\sqrt{5})$, so the Galois group must contain an index 2 subgroup. Therefore, it cannot be $A_4$. Also, since $K=\Q(\sqrt{\alpha},\sqrt{\beta})$ has degree at most $4$ over $\Q(\sqrt{5})$, the Galois group of $K/\Q$ can have order at most $8$. So, it cannot be $S_4$.
+
+We will now show that $\Gal(K/\Q)=D_4$, a group of order 8, by showing that $[K:\Q]>4$, which will eliminate $\Z/4\Z$ and the Klein 4 group as options. Consider the subfield $L=\Q(\sqrt{\alpha},\beta) \subseteq K$, which is not all of $K$ since $L \subseteq \R$ and $K \not\subseteq \R$. We will show that $[L:\Q]=4$, which implies that $[K:\Q]>4$. Since $\Q(\sqrt{5})\subseteq L$, it is enough to show that $L$ is strictly larger than $\Q(\sqrt{2})$. Suppose instead that $\sqrt{\alpha} = a+b\sqrt{5}$ with $a,b \in \Q$. Then squaring both sides gives
+\[\frac{1}{2}+\frac{1}{2} \sqrt{5} = a^2+5b^2+2ab\sqrt{5}\]
+which implies that $\frac{1}{2}=a^2+5b^2$ and $\frac{1}{2}=2ab$. Substituting $b=\frac{1}{4a}$ into the first equation and simplifying (since $a\neq 0$) gives $16a^4-8a^2+5=0$. You can then use the rational root theorem to show that none of the possible roots in $\Q$ are actually roots. Therefore, $\sqrt{\alpha} \notin \Q(\sqrt{5})$, so $[L:\Q]=4$, and we are done.
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2017 Problem 4,ID=Aug17_4]
+Suppose that $K\subseteq \C$ is a Galois extension of $\Q$, $[K:\Q]=4$, and $\sqrt{-m} \in K$ for some positive integer $m$. Show that $\Gal(K/\Q) \cong \Z/2\Z \times \Z/2\Z$.
+\end{question}
+\begin{solution}
+Since $K/\Q$ is Galois and degree $4$, its Galois group is either $\Z/4\Z$ or $\Z/2\Z \times \Z/2\Z$. We can show that it is the latter by showing that $K$ has two quadratic subfields, which means that $\Gal(K/\Q)$ has two index 2 subgroups. We know that $\Q(\sqrt{-m})\subseteq K$ is one quadratic subfield since $\sqrt{-m} \in K$ and the minimal polynomial of this element is $x^2+m$. Another quadratic subfield is given by the fixed field of complex conjugation. Let $c: \C \to \C$ be complex conjugation. Then $c$ is a nontrivial automorphism of $K$ since $c$ is not the identity on the subfield $\Q(\sqrt{-m})$. Since $c$ has order 2, the fixed field of $K$ by $c$ is a quadratic subfield of $K$ different from $\Q(\sqrt{-m})$.
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2017 Problem 4,ID=Jan17_4]
+This is a question about ``biquadratic extensions'' in two parts.
+\begin{enumerate}
+    \item Let $F/E$ be a degree-4 Galois extension, where $E$ and $F$ are fields of characteristic different from 2. Show that $\Gal(F/E) \cong (\Z/2\Z) \times (\Z/2\Z)$ if and only if there exist $x,y \in E$ such that $F = E(\sqrt{x},\sqrt{y})$ and none of $x,y,xy$ are squares in $E$.
+    \item Give an example of a field $E$ of characteristic 2 that is not algebraically closed but that has no Galois extension $F/E$ with Galois group $(\Z/2\Z) \times (\Z/2\Z)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Suppose $F = E(\sqrt{x},\sqrt{y})$, where none of $x$, $y$, and $xy$ are squares in $E$. This is a degree 4 extension, since it has basis $1, \sqrt{x}, \sqrt{y}, \sqrt{xy}$. It has four easy-to-think-of automorphisms: the identity, $\sigma$ which flips the sign of $\sqrt{x}$ and $\sqrt{xy}$, $\tau$ which flips the sign of $\sqrt{y}$ and $\sqrt{xy}$, and $\sigma \tau$ which flips the sign of $\sqrt{x}$ and $\sqrt{y}$. Since the automorphism group can have size at most 4, we know we've found all the automorphisms, so this is in fact a Galois extension.
+    
+    On the other hand, suppose $F/E$ is a degree 4 Galois extension with Galois group $(\Z/2\Z) \times (\Z/2\Z)$. Then, by the Fundamental Theorem of Galois Theory, from the subgroup structure of $(\Z/2\Z) \times (\Z/2\Z)$, we know that $F$ has three intermediate extension, which are degree 2 over $E$. Since $E$ is not characteristic 2, the quadratic formula tells us that any degree 2 extension is of the form $E(\sqrt{d})$ for some nonsquare $d$. So, we can say two of the intermediate extensions are $E(\sqrt{x})$ and $E(\sqrt{y})$. Since these are distinct extensions of $E$, $\sqrt{x} \not\in E(\sqrt{y})$ and visa versa, so $E(\sqrt{x},\sqrt{y})$ is a degree 4 extension of $E$ sitting inside $F$, and thus in fact we have $F = E(\sqrt{x},\sqrt{y})$.
+    
+    \item $E = \F_2$ works, because all the extensions of $\F_2$ have cyclic Galois group.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle={August 2016 Problem 5, modified},ID=Aug16_5]
+Consider the field $K = \Q(\zeta_7)$. Find an element $x \in K$ which generates a quadratic subextension, that is, so that $[\Q(x):\Q] = 2$. (Proving that such an $x$ exists will earn you partial credit. For full credit, express $x$ explicitly as a polynomial in $\zeta_7$, such as $42\alpha^3-1337\alpha^2$.)
+\end{question}
+\begin{question}
+We know that $\Gal(K/\Q) \cong (\Z/7\Z)\mult$ is cyclic of order 6, so has a unique subgroup $H$ of index 2. Then we know that the fixed field $K^H$ is the field we're looking for. Explicitly, $H$ is the subgroup consisting of all the squares mod 7, $H = \sqrt{1,2,4}$. To find a specific element fixed by this subgroup, we can take an orbit under this subgroup and add all the elements in that orbit together. So, one possible solution would be $x = \zeta_7 + \zeta_7^2 + \zeta_7^4$. This $x$ is clearly fixed by $H$, but not fixed by all of $\Gal(K/\Q)$, so it generates a degree 2 extension of $\Q$.
+\end{question}
+
+%I do like this one.
+\begin{question}[subtitle=January 2016 Problem 1,ID=Jan16_1]
+Let $K$ be a field, and let $f(x) \in K[x]$ be an irreducible polynomial. Suppose that the splitting field $L$ of $f(x)$ is a Galois extension of $K$ (that is, $f$ is separable). Let $\alpha \in L$ be one of the roots of $f$.
+\begin{enumerate}
+    \item Show that if $\Gal(L/K)$ is an abelian group, then $L=K(\alpha)$.
+    \item Is the converse statement true? That is, suppose $L=K(\alpha)$; must $\Gal(L/K)$ be abelian?
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Assume that $G=\Gal(L/K)$ is abelian. We know that $K(\alpha) \subseteq L$, so the Galois correspondence implies that there is a subgroup $H \leq G$ such that $H=\Gal(L/K(\alpha))$. Since $G$ is abelian, $H$ is a normal subgroup, so $K(\alpha)$ is a Galois extension of $K$. Since $f(x)$ is irreducible, it is the minimal polynomial of $\alpha$ over $K$, so $f$ splits in $K(\alpha)$ since $K(\alpha)/K$ is Galois and contains a root of $f$ so must contain all of the roots of $f$. Thus, $K(\alpha)=L$.
+    \item This is not true. Let $L$ be any finite Galois extension of $\Q$ with non-abelian Galois group. Then the primitive element theorem gives that $L=\Q(\alpha)$ for some $\alpha \in L$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2015 Problem 5,ID=Aug15_5]
+Let $\C(x)$ be the field of rational functions with complex coefficients in the variable $x$. Thus, $x$ is transcendental over $\C$. Put
+\[y=x^n+x^{-n} \in \C(x)\]
+for some $n>0$. Prove that the field extension $\C(x)/\C(y)$ is a finite Galois extension and find its degree.
+\end{question}
+\begin{solution}
+Let $\zeta$ be a primitive $n$th root of unity, let $\sigma_i: \C(x) \to \C(x)$ be the automorphism induced by $x \mapsto \zeta^i x$ for $0 \leq i\leq n-1$, and let $\tau$ be the automorphism defined by $x \mapsto \frac1x$. Notice that all of the $\sigma_i$ and $\tau$ fix $\C(y)$ since $\zeta^n=1$, so their products $\sigma_i\tau$ also fix $\C(y)$. Therefore, $Id,\sigma_1,\dots,\sigma_{n-1},\tau,\sigma_1\tau,\dots,\sigma_{n-1}\tau$ are all elements of $\Aut(\C(x)/\C(y))$, so $\abs{\Aut(\C(x)/\C(y))}\geq 2n$. On the other hand, we have that $x$ is a root of $t^{2n}+1 - (x^n+x^{-n})t^n \in \C(y)[t]$, which is a degree $2n$ polynomial, so $[\C(x):\C(y)] \leq 2n$. Since $\abs{\Aut(\C(x)/\C(y))}\leq [\C(x):\C(y)]$, they must both be equal to $2n$. Thus, $\C(x)/\C(y)$ is a Galois extension of degree $2n$.
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2011 Problem 3,ID=Aug11_3] %% Requested by Kevin Dao
+Let $K\subseteq F\subseteq E$ be fields with $E=F[\alpha]$ and with $\alpha^n \in F$ for some positive integer $n$. Suppose $K$ contains a primitive $n$th root of unity, and let $L$ be a field with $K\subseteq L \subseteq E$ and $L\cap F=K$.
+\begin{enumerate}
+    \item If $L$ is Galois over $K$, show that $L=K[\beta]$ for some element $\beta$  with $\beta^n \in K$.
+    \item Show by example that $L$ need not be Galois over $K$. (Hint. Take $n= 2$.)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $\zeta \in K$ be a primitive $n$th root of unity. If $\alpha^d \in F$ for some $d < n$, then $d \mid n$. Since $K$ certainly contains a primitive $d$th root of unity, namely $\zeta^{n/d}$, so without loss of generality we may assume that $n$ is the least integer such that $\alpha^n \in F$. Then $[E:F] \leq n$. Notice that for each $i$, $\alpha \mapsto \zeta^i \alpha$ gives a distinct automorphism of $E$ fixing $F$, so $E/F$ is Galois with Galois group $C_n$. For each $d \mid n$, $F(\alpha^{n/d})$ is a degree $d$ extension of $F$ contained in $E$. But we know that such extensions are in bijection with subgroups of $C_n$, and $C_n$ has a unique subgroup of each order dividing $n$, so in fact every intermediate extension is of the form $F(\alpha^{n/d})$.
+    
+    Now, consider the particular intermediate extension $FL$, the composite of $F$ and $L$. This is equal to $F(\alpha^{n/d})$ for some $d$, so is the splitting field of $x^d - \alpha^n$. 
+    \item Let $K = \Q$, $F$ and $L$ be different fields containing cube roots of 2, say $F = \Q(\sqrt[3]{2})$ and $L = \Q(\zeta_3 \sqrt[3]{2})$, and $E = FL = \Q(\sqrt[3]{2},\zeta_3)$. Then $E$ is a quadratic extension of $F$, so it can be written as $F(\sqrt{\alpha})$ (in fact $F(\sqrt{-3})$). However, $L$ cannot be written as $\Q(\sqrt{\beta})$ because it is a degree 3 extension.
+\end{enumerate}
+\end{solution}

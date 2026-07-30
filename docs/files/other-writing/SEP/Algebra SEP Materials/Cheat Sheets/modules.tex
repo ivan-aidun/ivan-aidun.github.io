@@ -1,0 +1,34 @@
+\begin{center}
+    \huge Module Theory Cheat-Sheet
+\end{center}
+
+\vspace{5mm}
+\noindent For the most part, on this sheet I will assume rings to be commutative, with the one except being when the matrix ring $M_2(k)$ is discussed.
+
+\noindent\textbf{Examples}
+\begin{itemize}
+    \item A $\Z$-module is an abelian group.
+    \item A $k[x]$-module is a $k$-vector space $V$ and a linear transformation $X \colon V \to V$.
+    \item A $k[x,y]$-module is a $k$-vector space $V$ and \emph{two} linear transformations $X, Y \colon V \to V$ such that $XY = YX$. (And so on for $k$ adjoin several variables.)
+    \item A module over $k[x]/(f)$ is a $k$-vector space $V$ and a linear transformation $X \colon V \to V$ satisfying $f(X) = 0$. (That is, the minimal polynomial of $X$ divides $f$.)
+    \item The vector space $k^2$ is a left $M_2(k)$-module, where a matrix $A$ acts on a vector $v$ by left matrix multiplication $Av$. In fact, every f.g.\ left $M_2(k)$-module is a direct sum of $k^2$ with itself. This is related to the fact that $M_2(k)$ is a simple ring.
+\end{itemize}
+
+\noindent\textbf{Constructions}
+\begin{itemize}
+    \item For any ring $R$, an ideal $I \subset R$ is an $R$-module, as is $R/I$.
+    % \item Given any two $R$-modules $M,N$, we can form their \textbf{direct sum} $M \oplus N$. The underlying set of $M \oplus N$ is the Cartesian product $M \times N$, and scalar multiplication works as you might expect: $r(m,n) = (rm,rn)$.
+    % \item Given an $R$-module $M$ and a submodule $N \subset M$, the quotient group $M/N$ is an $R$-module.
+    \item Given $R$-modules $M,N$, let $\Hom_R(M,N)$ be the set of all $R$-module homomorphisms $f \colon M \to N$. Then $\Hom_R(M,N)$ is itself an $R$-module, since if $f \colon M \to N$ is a homomorphism, so is $rf \colon M \to N$.
+    \item If $R' \subset R$ is a subring, and $M$ is an $R$-module, then $M$ is moreover an $R'$-module. For example, a $\C[x]$-module is also a $\C$-vector space; a $\C$-vector space is also an $\R$-vector space of twice the dimension; a $\Q$-vector space is also an abelian group (a $\Z$-module). This way of forming modules is called \textbf{restriction of scalars}.
+    \item More generally, if $f\colon R' \to R$ is any ring homomorphism, and $M$ is an $R$-module, then we can view $M$ as an $R'$-module via $r' \cdot m \coloneqq f(r')m$. E.g.\ $k[t]$ can be a module over $k[x,y]/(y^2-x^3)$ via the map $x \mapsto t^2$, $y \mapsto t^3$.
+\end{itemize}
+
+\noindent\textbf{Modules over PIDs}
+\begin{thm}
+A finitely-generated module over a PID $R$ is isomorphic to a module of the form
+\[R^r \oplus R/(a_1) \oplus R/(a_2) \oplus \dots \oplus R/(a_m),\]
+where each $a_i \mid a_{i+1}$. The elements $a_i$ are called the \textbf{invariant factors} of the module. Alternatively, a f.g.\ module over a PID is isomorphic to a module of the form
+\[R^r \oplus R/(p_1^{e_1}) \oplus R/(p_2^{e_2}) \oplus \dots \oplus R/(p_n^{e_n}),\]
+where each $p_j$ is a prime element of $R$ (which are not necessarily distinct). The $p_j$ are called the \textbf{elementary divisors} of the module.
+\end{thm}

@@ -1,0 +1,82 @@
+\section{Other problems I like}
+
+%Stealing this from a Purdue qual bc I like it.
+\begin{question}[subtitle= {From a Purdue qual},ID=PuLA_Aug23]
+Let $M_2(\C)$ be the space of $2 \times 2$ matrices over $\C$. The space $M_2(\C)$ is a complex vector space of dimension 4. There is a linear map $T\colon M_2(\C) \to M_2(\C)$ that sends $A$ to $A^T$.
+\begin{enumerate}
+    \item Compute the eigenvalues of $T$.
+    \item For each eigenvalue of $T$, compute a basis for the associated eigenspace.
+    \item Is the map $T$ diagonalizable?
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Since $(A^T)^T = A$, the map $T$ satisfies $T^2 = I$, but $T \neq I$, so the minimal polynomial of $T$ is $x^2 - 1$, and thus the eigenvalues are $\pm 1$.
+    \item The $\lambda = 1$ eigenspace consists of symmetric matrices. We may take a basis for this eigenspace consisting of the matrices $S_{i,j}$ which have a 1 in the $(i,j)$ and $(j,i)$ entries (if distinct) and 0s elsewhere. The $\lambda = \shortminus 1$ eigenspace consists of skew-symmetric matrices. We may take a basis for this eigenspace consisting of the matrices $A_{i,j}$, $i < j$, which have a 1 in the $(i,j)$ entry, a $\shortminus 1$ in the $(j,i)$ entry, and 0s elsewhere.
+    \item Yes, $T$ is diagonalizable. We can see this both because its minimal polynomial has no repeated roots, and also because we just found an eigenbasis.
+\end{enumerate}
+\end{solution}
+
+%Also stolen from Purdue
+\begin{question}[subtitle = {From a Purdue qual},ID=PuAA_Jan23]
+Let $f \in \Q[x]$ be a degree 5 irreducible polynomial, let $K/\Q$ be its splitting field, and let $\alpha,\beta,\gamma,\delta,\badep \in K$ be the roots of $f$. Suppose that $\Gal(K/\Q) = S_5$, the symmetric group on 5 elements.
+\begin{enumerate}
+    \item Find the Galois group of $K/\Q(\alpha,\beta)$.
+    \item Find the Galois group of $K/\Q(\alpha+\beta,\alpha \beta)$.
+    \item The field $\Q(\alpha,\beta)$ contains the field $\Q(\alpha + \beta,\alpha \beta)$. Find the degree $[\Q(\alpha,\beta) : \Q(\alpha + \beta,\alpha \beta)]$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The Galois group of $K/\Q(\alpha,\beta)$ will consist of all those elements of $S_5$ which fix $\alpha$ and $\beta$, which is a subgroup isomorphic to $S_3$.
+    \item The Galois group of $K/\Q(\alpha + \beta,\alpha \beta)$ will consist of all those elements of $S_5$ which fix $\alpha + \beta$ and $\alpha \beta$. Such a permutation can swap $\alpha$ and $\beta$, and can freely permute the remaining roots, so this subgroup is isomorphic to $S_2 \times S_3$.
+    \item We have that
+    \begin{align*}
+    [\Q(\alpha,\beta) : \Q(\alpha + \beta,\alpha \beta)] [K : \Q(\alpha,\beta)] &= [K : \Q(\alpha + \beta,\alpha \beta)]\\
+    [\Q(\alpha,\beta) : \Q(\alpha + \beta,\alpha \beta)] \abs{\Gal(K/\Q(\alpha,\beta))} &= \abs{\Gal(K/\Q(\alpha + \beta,\alpha \beta))}\\
+    [\Q(\alpha,\beta) : \Q(\alpha + \beta,\alpha \beta)] \cdot 6 &= 12.
+    \end{align*}
+    Hence, $[\Q(\alpha,\beta) : \Q(\alpha + \beta,\alpha \beta)] = 2$.
+\end{enumerate}
+\end{solution}
+
+\begin{question}[subtitle = From a Michigan qual]
+Let $A$ be an integral domain, and let $M$ be an $A$-module. We say that $M$ is \emph{torsion-free} if whenever $a\cdot m = 0$ either $a = 0$ or $m = 0$.
+\begin{enumerate}
+    \item Let $A$ be a principal ideal domain. Suppose that $M$ and $N$ are torsion-free $A$-modules. Prove that $M \otimes_A N$ is torsion-free. (You may assume that $M$ and $N$ are finitely generated, but this is not necessary!)
+    \item Let $A$ be the ring $\C[x,y]$, and let $M$ be the ideal $(x,y) \subset A$. Show that $M \otimes_A M$ is \textbf{not} torsion-free.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Low-ish-tech way: suppose $M$ and $N$ are finitely generated. Then, by the classification of finitely-generated modules over a PID, the assumption that $M$ and $N$ are torsion free implies that they are free, say of ranks $r_1,r_2$ respectively. Then, since tensor products distribute over direct sums, $M \otimes_A N$ is free of rank $r_1 r_2$. (I thought about trying to work hands-on with the tensors, and I think it's real bad.)
+
+    Higher-tech way: it is a fact that a torsion-free module over a PID is flat. The fact that a module $B$ is torsion-free can be rephrased as saying that, for any $a \in A \setminus\set{0}$, the multiplication by $a$ map $B \tonamed{\cdot a} B$ is injective. Since $M$ is torsion-free, we have this condition for $M$. Since $N$ is flat, we have that $M \otimes_A N \tonamed{(\cdot a)\otimes \text{id}} M \otimes_A N$ is injective. But this is exactly the multiplication by $a$ map on $M \otimes_A N$ by bilinearity, so $M \otimes_A N$ is torsion-free.
+
+    \item Consider the elements $m_1 = x \otimes y$ and $m_2 = y \otimes x$ in $M \otimes_A M$. These seem like they would be the same element, and indeed if we were talking about $A \otimes_A A$ they would be, as they would both be equivalent to $xy \otimes 1$. However, in $M \otimes_A M$, we can't write them as $xy \otimes 1$ since $1 \notin M$. Also, neither $m_1$ nor $m_2$ is equal to 0, because we have a map $M \otimes_A M \to M$ sending $f \otimes g$ to $fg$, and under this map they both map to $xy$. However, notice that $x(x\otimes y) = x \otimes xy = xy \otimes x = x(y \otimes x)$, so $x \otimes y - y \otimes x$ is $x$-torsion (and also $y$-torsion for the same reason).
+
+    So, we have found a torsion element if, as suggested above, we can show that $x \otimes y \neq y \otimes x$. To do so formally, consider the map $M \to M/M^2$. This induces a map \[M \otimes_A M \to (M/M^2) \otimes_A (M/M^2)\] sending $f \otimes g$ to the reduction in each component. Notice that $x$ and $y$ act as the zero map on $M/M^2$, so $M/M^2$ is really an $A/M \cong \C$-vector space with basis vectors $x,y$. Thus, $(M/M^2) \otimes_A (M/M^2)$ is a 4-dimensional $\C$-vector space, with basis $x \otimes x$, $x \otimes y$, $y \otimes x$, $y \otimes y$. Thus, $x \otimes y, y \otimes x \in M \otimes_A M$ get sent to linearly independent vectors under this map, and therefore cannot be equal in $M \otimes_A M$.
+
+    The high-tech way: we have an exact sequence of $A$-modules $0 \to M \to A \to A/M \to 0$. Tensoring this sequence with $M$, we get a long exact sequence of $\Tor$ modules, which begins $0 \ot M/M^2 \ot M \ot M \otimes_A M \ot \Tor_1(A/M,M) \ot 0 \dots$. Luckily, it is easy to write down a free resolution of $A/M$ to compute that $\Tor_1(A/M,M) \cong A/M$. Thus, $A/M$ sits as a submodule of $M \otimes_A M$, and $A/M$ is clearly torsion.
+\end{enumerate}
+\end{solution}
+
+% This actually appeared on a qual, and in a nicer way.
+% \begin{question}[subtitle=From Robert Lemke Oliver]
+% Say a nontrivial normal subgroup $H \trianglelefteq G$ is \emph{minimal} if for all other normal subgroups $H' \trianglelefteq G$, $H' \leq H$ implies either $H' = \genset{e}$ or $H' = H$.
+
+% Let $G$ be finite. Prove that any minimal normal subgroup $H \leq G$ is isomorphic to the direct power of a simple group. That is, there exists a simple group $P$ and a positive integer $r$ so that $H \cong P^r$.
+% \end{question}
+% \begin{solution}
+% Notice that if $H \cong P^r$, then a minimal normal subgroup \emph{of $H$} must be a copy of the simple group $P$. So, let's take a minimal normal subgroup of $H$, and we will provisionally call it $P$. We need to prove two things:
+% \begin{enumerate}[i.]
+%     \item $H \cong P^r$ for some $r$, and
+%     \item $P$ is simple.
+% \end{enumerate}
+
+% The group $G$ acts on the subgroups of $H$ by conjugation, since $H$ is normal in $G$. The conjugates of $P$ are all isomorphic to $P$, and they are all minimal normal in $H$. Since the intersection of two normal subgroups is a normal subgroup, if $gPg\inv$ is a conjugate subgroup different from $P$, then $P \int gPg\inv$ is a normal subgroup of $H$ contained in $P$, hence is the trivial subgroup. Furthermore, the group generated by $P$ and all its $G$-conjugates is a nontrivial normal subgroup of $G$, and it is contained in $H$, hence it is equal to $H$. Thus, by the internal direct product test, $H$ is isomorphic to the direct product of $P$ with all its conjugates, which is isomorphic to $P^r$ for some $r$.
+
+% Now, we will show that $P$ is simple. Suppose $N \lnormal P$, then since $N$ is normal in a direct factor of $H$, $N$ is normal in $H$ itself. However, we supposed $P$ to be minimal normal in $H$, so the only possibilities are $N = P$ and $N = \set{1}$. Hence, $P$ is simple.
+
+% (Aside: a group with no characteristic subgroups is called \textbf{characteristically simple}, and a minimal normal subgroup must always be characteristically simple. Our proof is essentially showing that a finite characteristically simple group is a direct power of a simple group. Indeed, this result follows immediately by taking a characteristically simple group $G \cong \operatorname{Inn}(G)$ and embedding it in $\Aut(G)$ as a minimal normal subgroup.)
+% \end{solution}

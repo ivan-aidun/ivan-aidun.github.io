@@ -1,0 +1,44 @@
+\begin{center}
+    \huge Localization Cheat-Sheet
+\end{center}
+
+\vspace{5mm}
+\noindent Here, I will say ``ring'' to mean ``commutative ring''.
+
+\vspace{1em}
+In rings, unlike in fields, we cannot necessarily divide by elements. At times this leads to some awkwardness in arguments where you'd really like to divide by something. To overcome this, we can localize our ring. A \textbf{localization} of a ring $R$ is another ring which is much like $R$, but in which you can divide by certain elements that you maybe couldn't originally. So, say $R = \Z$ and we want to be able to divide by 7. We form a new ring $\Z[\frac{1}{7}]$ which contains all the original integers and the new element $\frac{1}{7}$. What denominators are possible in the fractions in our new ring? We must have any power of $\frac{1}{7}$ in order to have a ring, but that is it.
+
+In general, given a ring $R$, we might want to localize $R$ to throw in a set of possible denominators. We say a set $S \subset R$ is \textbf{multiplicatively closed} if $1 \in S$ and whenever $s_1, s_2 \in S$, then $s_1 s_2 \in S$. A set of denominators is valid only if it is multiplicatively closed, just like above we couldn't throw in $\frac{1}{7}$ alone, we had to include all the powers of it. The localization of $R$ at the multiplicatively closed subset $S$ is denoted $S\linv R$ or $R[\frac{1}{S}]$ except for when it isn't, see below. The elements of $S\linv R$ are ``fraction symbols'' $\frac{r}{s}$ where $r \in R$ and $s \in S$. They add like fractions add and multiply like fractions multiply.
+
+We use the usual fraction equivalence $\frac{r}{s} = \frac{rs'}{ss'}$. However, this can lead to unintuitve behavior when the ring $R$ has zero divisors. For example, in $\Z/6\Z$, I could take the multiplicatively closed subset $S = \set{1,2,4}$. Then in $S\linv R$ I would have $\frac{3}{1} = \frac{6}{2} = 0$. Formally, we say two fractions $\frac{r_1}{s_1}, \frac{r_2}{s_2}$ are equal if there is some $s_3 \in S$ so that $s_3(r_1 s_2 - r_2 s_1) = 0$ in $R$.
+
+Two common special examples of localizations, which break from the notation above, are:
+\begin{itemize}
+    \item When the multiplicatively closed subset is $\set{1,x,x^2,\dots}$ for some $x \in R$, like in our example above with $\frac{1}{7}$. This often gets denoted $R_x$ instead of $S\linv R$, except if $R = \Z$ in which case $\Z[\frac{1}{x}]$ is standard, like I used above. This is called ``the localization of $R$ at (the element) $x$''.
+    \item When the multiplicatively closed subset is $R \setminus \mf{p}$ for some prime ideal $\mf{p} \subset R$. This is denoted $R_{\mf{p}}$.  Don't get confused! The rings $\C[x]_x$ and $\C[x]_{(x)}$ are different! This is often called ``the localization of $R$ at (the prime) $\mf{p}$'', although former UW professor Daniel Erman preferred to say ``the localization of $R$ \emph{away from} $\mf{p}$'' to emphasize which denominators you actually use.
+\end{itemize}
+
+Above, if we wanted all the integers and also $\frac{1}{7}$, we had several choices of ring to choose: we could have chosen $\Q$, or $\R$, or $\C$, etc. However, $\Z[\frac{1}{7}]$ seems like the ``simplest'' possible ring that both has all the integers and has $\frac{1}{7}$. In general, we always have a ring homomorphism $\ell\colon R \to S\linv R$ which sends $r \mapsto \frac{r}{1}$. This has the property that if $\phi\colon R \to T$ is any other ring homomorphism so that $\phi(s)$ is invertible in $T$ for every $s \in S$, then there is a unique homomorphism $\twiddle{\phi}\colon S\linv R \to T$ so that $\phi = \twiddle{\phi} \circ \ell$. So, this property tells us that there's a unique ring homomorphism $\Z[\frac{1}{7}] \to \Q$ (or $\R$ or $\C$).
+
+As mentioned above, localization can behave strangely if $S$ contains zero divisors:
+\begin{itemize}
+    \item If $S$ contains zero divisors, then the localization map $\ell\colon R \to S\linv R$ is not injective.
+    \item If $S$ contains a nilpotent element, then $S\linv R = 0$. This is because no matter how strong you are, you can never divide by 0.
+\end{itemize}
+In fact, these are both ``if and only if'' statements.
+
+The ideals in $S\linv R$ correspond to ideals of $R$ which do not intersect $S$. This is because an ideal which intersects with $S$ contains a unit in the localization, and therefore is $(1)$. This correspondence preserves prime ideals.
+
+Just like you can localize a ring $R$, you can also localize any ideal or $R$-module. If $M$ is an $R$-module, then the elements of $S\linv M$ are again ``fraction symbols'' $\frac{m}{s}$ where $m \in M$ and $s \in S$. The localized module is a module over $S\linv R$. The notation caveats above also apply to modules, so people will write $M_x$ or $M_{\mf{p}}$. If $\phi \colon M \to N$ is a homomorphism of $R$-modules, then there is an induced homomorphism on their localizations $S\inv \phi \colon S\linv M \to S\linv N$ defined by $S\inv \phi(\frac{m}{s}) = \frac{\phi(m)}{s}$. This is way more important than it sounds.
+
+\noindent \textbf{Local rings}
+A \textbf{local ring} is a ring $R$ with a unique maximal ideal $\mf{m}$.
+\begin{itemize}
+    \item Every field is a local ring, but this is a dumb example.
+    \item The ring $\Z/p^n \Z$ is a local ring whose maximal ideal is $(p)$, and this is only a mildly dumb example.
+    \item If $R$ is a ring and $\mf{p} \subset R$ is a prime ideal, then $R_{\mf{p}}$ is a local ring whose maximal ideal is $\mf{p}_{\mf{p}}$. For example, let $S$ consist of all odd integers, then $\Z[\frac{1}{S}]$ is a local ring with maximal ideal $(2)$.
+\end{itemize}
+Local rings are very important because one of the main ways to analyze modules is to look at them ``locally'', by localizing at different prime ideals. Modules over local rings are very nice because of \textbf{Nakayama's lemma}.
+\begin{thm}[Nakayama's lemma]
+If $(R,\mf{m})$ is a local ring, and $M$ is a finitely-generated $R$-module, we can look at $M/\mf{m}M$ as a vector space over $R/\mf{m}$. If $m_1,\dots,m_n \in M$ are a basis for the vector space $M/\mf{m}M$, then they form a minimal generating set for $M$.
+\end{thm}

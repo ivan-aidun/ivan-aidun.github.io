@@ -1,0 +1,96 @@
+\begin{center}
+    \huge Jordan Normal Form Cheat-Sheet
+\end{center}
+
+\vspace{5mm}
+\noindent We're going to discuss only square matrices, so I will say ``matrix'' to implicitly mean ``square matrix''.
+
+\vspace{1em}
+The \emph{Jordan Normal Form} (JNF) of a matrix $A$ is a specific almost-diagonal matrix $J$ that is similar to $A$. When $A$ is diagonalizable, $J$ is the diagonalization of $A$. Otherwise, the matrix $J$ is block-diagonal, and each block will be an almost-diagonal matrix of the form
+\[\begin{pmatrix}
+    \lambda & 1 & & & \\
+     & \lambda & 1 & & \\
+     & & \ddots & \ddots & \\
+     & & & \ddots & 1\\
+     & & &  & \lambda 
+\end{pmatrix},\]
+where $\lambda$ is an eigenvalue of $A$. Such a block is called a \emph{Jordan block}. In the JNF of $A$, the sum of the sizes of the Jordan blocks associated to $\lambda$ will equal the algebraic multiplicity of $\lambda$ as an eigenvalue of $A$. (e.g.\ if $\lambda$ has algebraic multiplicity 3, then $A$ could have one $3 \times 3$ Jordan block, a $2 \times 2$ Jordan block and a $1 \times 1$ Jordan block, or three $1 \times 1$ Jordan blocks.)
+
+For example, the following $6 \times 6$ matrix has 3 Jordan blocks, one of size 1 and eigenvalue 1, one of size 2 and eigenvalue 1, and one of size 3 and eigenvalue 4:
+\[\begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 & 0\\
+    0 & 1 & 1 & 0 & 0 & 0\\
+    0 & 0 & 1 & 0 & 0 & 0\\
+    0 & 0 & 0 & 4 & 1 & 0\\
+    0 & 0 & 0 & 0 & 4 & 1\\
+    0 & 0 & 0 & 0 & 0 & 4
+\end{pmatrix}.\]
+
+Saying that $A$ is similar to $J$ means that there is an invertible matrix $B$ so that $A = BJB\inv$. The columns of the matrix $B$ form a special basis for the underlying vector space called a \emph{Jordan basis}. A Jordan basis is a union of \emph{Jordan chains}, which is a sequence of vectors $v_k,v_{k-1},\dots,v_1$ such that $Av_k = \lambda v_k + v_{k-1}$. This is what gives the Jordan blocks their staircase shape. In the example above, the Jordan chains making up the basis are $\set{e_1}$, $\set{e_3,e_2}$, and $\set{e_6,e_5,e_4}$.
+
+The vectors $v_i$ are examples of \emph{generalized eigenvectors}: a generalized eigenvector of eigenvalue $\lambda$ is an element of $\ker (A-\lambda I)^k$ for some natural number $k$; the least such $k$ I call the ``degree'' of the generalized eigenvector, while Wikipedia calls it the ``rank''. (I do not know whether anybody else uses my terminology, but it seems obviously bad in context to call this the ``rank'' of the generalized eigenvector.) You can only find generalized eigenvectors for $\lambda$ that are already eigenvalues of $A$, because otherwise $A - \lambda I$ is invertible.
+
+If you were given a matrix $A$ and wanted to compute a Jordan basis for it, you would:
+\begin{enumerate}[i.]
+    \item Find the eigenvalues of $A$.
+    \item Choose an eigenvalue $\lambda$ and compute the maximal generalized eigenspace $V_{\lambda} = \ker (A-\lambda I)^n$. Choose almost any vector $v_k \in V_{\lambda}$, and start forming a Jordan chain by recursively defining $v_{i-1} = Av_i - \lambda v_i = (A-\lambda I)v_i$. (I say ``almost any'' because you need $v_k$ to have maximal degree, and the generalized eigenvectors of lower degree form a measure 0 set.)
+    \item The Jordan chain you get in Step ii.\ might not span all of $V_{\lambda}$. If it doesn't, choose almost any vector in $V_{\lambda}$ that isn't in the span of the vectors you already have and repeat the process. Continuing in this fashion, you will eventually have enough Jordan chains to span $V_{\lambda}$.
+    \item Repeat Steps ii.\ and iii.\ for all the other eigenvalues.
+\end{enumerate}
+
+The JNF of a matrix is related to its characteristic polynomial. The characteristic polynomial of $A$ is the product of $(x-\lambda_i)$ for each time you see $\lambda_i$ on the diagonal of its JNF. For the example above, the characteristic polynomial is $(x-1)^3(x-4)^3$.
+
+There is a different polynomial which is more closely associated to the JNF. The \emph{minimal polynomial} of $A$ is the lowest-degree polynomial $A$ satisfies (meaning $f(A) = 0$). The minimal polynomial divides any other polynomial $A$ satisfies. By the Cayley-Hamilton Theorem, $A$ satisfies its own characteristic polynomial, so the minimal polynomial always divides the characteristic polynomial. The minimal polynomial of a $k \times k$ Jordan block of eigenvalue $\lambda$ is the same as its characteristic polynomial: $(x-\lambda)^k$. However, the minimal polynomial of $A$ is the gcd, not the product, of the minimal polynomials of its Jordan blocks. That means that in the minimal polynomial for $A$, $(x-\lambda_i)$ appears to the power $k$ which is the size of the largest Jordan block. So, in the example above, $A$ has minimal polynomial $(x-1)^2 (x-4)^3$. (Notice: the minimal polynomial doesn't just divide the characteristic polynomial, but they also have all the same irreducible factors, and differ only in the multiplicity of each root.)
+
+A Jordan normal form for a matrix always exists over $\C$, but might not exist over a field $k$ which is not algebraically closed. It will exist if and only if all the eigenvalues lie in $k$. If you're over a non-algebraically closed $k$ and have eigenvalues that do not lie in $k$ (e.g.\ you have a real matrix with complex eigenvalues), there is another normal form called the \emph{Rational Canonical Form} (RCF), which is also a block diagonal normal form. If the eigenvalue $\lambda$ does not lie in $k$, then, instead of having a Jordan block, the RCF will have a \emph{companion matrix} associated to a polynomial $f(x) \in k[x]$ such that $f(\lambda) = 0$. The companion matrix associated to $f(x) = x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0$ is the $n \times n$ matrix
+\[\begin{pmatrix*}[r]
+    0 & 0 & \dots & \dots & \shortminus a_0 \\
+    1 & 0 & & & \vdots \\
+    0 & 1 & \ddots & & \vdots \\
+    \vdots & & \ddots & 0 & \shortminus a_{n-2} \\
+    0 & \dots & & 1 & \shortminus a_{n-1}
+\end{pmatrix*}.\]
+The RCF of a matrix can be computed algorithmically, but it's more complicated than computing the JNF, and not worth going into. It's better to understand the RCF from the perspective of module theory, rather than trying to think about it purely in terms of linear algebra.
+
+% \vspace{1em}
+% Most matrices are diagonalizable. To diagonalize a matrix $A$, you just need to find a basis of eigenvectors. For example, to diagonalize
+% \[A = \twomatrix{2}{1}{1}{2},\]
+% first we compute that its characteristic polynomial is $x^2-4x+3$, which has roots $\lambda_1 = 1,\ \lambda_2 = 3$, so these are the eigenvalues of $A$. Then, for $i=1,2$, we find eigenvectors of $A$ of eigenvalue $\lambda_i$ by finding $\ker(A - \lambda_i I)$ through row reduction. In this case we find that the 1-eigenspace of $A$ is spanned by $\begin{pmatrix*}[r]1\\\shortminus 1\end{pmatrix*}$ and the 3-eigenspace is spanned by $\begin{pmatrix}1\\1\end{pmatrix}$. These eigenvectors will be the columns of the matrix we need to conjugate by to diagonalize $A$:
+% \[\twomatrix{1}{1}{\shortminus 1}{1}\inv \twomatrix{2}{1}{1}{2} \twomatrix{1}{1}{\shortminus 1}{1} = \twomatrix{1}{0}{0}{3}.\]
+
+% % Tragically, some matrices are not diagonalizable. The two matrices below are not diagonalizable over $\R$:
+% % \[A_1 = \twomatrix{0}{-1}{1}{0} \qquad A_2 = \twomatrix{1}{1}{0}{1}.\]
+% % The matrix $A_1$ has characteristic polynomial $x^2+1$, and this polynomial does not have real roots. This challenge is easily reasolved: $x^2+1$ \emph{does} have roots defined over $\C$, and accordingly, this matrix has two linearly independent eigenvectors in $\C^2$, so the procedure above suffices to diagonalize it.
+
+% % However, $A_2$ presents a more serious problem. It's characteristic polynomial is $(x-1)^2$, but it only has a one-dimensional space of eigenvectors. This is not an issue with the underlying field, something else is going on. Sometimes people will say that this matrix has 1 as an eigenvalue of \emph{algebraic} multiplicity 2 (because $(x-1)^2$ divides, and indeed is, the characteristic polynomial), but of \emph{geometric} multiplicity 1 (because it only has one eigenvector). Sometimes people will say a matrix of this sort is \emph{defective}, and that it's 1-eigenspace has defect $1 = 2-1$, because you would expect it to have 2 linearly independent eigenvectors, but it has only 1 instead.
+
+% % The matrix $A_2$ does not admit a basis of eigenvectors, but it gets kinda close. The standard basis $e_1,e_2$ has the property that $e_1$ is an actualy eigenvector of eigenvalue 1, and $e_2$ is kinda close to being an eigenvector of eigenvalue 1. After all, $A_2 e_2 = e_2 + e_1$. Maybe more convincingly, I could write $A_2 e_2 \equiv e_2 \pmod{e_1}$, so once I mod out by the \emph{actual} eigenvectors, $e_2$ is the next best thing. If we were given a defective matrix, instead of demanding a basis of \emph{actual} eigenvectors, we satisfied ourselves with the next best thing whenever we fail to find sufficiently many eigenvectors?
+
+% Some matrices are not diagonalizable, because they don't have enough linearly independent eigenvectors. We want to have a matrix form for these matrices which gets as close to being diagonal as possible, and we will do this by using the next best thing after eigenvectors. For a given matrix $A$, we define a \emph{generalized eigenvector} of eigenvalue $\lambda$ and degree $k$ to be a vector $v$ so that $(A-\lambda I)^k v = 0$.
+% % (This is equivalent to saying $A v \equiv v$ (mod generalized eigenvectors of degree $<k$).)
+% You can only find generalized eigenvectors for $\lambda$ that are already eigenvalues of $A$, because otherwise $A - \lambda I$ is invertible. Generalized eigenvectors make up the gap between the algebraic and geometric multiplicity of a given eigenvalue $\lambda$.
+
+% To obtain an almost-diagonal matrix, it is not quite enough to ask for any random basis of generalized eigenvectors, but rather you want chains of generalized eigenvectors. A \emph{Jordan chain} is an ordered set of vectors $\set{v_k, v_{k-1},\dots, v_1}$ so that $(A-\lambda I)v_i = v_{i-1}$ (equivalently, $A v_i = \lambda v_i + v_{i-1}$). The vectors in a Jordan chain are always linearly independent of one another. A basis which is a union of Jordan chains is a \emph{Jordan basis}, which always exists for any matrix $A$. Similar to diagonalization, we can put a Jordan basis as the columns of a matrix $B$. Then $B\inv A B$ will be in an almost-diagonal form called \emph{Jordan Normal Form}. In Jordan Normal Form, $A$ will be block-diagonal, and blocks will themselves be almost-diagonal matrices of the form
+% \[\begin{pmatrix}
+%     \lambda & 1 & & & \\
+%      & \lambda & 1 & & \\
+%      & & \ddots & \ddots & \\
+%      & & & \ddots & 1\\
+%      & & &  & \lambda 
+% \end{pmatrix}.\]
+% If a matrix is diagonalizable, its Jordan form coincides with its diagonalization.
+
+% For example, the following $6 \times 6$ matrix has 3 Jordan blocks, one of size 1 and eigenvalue 1, one of size 2 and eigenvalue 1, and one of size 3 and eigenvalue 4:
+% \[\begin{pmatrix}
+%     1 & 0 & 0 & 0 & 0 & 0\\
+%     0 & 1 & 1 & 0 & 0 & 0\\
+%     0 & 0 & 1 & 0 & 0 & 0\\
+%     0 & 0 & 0 & 4 & 1 & 0\\
+%     0 & 0 & 0 & 0 & 4 & 1\\
+%     0 & 0 & 0 & 0 & 0 & 4
+% \end{pmatrix}.\]
+% The Jordan chains making up the basis are $\set{e_1}$, $\set{e_3,e_2}$, and $\set{e_6,e_5,e_4}$.
+
+% The Jordan Normal Form lets you tell the characteristic polynomial of a matrix just like a diagonalization: you have a factor of $(x-\lambda_i)$ for each time you see $\lambda_i$ on the diagonal. For the matrix above, the characteristic polynomial is $(x-1)^3(x-4)^3$. There is a different polynomial which is more closely associated to the JNF. The \emph{minimal polynomial} of $A$ is the lowest-degree polynomial $A$ satisfies (meaning $f(A) = 0$). The minimal polynomial divides any other polynomial $A$ satisfies. By the Cayley-Hamilton Theorem, $A$ satisfies its own characteristic polynomial, so the minimal polynomial always divides the characteristic polynomial.
+
+% You can read the minimal polynomial for $A$ from the JNF. The minimal polynomial has a factor of $(x-\lambda_i)^k$ if the largest Jordan block of eigenvalue $\lambda_i$ has size $k$. So, the matrix above has minimal polynomial $(x-1)^2 (x-4)^3$. In particular, the minimal polynomial always has the same roots as the characteristic polynomial, but the factors might be raised to different powers. Also, if the minimal polynomial has all distinct factors, this means that $A$ is diagonalizable.

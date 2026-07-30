@@ -1,0 +1,415 @@
+\section{Linear Algebra}
+
+\begin{question}[subtitle = January 2026 Problem 4,ID=Jan26_4]
+Let $F$ be an algebraically closed field, and $a_1, \dots, a_n \in F - \set{0}$. Consider the matrix
+\[A = \begin{pmatrix}
+0 & 0 & \dots & 0 & a_n \\
+a_1 & 0 & \dots & 0 & 0 \\
+0 & a_2 & \ddots & 0 & 0 \\
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & \dots & a_{n-1} & 0
+\end{pmatrix}\]
+over $F$.
+\begin{enumerate}
+    \item Suppose $F$ has characteristic 0. Find the eigenvalues and eigenspaces of $A$. (Of course, the answer would involve the $a_i$'s.)
+    \item Suppose $F$ has characteristic 0. Find the Jordan form of $A$.
+    \item Suppose $n = p$ is prime and $F$ has characteristic $p$. Find the Jordan form of $A$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item To find the eigenvalues, let us first find the characteristic polynomial. Expanding $\det(\lambda I - A)$ along the first row, we get
+    \begin{align*}
+    \det \begin{pmatrix}
+    \lambda & 0 & \dots & 0 & \shortminus a_n \\
+    \shortminus a_1 & \lambda & \dots & 0 & 0 \\
+    0 & \shortminus a_2 & \ddots & 0 & 0 \\
+    \vdots & \vdots & \ddots & \vdots & \vdots \\
+    0 & 0 & \dots & \shortminus a_{n-1} & \lambda
+    \end{pmatrix}
+    = &\lambda \det \begin{pmatrix}
+    \lambda & 0 & \dots & 0 \\
+    \shortminus a_2 & \lambda & \dots & 0 \\
+    \vdots & \ddots & \ddots & \vdots \\
+    0 & \dots & \shortminus a_{n-1} & \lambda
+    \end{pmatrix} +\\
+    &(-1)^{n} a_n \det \begin{pmatrix}
+    \shortminus a_1 & \lambda & \dots & 0\\
+    0 & \shortminus a_2 & \ddots & \vdots\\
+    \vdots & \vdots & \ddots & \lambda\\
+    0 & 0 & \dots & \shortminus a_{n-1}
+    \end{pmatrix}.
+    \end{align*}
+    The first matrix is lower triangular and the second is upper triangular, so we easily compute that the characteristic polynomial of $A$ is $\lambda^n + (-1)^{2n-1} \prod_j a_j = \lambda^n - \prod_j a_j$. This makes sense since the matrix $A$ cycles the standard basis vectors and multiplies by the constants $a_i$ as it does so: $A e_i = a_i e_{i+1}$. Thus, we can see that $A^n e_i = \paren{\prod_j a_j} e_i$ for all $i$, so $A^n$ is the scalar matrix with $\prod_j a_j$ along the diagonal.
+
+    Set $P = \prod_j a_j$, then the eigenvalues of $A$ are $\zeta^k \sqrt[n]{P}$ for $0 \leq k \leq n-1$, where $\zeta$ is a primitive $n$th root of unity. Since the characteristic polynomial has distinct roots, the eigenspaces of $A$ are all 1-dimensional.
+    
+    By ``find the eigenspaces'', I assume they mean write down eigenvectors corresponding to each eigenvalue. That seems a bit mean, because the eigenvectors don't look particularly nice. Here's the cleanest way I found to write them. Reckon all indices cyclically, so $n+1$ means the same thing as 1. Let $v$ be the vector whose $i$th component is
+    \[v_i = \zeta^{-ik} \sqrt[n]{\prod_{j=1}^{n-1} a_{i+j}^j} = \zeta^{-ik} \sqrt[n]{a_{i+1} a_{i+2}^2 \cdots a_{i-1}^{n-1}}.\]
+    Then the $i$th component of $Av$ is
+    \begin{align*}
+        a_{i-1} v_{i-1} &= a_{i-1} \cdot \zeta^{-(i-1)k} \sqrt[n]{a_i a_{i+1}^2 \cdots a_{i-2}^{n-1}}\\
+        &= \zeta^{-(i-1)k} \sqrt[n]{a_i a_{i+1}^2 \cdots a_{i-2}^{n-1} a_{i-1}^n} \\
+        &= \zeta^k \sqrt[n]{a_i a_{i+1} \cdots a_{i-1}} \paren{\zeta^{-ik} \sqrt[n]{a_{i+1} a_{i+2}^2 \cdots a_{i-1}^{n-1}}} \\
+        &= \zeta^k \sqrt[n]{P} v_i,
+    \end{align*}
+    so $v$ is an eigenvector of eigenvalue $\zeta^k \sqrt[n]{P}$.
+    \item The Jordan form of $A$ in this case is a diagonal matrix with $\zeta^k \sqrt[n]{P}$ down the diagonal.
+    \item In this case, now $\lambda^n - P = (\lambda - \sqrt[n]{P})^n$ no longer has distinct roots, but the $\sqrt[n]{P}$-eigenspace will still be 1-dimensional. Indeed, $\rank(\sqrt[n]{P}I - A) = n-1$ since the first $n-1$ rows are linearly independent. Thus, in this case the Jordan form of $A$ will consist of a single Jordan block of eigenvalue $\sqrt[n]{P}$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2025 Problem 4,ID=Aug25_4]
+Fix a field $F$.
+\begin{enumerate}
+    \item Let $V$ be a finite dimensional vector space over $F$, and let $U \subset V$ be a subspace. Put $n = \dim(V)$, $k = \dim(U)$. Denote by $V^*$ the dual space of $V$, so its elements are functionals (linear transformations) $\phi\colon V \to F$. Find the dimension of the subspace
+    \[V_U^* = \set{\phi: \phi\vert_U = 0} \subset V^*.\]
+    \item Denote by $Gr(n,k)$ the set of all $k$-dimensional subspaces of the space $F^n$. Construct a bijection between $Gr(n,k)$ and $Gr(n,n-k)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The elementary but tedious way: Let $v_1,\dots,v_k$ be a basis for $U$, and complete this to a basis $v_1,\dots,v_n$ for $V$. Let $\phi_i$ be the functional that takes a vector $v$ to the coefficient of $v_i$ when $v$ is written in this basis (also known as the dual basis). The $\phi_i$ are linearly independent since for any linear combination $a_1 \phi_1 + \dots + a_n \phi_n$ with, say, $a_i \neq 0$, when we evaluate at $v_i$ we get $a_1 \phi_1(v_i) + \dots + a_n \phi_n(v_i) = a_i$, so this linear combination is clearly not the 0 homomorphism. We claim that $\phi_{k+1},\dots,\phi_n$ span $V_U^*$. Indeed, let $\phi \in V_U^*$, and let $b_i = \phi(v_i)$. Then the linear combination $b_{k+1} \phi_{k+1} + \dots + b_n \phi_n$ agrees with $\phi$ at every basis vector $v_i$, and so $\phi = b_{k+1} \phi_{k+1} + \dots + b_n \phi_n$. Thus, $\dim V_U^* = n-k$.
+
+    The fast way: a functional vanishing on $U$ is the same thing as a functional on $V/U$. Thus, $V_U^* \cong (V/U)^*$. Since the dual of a finite dimensional vector space has the same dimension as the original vector space (by taking the dual basis), $\dim(V/U)^* = \dim (V/U) = n - k$.
+    \item Notice that $(F^n)^* \cong F^n$. Define a function $Gr(n,k) \to Gr(n,n-k)$ by sending a $k$-dimensional subspace $U$ to the $n-k$-dimensional subspace $(F^n)_U^*$ inside $(F^n)^* \cong F^n$.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2025 Problem 4,ID=Jan25_4]
+Let $V$ be a dimension 4 vector space over $\C$ and $\phi\colon V \to V$ an operator. Suppose that a dimension 2 subspace $W$ of $V$ is invariant in the sense that $\phi(W) \subset W$; then $\phi$ induces operators $W \to W$ and $V/W \to V/W$.
+
+Suppose that the Jordan form of $\phi$ on both $W$ and $V/W$ is a single $2 \times 2$ Jordan block with eigenvalue 0. Find all possible Jordan forms of $\phi$ on $V$.
+
+(For full credit, you need to provide examples that show your answers indeed can happen and prove that there are no other possibilities.)
+\end{question}
+\begin{solution}
+We know the only possible eigenvalue of $\phi$ is 0, and that $\phi$ must have a Jordan block of size at least 2. There are four possible Jordan forms satisfying those conditions, and we will show that only three can arise. Namely, the Jordan form of $\phi$ can be: a single $4 \times 4$ block; a $1 \times 1$ block and a $3 \times 3$ block; or two $2 \times 2$ blocks. That is, the Jordan matrix of $\phi$ can be any of
+\[\begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \end{pmatrix}, \qquad \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0\end{pmatrix}, \;\;\: \text{or}\;\; \begin{pmatrix} 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 \end{pmatrix}.\]
+
+Here are two helpful things for approaching this problem. First, saying we know how $\phi$ acts on $W$ and on $V/W$ is basically the same as saying we know 3 out of 4 blocks of a block matrix representing $\phi$. Specifically, if we choose a basis $v_1, v_2,v_3,v_4$ so that $v_1,v_2$ are a Jordan basis for $W$, and $v_3 + W, v_3 + W$ are a Jordan basis for $V/W$, then we know the matrix of $\phi$ acting on $v_1, v_2$ is a $2 \times 2$ Jordan block. We also know that $\phi$ acting on $v_3,v_4$ is a $2 \times 2$ Jordan block modulo $W$, which is the same as saying it's a $2 \times 2$ Jordan block plus some linear combination of $v_1$ and $v_2$. This means that the matrix of $\phi$ with respect to this basis look like
+\[\begin{pmatrix}
+0 & 1 & \ast & \ast \\
+0 & 0 & \ast & \ast \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 0
+\end{pmatrix},\]
+where the $\ast$ represent unknown entries. So, our task is essentially to understand all the possible Jordan forms that can come about for different values of the $\ast$ entries.
+
+The second helpful thing is what exactly you're looking for to determine the Jordan form of $\phi$. To get a matrix in Jordan form, you need a basis of Jordan chains, and a Jordan chain of eigenvalue $\lambda$ is a sequence of vectors $v_k, v_{k-1},\dots,v_1$ such that $\phi(v_k) = \lambda v_k + v_{k-1}$. (This is where the staircase shape of Jordan matrices comes from.) The general way to build a Jordan chain is to start with $v_k$ which you know is a generalized eigenvector of eigenvalue $\lambda$, and recursively define $v_{i-1} = \phi(v_i) - \lambda v_i = (\phi - \lambda I)v_i$.
+
+So, in this case, to build our Jordan chain we should start with $v_4$ and recursively work our way up. We know $\phi(v_4) = v_3 + w$ for some $w \in W$. We can change basis by declaring $v_3' = v_3 + w$, so without loss of generality we may assume $w = 0$. Now, there are several possibilities for $\phi(v_3)$:
+\begin{enumerate}
+    \item We could have $\phi(v_3) = 0$. In this case, $v_1,v_2,v_3,v_4$ is already a Jordan basis for $\phi$, and it has two Jordan blocks of size 2.
+    \item Perhaps $\phi(v_3) \neq 0$ but $\phi(\phi(v_3)) = 0$, that is $\phi(v_3) \in \ker \phi$. In this case, we know $\phi(v_3) = cv_1$ for some nonzero scalar $c$. In this case, notice that $\phi(cv_2-v_3) = cv_1 - cv_1 = 0$, so $v_1$ and $cv_2 - v_3$ are two linearly independent elements of $\ker \phi$. Thus, $cv_2 - v_3, cv_1, v_3, v_4$ is a Jordan basis for $\phi$, having one Jordan block of size 1 and one of size 3.
+    \item Perhaps $\phi(v_3) \notin \ker\phi$. In this case, we can change basis by $v_2' = \phi(v_3)$, $v_1' = \phi(v_2')$, and the basis $v_1', v_2', v_3, v_4$ is a Jordan basis for $\phi$, having one Jordan block of size 4.
+\end{enumerate}
+
+All that is left to do is to translate this proof that these are the only possibilities into examples of all three happening. For the Jordan block of size 4, we can take $W = \operatorname{span}(e_1,e_2)$, for the Jordan blocks of sizes (1,3) we can take $W = \operatorname{span}(e_1+e_3,e_2)$, and for the two Jordan blocks of size 2 we can again take $W = \operatorname{span}(e_1,e_2)$.
+
+(There is a way to approach this question as a question about $\C[x]$-modules, where subtly what this question is asking is almost but not quite to compute an Ext group.)
+\end{solution}
+
+%
+\begin{question}[subtitle = August 2024 Problem 3,ID=Aug24_3]
+For an integer $n \geq 1$ consider the following $n \times n$ matrix:
+\[A = \begin{pmatrix}
+0 & & & & 1 \\
+& & & 1 & \\
+& & \iddots & &\\
+& 1 & & & \\
+1 & & & & 0
+\end{pmatrix}.\]
+Let $V$ denote the set of all $n \times n$ matrices over $\C$ that are upper triangular and commute with $A$.
+\begin{enumerate}
+    \item Show that $V$ is a vector space over $\C$.
+    \item Find a basis for $V$.
+    \item Find the dimension of $V$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item You know how to do this.
+    \item I recommend starting by computing this in the cases $n = 2,3$. I think it's worth noting that $A = A\inv$, so saying that $MA = AM$ is the same as saying that $AMA = M$. However, if $M$ is upper triangular then $AMA$ is lower triangular, so in fact every matrix in $V$ is diagonal. Moreover, $AMA$ reverses the order of the diagonal elements, so we must also have that $m_{ii} = m_{n-i,n-i}$ for all $i$. Thus, we have a basis for $V$ composed of matrices $M_i$ which has $m_{ii} = m_{n-i,n-i} = 1$ and all other entries equal to 0.
+    \item $\ceil{\tfrac{n}{2}}$.
+\end{enumerate}
+\end{solution}
+
+%This is a neat problem that is not too hard *if* you already are familiar with important facts about orthogonal matrices. Schur decomposition appears.
+\begin{question}[subtitle = August 2023 Problem 3,ID=Aug23_3]
+Let $V$ be a four-dimensional real vector space with a positive definite inner product, and let $R\colon V \to V$ be an orientation-preserving automorphism that respects the inner product (that is, $\langle Rv, Rw \rangle = \langle v, w \rangle$ for all vectors $v,w \in V$).
+\begin{enumerate}
+    \item Show that $V$ decomposes as the direct sum of two subspaces $V_1$ and $V_2$, each of dimension 2, each of which is preserved by $R$.
+    \item Show furthermore that $V_1$ and $V_2$ can be chosen to be orthogonal (that is, $\langle v_1, v_2 \rangle = 0$ for any $v_1 \in V_1$, $v_2 \in V_2$).
+\end{enumerate}
+
+(\textbf{NB} in this context, ``orientation-preserving'' means $\det R > 0$.)
+\end{question}
+\begin{solution}
+Below, I'm writing the solution in the level of abstraction given in the problem. The main idea is that, if we pretend the inner product is the usual dot product, then the condition that $R$ preserves the inner product means that $R$ is an orthogonal matrix, and the condition of being orientation-preserving means $\det R = 1$, so in fact $R$ lies in the special orthogonal group $\SO_4(\R)$. An orthogonal transformation is a composition of rotations and reflections, and since $R$ is orientation-preserving we can decompose it in a way that has either 0, 2, or 4 reflections. If there are 0 reflections, we want to find 2 orthogonal subspaces in which $R$ acts by rotations. If there are 2 reflections, we take the subspace of reflected vectors as one of our subspaces, and want to find an orthogonal subspace in which $R$ acts by rotations. If the whole space is reflected, then any pair of orthogonal subspaces will do.
+
+To read a bit more about this from a concrete perspective, here's a \href{https://people.tamu.edu/~yvorobets/MATH304-2011A/Lect4-02web.pdf}{short document} I found which I think is pretty good.
+\begin{enumerate}
+    \item If we're looking for a decomposition of a vector space, the most natural place to look is at eigenspaces. Unfortunately, the map $R$ need not have any eigenvectors, since its eigenvalues might be complex. To remedy this, we can take $V_{\C} = V \otimes_{\R} \C$ to be the complexification of $V$. That is to say, $V_\C$ is a 4-dimensional complex vector space, and we can think of any basis for $V$ as being a basis for $V_\C$ (once we allow for complex scalars). We can extend the inner product on $V$ to a Hermitian inner product on $V_\C$ via $\langle \alpha v, \beta w \rangle = \alpha \widebar{\beta} \langle v, w \rangle$ (and extending bilinearly to sums). Note that $R$ can now be interpreted as a map $V_\C \to V_\C$, and it preserves this Hermitian inner product. We can also view $V_\C$ as an 8-dimensional \textbf{real} vector space which contains $V$ (as the real subspace where all the complex parts are equal to 0). When we view $V_\C$ in this way, we will denote the subspace corresponding to our original $V$ as $V_\R$.
+    
+    Let's study the eigenspaces of $R$ acting on $V_\C$. Since $V_\C$ is a complex vector space, for every root $\lambda$ of the characteristic polynomial of $R$, there is an eigenvector $v \in V_\C$ of eigenvalue $\lambda$. If $v$ is such an eigenvector, then $\langle v, v \rangle = \langle Rv, Rv \rangle = \abs{\lambda}^2 \langle v, v \rangle$, so since $v \neq 0$, we must have $\abs{\lambda} = 1$ for all eigenvalues of $R$. Since the characteristic polynomial of $R$ has real coefficients, if $\lambda$ is an eigenvalue of $R$, so too is $\widebar{\lambda}$, and indeed $R\widebar{v} = \widebar{Rv} = \widebar{\lambda}\widebar{v}$.
+    
+    If $\lambda$ is real, then we already have that $v \in V_\R$. If $\lambda \in \C \setminus \R$, write $\lambda = a+bi$. Note that $u_1 = v + \widebar{v}$ and $u_2 = (v - \widebar{v})/i$ are linearly independent vectors in $V_\R$, and moreover $Ru_1 = au_1 - bu_2$, $Ru_2 = bu_1 + au_2$. So, each complex eigenvalue gives us a 2-dimensional subspace of $V = V_\R$ preserved by $R$, which is what we are looking for. Each real eigenvalue gives us a 1-dimensional subspace, but since complex eigenvalues occur in pairs, if we have 1 real eigenvalue, we are guaranteed to have 2, and so we can pair up those eigenspaces as well. Furthermore, since we know that $\det R > 0$, we can always find pairs of real eigenvalues of the form $(1,1)$ or $(\shortminus 1,\shortminus 1)$. The last thing we need to check is that if we have an eigenvalue which is a root of the characteristic polynomial of multiplicity greater than 1, then we actually can find the right number of independent eigenvectors. That is, we need $R$ to be diagonalizable.
+
+    This argument is one instance of Schur's Lemma, which has a few different possible forms it can take. Let $v$ be an eigenvector of eigenvalue $\lambda$, and let $W = \genset{v}$ be the subspace generated by $v$. Consider the action of $R$ on the subspace $W^\perp$, the orthogonal complement of $W$. Since $R$ preserves the Hermitian inner product, for any $w \in W^\perp$, $\langle v, Rw \rangle = (1/\lambda) \langle Rv, Rw \rangle = (1/\lambda) \langle v, w \rangle = 0$, so $R$ indeed maps $W^\perp$ to itself. But then, $R$ must have an eigenvector inside $W^\perp$. Continuing this process, we find that $R$ has 4 eigenvectors, and moreover these eigenvectors can be chosen to be orthogonal.
+    \item This follows immediately from the argument that the eigenvectors can be taken to be orthogonal.
+\end{enumerate}
+
+You might wonder (as I did) why we extend the inner product by declaring $\langle \alpha v, \beta w \rangle = \alpha \widebar{\beta} \langle v, w \rangle$ rather than $\alpha \beta \langle v, w \rangle$, which seems more straightforward and natural. The reason comes up when we discussed the eigenvalues of $R$: if we don't impose conjugate-linearity, we will get a nondegenerate, symmetric bilinear form, but we might have $\langle v , v \rangle = 0$ for nonzero vectors $v$. For example, choose an orthonormal basis $v_1, \dots, v_4$ for $V$, then if we extended the inner product bilinearly, we would get $\langle v_1 + i v_2, v_1 + i v_2 \rangle = 1 - 1 = 0$.
+\end{solution}
+
+% I don't like this one. It's asking you to prove something useful, and it's very easy if you know what to do. However, I think that if you don't know what to do, you don't have much information about what strategies to pursue to construct an answer, and if you manage to do so I'm not sure you'd learn much from the experience. I also don't like that the problem asks for something to be ``natural'', it just adds further linguistic confusion.
+\begin{question}[subtitle = January 2022 Problem 4,ID=Jan22_4]
+Let $V$ and $W$ be vector spaces over a field $k$, not necessarily finite dimensional. As usual, we denote by $\Hom_k(V,W)$ the space of linear maps from $V$ to $W$, and by $V^\vee$ the dual of $V$, so that $V^\vee = \Hom_k(V,k)$.
+\begin{enumerate}
+    \item Construct a natural injective linear operator
+    \[\Phi\colon V^\vee \otimes_k W \to \Hom(V,W),\]
+    and prove that it is indeed injective. (``Natural'' means it should be independent of any arbitrary choices.)
+    \item Prove that the operator $\Phi$ is an isomorphism if $V$ and $W$ are finite-dimensional.
+    \item Prove a necessary and sufficient condition that a linear map $A \in \Hom(V,W)$ is in the image of $\Phi$. (The assumption that $V$ and $W$ are finite-dimensional does not apply to this part.)
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $f \colon V \to k$ be an arbitrary element of $V^\vee$, and $w \in W$. We define $\Phi(f\otimes w)$ to be the linear map that sends $v \in V$ to $f(v)w \in W$. Then, for an arbitrary linear combination of tensors in $V^\vee \otimes_k W$, we extend the map linearly. (You are free to decide for yourself how ``natural'' you find this map to be.)
+
+    Showing this map is injective is a bit annoying. Take any nonzero tensor $t = \sum_i f_i \otimes w_i$ in $V^\vee \otimes_k W$, and assume the sum for $t$ above has the fewest summands among all possible representations, and in particular that all the $f_i$ and $w_i$ are linearly independent. (As an example, suppose $t = f_1 \otimes w_1 + f_2 \otimes w_2 + f_3 \otimes w_3$, and that $w_3 = a_1 w_1 + a_2 w_2$. Then we can rewrite $t$ as $(f_1 + a_1 f_3)\otimes w_1 + (f_2 + a_2 f_3) \otimes w_2$, which has fewer terms.) Then $\Phi(t)(v) = \sum_i f_i(v) w_i$, which is not equal to zero unless $f_i(v) = 0$ for all $i$ by the assumption that the $w_i$ are independent. But we can always find a $v\in V$ so that some $f_i(v) \neq 0$, so $\Phi(t)$ is not the zero map $V \to W$. Thus, $\Phi$ is injective.
+    \item When $V$ and $W$ are finite-dimensional, we have
+    \[\dim(V^\vee \otimes_k W) = \dim(V \otimes_k W) = \dim(V) \dim(W) = \dim(\Hom(V,W)).\]
+    Therefore, any injective function $V^\vee \otimes_k W \to \Hom(V,W)$ is an isomorphism.
+    \item A linear map $A \in \Hom(V,W)$ is in the image of $\Phi$ if and only if $\dim \im A < \infty$. Certainly, any $A \in \im \Phi$ has finite-dimensional image, because if we write $A = \Phi\left(\sum_i f_i \otimes w_i\right)$, then $\im A$ is spanned by the finitely many $w_i$. On the other hand, given any $A \colon V \to W$ with finite-dimensional image, choose any basis $v_1,v_2,\dots$ for $V$, and $w_1,\dots,w_n$ a basis for $\im A$. Then for $i=1,\dots,n$, the function
+    \[f_i(v_j) = \text{coefficient of }w_i\text{ in } A(v_j)\]
+    is a linear map $V \to k$, and clearly $A = \Phi\left(\sum_i f_i \otimes w_i\right)$. (Precisely, if we extend the $w_i$ to a basis for $W$, $f_i$ is the composition of $A$ followed by the map $W \to k$ that sends $w_i$ to 1 and all $w_{i'}$ to 0 for $i' \neq i$.)
+\end{enumerate}
+\end{solution}
+
+%This one is unassuming, but it contains an essential idea. Perhaps a good follow-up question is to prove the spectral theorem, to make the idea clear.
+\begin{question}[subtitle = August 2020 Problem 2,ID=Aug20_2]
+Let $M$ be an $n \times n$ matrix with real entries. Let $M^T$ be its transpose. Each of these two matrices defines a linear transformation $\R^n \to \R^n$; let $A$ denote the transformation corresponding to $M$, and let $B$ denote that corresponding to $M^T$.
+\begin{enumerate}
+    \item Prove that any vector in $\ker(A)$ is orthogonal to any vector in $\im(B)$ with respect to the standard inner product (dot product).
+    \item Prove that $\R^n$ is the direct sum of $\ker(A)$ and $\im(B)$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item The key thing here is that $v \cdot u = v^T u$. Let $v \in \ker(A)$ and $u' \in \im(B)$. Then there is some $u \in \R^n$ so that $u' = M^T u$. Then we have $v \cdot u' = v \cdot (M^T u) = v^T (M^T u) = (Mv)^T u = 0 \cdot u = 0$.
+    \item This is the slick proof, using the internal direct product test. We need to check that $\ker(A)$ and $\im(B)$ (i) have dimensions that add up to $n$ and (ii) have trivial intersection. By the rank-nullity theorem,
+    \[n = \rank(M) + \operatorname{null}(M) = \rank(M^T) + \operatorname{null}(M) = \dim \im(B) + \dim \ker(A).\]
+    Also, since any vector in $\ker(A)$ is orthogonal to any vector in $\im(B)$, $\ker(A) \cap \im(B) = \set{0}$. Thus, $\R^n = \ker(A) + \im(B)$.
+\end{enumerate}
+\end{solution}
+
+%Just realized, this problem and August 2018 Problem 3 both have speedy solutions with row-column reduction. I like my original solution much more, since it is a little more instructive.
+\begin{question}[subtitle = January 2020 Problem 4,ID=Jan20_4]
+Let $V$ be a finite-dimensional vector space over a field. Let $A\colon V \to V$ be a linear transformation.
+\begin{enumerate}
+    \item Show that there exists $B\colon V \to V$ such that $ABA=A$.
+    \item Show that there exists $C\colon V \to V$ such that $ACA=A$ and $CAC=C$.
+\end{enumerate}
+(\textbf{NB} a matrix $C$ like in part (b) is known as a ``pseudo-inverse'' to $A$.)
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item By row and column reducing, we can find bases $\mathcal{V} = \set{v_1,\dots,v_n}$ and $\mathcal{W} = \set{w_1,\dots,w_n}$ for $\R^n$ so that, with respect to the pair of bases $(\mathcal{V},\mathcal{W})$, the matrix of $A$ is block-diagonal
+    \[\begin{pmatrix} I_r & 0\\0 & 0 \end{pmatrix},\]
+    where $r = \rank(A)$. Then we can choose $B$ to be the linear transformation whose matrix with respect to the bases $(\mathcal{W},\mathcal{V})$ is
+    \[\begin{pmatrix} I_r & 0\\0 & 0 \end{pmatrix}.\]
+    Then $ABA = A$.
+    \item The $B$ from part (a) already does this.
+    % \item Let $v_1,\dots,v_r$ be a basis for $\im A$, and let $\tilde{v}_1,\dots,\tilde{v}_r$ be any preimages of $v_1,\dots,v_r$. Extend $v_1,\dots,v_r$ to a basis for $V$ arbitrarily, and define $B$ by $Bv_i = \tilde{v}_i$ for $1 \leq i \leq r$ and $Bv_i = 0$ otherwise. Then $AB$ is the identity on $\im A$ and 0 otherwise. Hence, $ABA = A$.
+    % \item Let $C = B$ as constructed above. By the same token, $CA$ is the identity on $\im C$, so $CAC = C$.
+\end{enumerate}
+\end{solution}
+
+%Row reducing
+\begin{question}[subtitle = August 2019 Problem 4,ID=Aug19_4]
+This problem involves $4 \times 4$ matrices with entries in $\R$. We will say that a matrix $M$ is an \textbf{$E$-matrix} if $M$ has 1's along the diagonal and a single nonzero entry off the diagonal. For instance:
+\[\begin{pmatrix}1&0&0&0\\0&1&0&31\\0&0&1&0\\0&0&0&1\end{pmatrix}\]
+is an $E$-matrix. Express the matrix $A$ below as a product of $E$-matrices.
+\[\begin{pmatrix}1&1&1&1\\1&2&1&1\\1&1&2&1\\1&1&1&2\end{pmatrix}\]
+\end{question}
+\begin{solution}
+This is a straight up row reducing problem. Let $E_{i,j}$ be the matrix with 1s on the diagonal, a 1 in position $(i,j)$, and 0s elsewhere. Then
+\[\begin{pmatrix}1&1&1&1\\1&2&1&1\\1&1&2&1\\1&1&1&2\end{pmatrix} = E_{2,1} E_{3,1} E_{4,1} E_{1,2} E_{1,3} E_{1,4}\]
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2019 Problem 5,ID=Jan19_5]
+Let $F$ be a field and $n$ be a positive integer. Fix an $n\times n$ matrix $S$ over $F$ that is invertible and symmetric. Writing $A^t$ for the transpose of a matrix, we let
+\[V\coloneqq \{n\times n \text{ matrices } A \text{ over } F : A^t=SAS^{-1}\}.\]
+Note that $V$ is a vector space (you do not need to prove this). Find the dimension of $V$ in terms of $n$.
+\end{question}
+\begin{solution}
+Since $S$ is an arbitrary invertible symmetric matrix, let's first think about $V$ when $S=\operatorname{Id}_n$. In this case, $V$ is the space of matrices that are equal to their own transpose, i.e.\ those that are symmetric. Thus, $\dim(V) = n + (n-1) + \cdots + 1 = \frac{1}{2}(n^2+n)$. Now the question is, why is this the dimension of $V$ for any invertible symmetric $S$?
+
+Observe that $A^t=SAS^{-1}$ if and only if $A^tS=SA$, and since $S^t=S$, this is equivalent to $(SA)^t=SA$. So, we want to find the dimension of the space of matrices $A$ such that $SA$ is symmetric. Consider the map $M: M_n(F) \to M_n(F)$ defined by $A \mapsto SA$. Since $S$ is invertible, this map is an isomorphism. Therefore, $\dim(V)$ is the dimension of the space of symmetric matrices, which is exactly $\frac{1}{2}(n^2+n)$ as before.
+\end{solution}
+
+%Another row and column reduction problem. It just seems so silly.
+\begin{question}[subtitle = August 2018 Problem 3,ID=Aug18_3]
+Denote by $M_n(\R)$ the ring of all $n \times n$ matrices over $\R$.
+\begin{enumerate}
+    \item Show that for any $A \in M_n(\R)$, there exists a $B \in M_n(\R)$ such that $AB = 0$ and $\rank(A) + \rank(B) = n$.
+    \item Prove or disprove that for any $A \in M_n(\R)$, there exists $B \in M_n(\R)$ such that $BA = AB = 0$ and $\rank(A) + \rank(B) = n$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item By row and column reducing, we can find bases $\mathcal{V} = \set{v_1,\dots,v_n}$ and $\mathcal{W} = \set{w_1,\dots,w_n}$ for $\R^n$ so that, with respect to the pair of bases $(\mathcal{V},\mathcal{W})$, the matrix of $A$ is block-diagonal
+    \[\begin{pmatrix} I_r & 0\\0 & 0 \end{pmatrix},\]
+    where $r = \rank(A)$. Then we can choose $B$ to be the linear transformation whose matrix with respect to the pair of bases $(\mathcal{W},\mathcal{V})$ is
+    \[\begin{pmatrix}0 & 0\\0 & I_{n-r} \end{pmatrix}.\]
+    Then $AB = 0$ and $\rank(A) + \rank(B) = n$.
+    \item The $B$ from part (a) does this already.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle = January 2017 Problem 2,ID=Jan17_2]
+Let $n>0$ be an integer. Let $F$ be a field of characteristic zero, $V$ a vector space over $F$ of dimension $n$, and $T\colon V \to V$ an invertible $F$-linear map such that $T^{-1}=T$. Denote by $W$ the vector space of linear transformations from $V$ to $V$ that commute with $T$. Find a formula for $\dim(W)$ in terms of $n$ and the trace of $T$.
+\end{question}
+\begin{solution}
+Since $T^{-1}=T$, we see that $T^2-\operatorname{Id}_n=0$, so $T$ satisfies the polynomial $x^2-1 \in F[x]$. Therefore, the minimal polynomial of $T$ must divide $x^2-1=(x-1)(x+1)$. So the only possible eigenvalues of $T$ are $1$ and $\shortminus 1$. Since the minimal polynomial of $T$ has distinct roots, we can choose a basis so that $T$ is a diagonal matrix with only 1's and $-1$'s on the diagonal. Furthermore, we can rearrange the basis so that $T$ has the block matrix form
+\[T=
+\begin{pmatrix}
+\operatorname{Id}_a & 0\\
+0 & -\operatorname{Id}_b
+\end{pmatrix}
+\]
+where $a+b=n$. So the trace of $T$ is $\Tr(T)=a-b$.
+
+We want to understand matrices that commute with $T$. Given an $n\times n$ matrix $S$, we consider it as a block matrix of the form $S = \begin{pmatrix}
+A & B\\
+C & D
+\end{pmatrix}$
+where $A$ has size $a\times a$ and $D$ has size $b\times b$. Then multiplying by $T$ on either side gives
+\[TS =
+\begin{pmatrix}
+A & B\\
+-C & -D
+\end{pmatrix}
+\qquad \text{and} \qquad
+ST =
+\begin{pmatrix}
+A & -B\\
+C & -D
+\end{pmatrix}.
+\]
+Therefore, $S \in W$ if and only if $B=-B=0$ and $C=-C=0$. Since there are no constraints on $A$ and $D$, we see that $\dim(W)=a^2+b^2 = \frac{1}{2}((a+b)^2+(a-b)^2)=\frac{1}{2}(n^2+\Tr(T)^2).$
+\end{solution}
+
+%
+\begin{question}[subtitle=August 2016 Problem 2,ID=Aug16_2]
+Let $V$ be a non-zero finite dimensional vector space over $\C$. Given a linear transformation $A\colon V \to V$, show that the following are equivalent.
+\renewcommand{\labelenumi}{(\roman{enumi})}
+\begin{enumerate}
+    \item There exists a linear transformation $P \colon V \to V$ such that $P^2 = I$ and $AP = -PA$.
+    \item There exists an invertible linear transformation $P \colon V \to V$ such that $AP = -PA$.
+    \item There exists a direct sum decomposition $V = V_1 \oplus V_2$ such that $AV_1 \subset V_2$ and $AV_2 \subset V_1$.
+\end{enumerate}
+(Hint: Thinking about (iii) $\Rightarrow$ (i) helped me to think about (ii) $\Rightarrow$ (iii).)
+\end{question}
+\begin{solution}
+The implication (i) $\Rightarrow$ (ii) is immediate.
+
+For (ii) $\Rightarrow$ (iii), we first begin by showing that for every eigenvalue $\lambda$ of $AP$, $-\lambda$ is also an eigenvalue. Suppose $\lambda \neq 0$ is an eigenvalue of $AP$, and $v$ is an eigenvector for $\lambda$. Then notice that $APAv = -A(AP)v = -\lambda Av$. Furthermore, we have that $Av = -P\inv APv = -\lambda P\inv v \neq 0$, so $Av$ is an eigenvector for $AP$ of eigenvalue $-\lambda$.
+
+Now, divide the eigenvalues of $AP$ into two sets, $S_1$ and $S_2$, where if a nonzero $\lambda \in S_1$, then $-\lambda \in S_2$, and visa versa. Let $V_1$ be the union of the $\lambda$-generalized eigenspaces for all $\lambda \in S_1$, and $V_2$ that for those $\lambda \in S_2$. Then our calculation in the previous paragraph shows that $AV_1 \subset V_2$ and $AV_2 \subset V_1$, as desired.
+
+Finally, for (iii) $\Rightarrow$ (i), let $P$ be given by the block diagonal matrix $\begin{pmatrix} -I & 0\\0 & I \end{pmatrix}$. It is easy to check this matrix satisfies the properties we desire.
+\end{solution}
+
+%
+\begin{question}[subtitle=January 2015 Problem 4, ID=Jan15_4]
+Let $F$ be a field, and let $V$ be a finite-dimensional vector space over $F$ that has dimension $n \geq 1$. Let $q$ be a nonzero element of $F$ such that $q^i \neq 1$ for $1 \leq i \leq n$. Let $X: V \to V$ and $Y: V \to V$ be two $F$-linear transformations such that $XY=qYX$. Show that $XY$ is nilpotent.
+\end{question}
+\begin{solution}
+% We will show that $XY$ is nilpotent by showing that 0 is its only eigenvalue. First, we will show that $XY$ and $YX$ have the same eigenvalues by showing that they have the same characteristic polynomial. Let $f(x)\in F[x]$ be the characteristic polynomial of $XY$, and let $g(x) \in F[x]$  be the characteristic polynomial of $YX$. Then $f(x) = \det(XY-x\text{Id})$ and $g(x)= \det(YX-x\text{Id})$. Consider the following block matrices, where we are representing $X, Y,$ and Id by $n \times n$ matrices:
+% \[ A =
+% \begin{pmatrix}
+% x\text{Id} & X \\
+% Y & \text{Id}
+% \end{pmatrix},
+% \qquad
+% B = 
+% \begin{pmatrix}
+% \text{Id} & 0 \\
+% -Y & x\text{Id}
+% \end{pmatrix},
+% \]
+% and observe that we have
+% \[AB = 
+% \begin{pmatrix}
+% x\text{Id}-XY & xX\\
+% 0 & x\text{Id}
+% \end{pmatrix},
+% \qquad
+% BA =
+% \begin{pmatrix}
+% x\text{Id} & X\\
+% 0 & x\text{Id}-YX
+% \end{pmatrix}.
+% \]
+% Since these are upper triangular block matrices, their determinants are given by the product of the determinants of their diagonal blocks. Therefore,
+% \begin{align*}
+%     \det(AB) &= x^n \det(x\text{Id}-XY) = (-1)^n x^n f(x)\\
+%     \det(BA) &= x^n \det(x\text{Id}-YX) = (-1)^n x^n g(x)
+% \end{align*}
+% and since $\det(AB)=\det(BA)$, we see that $f(x)=g(x)$. Thus, $XY$ and $YX$ have the same eigenvalues.
+
+Suppose $\lambda \neq 0$ is an eigenvalue of $XY$. Then $XYv=\lambda v$ for some nonzero $v \in V$, and since $XY=qYX$, we also have that $XY(Yv)=qYXYv=qY(XYv)=q\lambda Yv$. So, $q\lambda$ is also an eigenvalue for $XY$ with eigenvector $Yv$. (Note that $Yv \neq 0$ since $XYv \neq 0$.) Iterating this gives that $q^{i} \lambda$ is an eigenvalue of $XY$ for each $0 \leq i \leq n$. Since $q^i\neq 1$ for $1 \leq i \leq n$, this means that $XY$ has at least $n+1$ distinct eigenvalues, which is impossible since $V$ is $n$-dimensional. Therefore, $\lambda = 0$ is the only eigenvalue of $XY$, and hence $XY$ is nilpotent.
+\end{solution}
+
+%
+\begin{question}[subtitle= August 2014 Problem 3,ID=Aug14_3]
+\begin{enumerate}
+    \item Let $V$ be a finite-dimensional vector space over $\C$, and let $T\colon V \to V$ be a linear transformation. Show that $T$ has an eigenvector.
+    \item Give an example of a nonzero finite-dimensional vector space $V$ over $\R$ and a linear transformation $T\colon V \to V$ such that $T$ does not have an eigenvector.
+    \item Does a linear transformation of an infinite-dimensional vector space over $\C$ have to have an eigenvector?  Either prove this is the case, or give an example of a linear transformation of an infinite-dimensional vector space with no eigenvector.
+    \item Suppose that $T$ and $U$ are two linear transformations on a finite-dimensional vector space $V$ over $\C$ which satisfy $TU = UT$. Prove that there is some $v \in V$ which is an eigenvector for both $T$ and $U$.
+\end{enumerate}
+\end{question}
+\begin{solution}
+\begin{enumerate}
+    \item Let $f_T(x)$ be the characteristic polynomial of $T$. Then by the fundamental theorem of algebra, $f_T$ has a root $\lambda$. This means that $\det(T-\lambda \operatorname{Id}) = 0$, so $T-\lambda \operatorname{Id}$ has nontrivial kernel. For any $v \in \ker(T -\lambda \operatorname{Id})$, we have $Tv = \lambda v$, so $v$ is an eigenvector for $T$.
+    \item The classic example is a rotation by $\frac{\pi}{2}$ radians:
+    \[\begin{pmatrix}0&-1\\1&0\end{pmatrix}.\]
+    \item This does not have to be the case. Consider the vector space $V$ whose elements are sequences of complex numbers. So a vector looks like $v = (z_1,z_2,\dots)$. Let $T$ be the ``right shift'' operator, so $Tv = (0,z_1,z_2,\dots)$. If we try setting up $Tv = \lambda v$, then looking at the first entry tells us the only possible value of $\lambda$ is 0. But, you can check that $T$ has trivial kernel, so it can't have any eigenvectors.
+    \item Let $\lambda$ be an eigenvalue for $T$, and let $W \subset V$ be the subspace consisting of all eigenvectors for $\lambda$ (and the zero vector). (We know we can find such things by part (a).)  Here's the standard trick: for any $w \in W$, we have that $TUw = UTw = \lambda Uw$, so $Uw \in W$. Thus, we can think about $U$ as a linear transformation on the smaller vector space $W$, and by part (a), $U$ must have an eigenvector $w'$. But then $w'$ is an eigenvector for both $U$ and $T$, as desired.
+\end{enumerate}
+\end{solution}
+
+%
+\begin{question}[subtitle=January 1994 Problem 4, ID=Jan94_4]
+Let $X$ be a subspace of $M_n(\C)$, the $\C$-vector space of all $n\times n$ complex matrices. Assume that every nonzero matrix in $X$ is invertible. Prove that $\dim_\C(X) \leq 1$.
+\end{question}
+\begin{solution}
+Let $A$ and $B$ be arbitrary matrices in $X$, and suppose $B \neq 0$. Then $B$ must be invertible, so consider the matrix $AB^{-1}$. Since we are over $\C$ this matrix must have an eigenvalue $\lambda$. So, $AB^{-1}-\lambda \operatorname{Id}$ is not invertible, which means that $\det(AB^{-1}-\lambda\operatorname{Id})=0$. Then we have
+\[\det(A-\lambda B) = \det(AB^{-1}-\lambda\operatorname{Id})\det(B)=0\]
+which implies that $A-\lambda B=0$ since it is an element of $X$ that is not invertible. Thus, $A=\lambda B$. Since all of the matrices in $X$ are scalar multiples of each other, we have that $\dim_\C(X) \leq 1$.
+\end{solution}
+
+\begin{question}[subtitle=January 1983 Problem 1,ID=Jan83_1]
+Suppose $V$ is a finite dimensional vector space over $\C$, and $T\colon V \to V$ is a linear operator. Suppose the subspace of $V$ spanned by all eigenvectors of $T$ is 1-dimensional. Prove that the minimal polynomial of $T$ is $(x-\alpha)^n$, where $n = \dim V$ and $\alpha$ is some complex number. (\textbf{NB} As an extra challenge, try doing this without JNF.)
+\end{question}
+\begin{solution}
+\textbf{not using Jordan normal form:} the characteristic polynomial of $T$ is a degree $n$ polynomial whose only root is $\alpha$, so it must be $(x-\alpha)^n$. By the Cayley-Hamilton theorem, $T$ satisfies its characteristic polynomial, so the minimal polynomial of $T$ divides $(x-\alpha)^n$. We just need to check that $(T-\alpha\operatorname{Id})^k \neq 0$ for any $k < n$. Notice that $\dim \ker(T-\alpha\operatorname{Id}) = 1$, and for any linear transformations $A, B$, $\dim \ker(AB) \leq \dim \ker(A) + \dim \ker(B)$. Thus, $\dim \ker((T-\alpha\operatorname{Id})^k) \leq k < n$, so $(T-\alpha\operatorname{Id})^k \neq 0$.
+
+\textbf{Using Jordan normal form:} if we take the Jordan normal form of $T$, all the Jordan blocks have $\alpha$ down the diagonal. However, if there is more than one block, then $T$ will have two linearly independent eigenvectors, so actually the Jordan form of $T$ is
+\[\begin{pmatrix}
+\alpha & 1 & 0 & \dots & 0\\
+0 & \alpha & 1 & \dots & 0\\
+\vdots & \ddots & \ddots & \ddots & \vdots\\
+0 & \dots & \dots & \alpha & 1\\
+0 & \dots & \dots & 0 & \alpha
+\end{pmatrix}.\]
+From here, one can compute that $(T-\alpha\operatorname{Id})^n = 0$, but $(T - \alpha\operatorname{Id})^k \neq 0$ for any $k < n$. (Indeed, for any upper triangular $n \times n$ matrix $W$ with $0$ on the diagonal, $W^n=0$.)
+\end{solution}

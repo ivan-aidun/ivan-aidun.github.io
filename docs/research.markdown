@@ -9,8 +9,14 @@ Most research activity involving strength has taken place when the base field is
 
 There are many questions in the world of rational points that make sense to ask about strength. Can we count how many polynomials of bounded naive height over $\mathbb{Z}$ have prescribed strength? Can we count how many polynomials have prescribed strength over a finite field? Can we determine $p$-adic densities for polynomials of prescribed strength over $\mathbb{Q}_p$? Is there a local-global principle, that is, to what extent is the strength of $f$ over a global field determined by its strength over completions of that global field?
 
-# Work in progress
-- **Arithmetic strength of pencils of conics**. For two quadratics $f_1,f_2 \in k[x,y,z]$, the collective strength $\operatorname{str}(f_1,f_2) \in \{1,2\}$. For $k = \mathbb{R}, \mathbb{Q}, \mathbb{F}_q, \mathbb{Q}_p$, and finite extensions of $\mathbb{Q}_p$, I investigate the question ''how often is $\str_k(f_1,f_2)$ less than maximal?'' For $\mathbb{R}$, the answer is ''always'', for $\mathbb{Q}$ the answer is ''almost never'', but for $\mathbb{F}_q$ and extensions of $\mathbb{Q}_p$ it is a proportion between 0 and 1, tending to $\frac{5}{12}$ as the residue characteristic tends to infinity.
+<!-- # Work in progress
+- **Arithmetic strength of pencils of conics**. For two quadratics $f_1,f_2 \in k[x,y,z]$, the collective strength $\operatorname{str}(f_1,f_2) \in \{1,2\}$. For $k = \mathbb{R}, \mathbb{Q}, \mathbb{F}_q, \mathbb{Q}_p$, and finite extensions of $\mathbb{Q}_p$, I investigate the question ''how often is $\operatorname{str}_k(f_1,f_2)$ less than maximal?'' For $\mathbb{R}$, the answer is ''always'', for $\mathbb{Q}$ the answer is ''almost never'', but for $\mathbb{F}_q$ and extensions of $\mathbb{Q}_p$ it is a proportion between 0 and 1, tending to $\frac{5}{12}$ as the residue characteristic tends to infinity. -->
+
+# Thesis
+- **Arithmetic Strength** <a class="page-link" href="/files/thesis/Ivan_Aidun_Dissertation__Arithmetic_Strength_v3.pdf"/>
+
+# Preprints
+- **A statistical investigation of a divisor-sum function** with Lola Thompson <a class="page-link" href="https://arxiv.org/abs/2604.05284"/>
 
 # Undergraduate publications
 - **Gonality sequences of graphs** with Franny Dean, Ralph Morrison, Teresa Yu, and Julie Yuan, SIAM Journal on Discrete Mathematics 35 (2021), no. 2, 814–839. (<a class="page-link" href="https://arxiv.org/abs/2002.07753">arxiv</a>)

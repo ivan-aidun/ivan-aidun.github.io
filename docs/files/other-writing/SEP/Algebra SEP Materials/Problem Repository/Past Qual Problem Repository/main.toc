@@ -1,0 +1,6 @@
+\contentsline {section}{\numberline {1}Mixes and Medleys}{2}{section.1}%
+\contentsline {section}{\numberline {2}Linear Algebra}{20}{section.2}%
+\contentsline {section}{\numberline {3}Group Theory}{33}{section.3}%
+\contentsline {section}{\numberline {4}Field and Galois Theory}{47}{section.4}%
+\contentsline {section}{\numberline {5}Rings and Modules}{61}{section.5}%
+\contentsline {section}{\numberline {6}Other problems I like}{90}{section.6}%
