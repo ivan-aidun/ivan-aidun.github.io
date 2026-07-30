@@ -39,6 +39,7 @@ minima:
 
 header_pages:
   - research.markdown
+  - teaching.markdown
   - other-writing.markdown
 
 # Exclude from processing.
