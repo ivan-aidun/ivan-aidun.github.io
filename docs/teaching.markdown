@@ -3,7 +3,7 @@ layout: page
 title: Teaching
 ---
 
-<!-- # SEP materials -->
+# SEP materials
 <details>
 <summary title="Click to expand">
 <h4><u>Notes on Algebra</u></h4>
@@ -24,20 +24,20 @@ From 2022-2025, I was the instructor of the Algebra SEP (Summer Enhancement Prog
 </ul>
 </details>
 
-<!-- # Number theory notes -->
+# Number theory notes
 <details>
 <summary title="Click to expand">
 <h4><u>Number theory notes</u></h4>
 </summary>
-Recently, I have been [relearning my field][tao-relearn]. As I go, I've been writing myself notes in a novel format: rather than write down whatever proofs I come up with, I write down only the questions I asked myself (or would have asked myself in an ideal problem-solving process) that brought me to those proofs.
+Recently, I have been <a class="page-link" href="https://terrytao.wordpress.com/career-advice/learn-and-relearn-your-field/">relearning my field</a>. As I go, I've been writing myself notes in a novel format: rather than write down whatever proofs I come up with, I write down only the questions I asked myself (or would have asked myself in an ideal problem-solving process) that brought me to those proofs.
 <ul>
-<li> <a class="page-link" href="/files/other-writing/NT/ANT_notes_v1.pdf" download>Notes about the two fundamental theorems of algebraic number theory: finite generation of the unit group and finiteness of the class group. I have ambitions to someday expand this to include other topics from algebraic number theory, such as an introduction to number fields and number rings, an introduction to Minkowski's theorem, a discussion of Frobenius elements, etc.</li>
-<li> <a class="page-link" href="/files/other-writing/NT/CFT_cubics.pdf" download>Inspired by a problem I got from Brain Lawrence when I took Class Field Theory with him. I have found that every hour I've spent thinking about this problem has repaid me tenfold in learning something else in number theory.</li>
-<li> <a class="page-link" href="/files/other-writing/NT/Silverman_V_5_10.pdf" download>A solution to a Silverman exercise I wrote up because a friend of mine got stuck on it.</li>
+<li> <a class="page-link" href="/files/other-writing/NT/ANT_notes_v1.pdf" download>Algebraic Number Theory</a>. Notes about the two fundamental theorems of algebraic number theory: finite generation of the unit group and finiteness of the class group. I have ambitions to someday expand this to include other topics from algebraic number theory, such as an introduction to number fields and number rings, an introduction to Minkowski's theorem, a discussion of Frobenius elements, etc.</li>
+<li> <a class="page-link" href="/files/other-writing/NT/CFT_cubics.pdf" download>Classifying cyclic cubic extensions</a>. Inspired by a problem I got from Brain Lawrence when I took Class Field Theory with him. I have found that every hour I've spent thinking about this problem has repaid me tenfold in learning something else in number theory.</li>
+<li> <a class="page-link" href="/files/other-writing/NT/Silverman_V_5_10.pdf" download>A solution to a Silverman exercise</a> I wrote up because a friend of mine got stuck on it.</li>
 </ul>
 </details>
 
-<!-- # Other math notes -->
+# Other math notes
 <details>
 <summary title="Click to expand">
 <h4><u>Short expositions</u></h4>
@@ -50,5 +50,3 @@ I have written several short expositions of a more recreational nature:
 <li> <a class="page-link" href="/files/other-writing/misc/pascal.pdf" download>Always Use Pascal</a>: a lesson about binomial coefficients and thinking mathematically. I wrote this in undergrad, and it is aimed towards undergraduates taking discrete math or combinatorics classes.</li>
 </ul>
 </details>
-
-[tao-relearn]:https://terrytao.wordpress.com/career-advice/learn-and-relearn-your-field/
