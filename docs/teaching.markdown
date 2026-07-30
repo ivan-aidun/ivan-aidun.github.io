@@ -26,7 +26,6 @@ From 2022-2025, I was the instructor of the Algebra SEP (Summer Enhancement Prog
 
 <!-- # Number theory notes -->
 <details>
-<details>
 <summary title="Click to expand">
 <h4><u>Number theory notes</u></h4>
 </summary>
