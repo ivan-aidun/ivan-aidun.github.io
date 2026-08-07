@@ -10,17 +10,17 @@ title: Teaching
 </summary>
 From 2022-2025, I was the instructor of the Algebra SEP (Summer Enhancement Program) at UW—Madison. You can read more about the SEP <a class="page-link" href="https://wiki.math.wisc.edu/index.php/Summer_Enhancement_Program">here</a>. In Summer 2024, as part of my SEP materials, I wrote a series of expository notes on various topics in graduate-level algebra. The notes are not intended to be read front-to-back, but rather with the intention that if the reader is facing an unfamiliar topic for the first time (say, tensor products), they can navigate to that section and find a short, conversational introduction, along with example problems, many of which are drawn from or oriented towards problems that have appeared on past Algebra Qualifying Exams at UW.
 <ul>
-<li><a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_LA_basics.pdf" download>Basic Linear Algebra</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_LA_adv.pdf" download>Advanced Linear Algebra</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_ring_basics.pdf" download>Ring Theory 1</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_rings.pdf" download>Ring Theory 2</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_module_basics.pdf" download>Module Theory 1</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_module_int.pdf" download>Module Theory 2</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_module_adv.pdf" download>Module Theory 3</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_group_basics.pdf" download>Group Theory 1</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_group_actions.pdf" download>Group Theory 2: Group Actions</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_group_adv.pdf" download>Group Theory 3</a></li>
-<li> <a class="page-link" href="/files/other-writing/SEP-2024/SEP_2024_fields_Galois.pdf" download>Fields and Galois Theory</a></li>
+<li><a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_LA_basics.pdf" download>Basic Linear Algebra</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_LA_adv.pdf" download>Advanced Linear Algebra</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_ring_basics.pdf" download>Ring Theory 1</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_rings.pdf" download>Ring Theory 2</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_module_basics.pdf" download>Module Theory 1</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_module_int.pdf" download>Module Theory 2</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_module_adv.pdf" download>Module Theory 3</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_group_basics.pdf" download>Group Theory 1</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_group_actions.pdf" download>Group Theory 2: Group Actions</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_group_adv.pdf" download>Group Theory 3</a></li>
+<li> <a class="page-link" href="/files/other-writing/SEP/SEP-2024/SEP_2024_fields_Galois.pdf" download>Fields and Galois Theory</a></li>
 </ul>
 </details>
 
